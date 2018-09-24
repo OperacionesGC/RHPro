@@ -1,0 +1,122 @@
+﻿.barraSuperior{ background-color: #4a4a4a;height: 22px; margin-bottom:-10px; }
+
+.form{ width: 950px; text-align: left; margin-left: auto;margin-right: auto; margin-top:15px; }
+
+    
+#logo{ background-image: url('../../Images/TopLogo.gif');
+background-repeat: no-repeat;height: 90px;margin-top: 15px; width:950px; }
+        
+#botonera{ width: 950px; margin-top: 15px;}
+#botonera #superior{ background-repeat: no-repeat; background-image: url('../../Images/Botonera/newBotoneraSup.png');
+height: 6px; line-height: 1px; font-size: 1px; }
+#botonera #medio{ background-repeat: repeat-y; background-image: url('../../Images/Botonera/newBotoneraMedio.png'); 
+height:18px; padding-top:2px; }
+#botonera #medio #search{  margin-top:-5px;  }
+#botonera #inferior{ background-repeat: no-repeat; background-image: url('../../Images/Botonera/newBotoneraInf.png');
+height: 6px; padding-bottom:00px;line-height: 1px; font-size: 1px;   }
+
+.menu_list{ list-style-type: none;font-family: arial;font-size: 12px;margin: 0;padding: 0; }
+.menu_list li {float: left;padding: 0 10px 0px 10px;color: #ee2e24;border-right: solid 1px #999999;color: red;font-family: Arial;font-size: 11px;font-weight: bold; text-decoration:none; }
+.menu_list li a{ float: left;color: #ee2e24;color: red;font-family: Arial;font-size: 11px;font-weight: bold; text-decoration:none; }
+
+.clear{ clear: both; }
+        
+#contenido {margin-top: 15px; width: 950px;}
+.imgBanner{ height:240px; width:150px;}
+#Izquierda{width: 150px; float: left;}
+#Menu1Izq #superior { background-repeat: no-repeat; background-image: url('../../Images/MRU/IzqSupGris1.gif'); 
+height: 9px; line-height: 1px; font-size: 1px; }
+#Menu1Izq #titulo   { background-repeat: no-repeat; background-color: #6f6f6f; height: 50px; }                  
+#Menu1Izq #titulo span { color: white; font-family: Arial; font-size: 18px;  margin: 0 0 0 0; padding-left: 20px }
+#Menu1Izq #cuerpo   { background-repeat: no-repeat; background-color: #dedede; }
+#Menu1Izq #cuerpo div{ width: 125px; margin-left: 15px; padding-top: 7px; padding-bottom: 5px; color: Red; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold}
+#Menu1Izq #cuerpo div .descripcion{color: Black; font-size: 11px; font-weight: normal; }
+#Menu1Izq #cuerpo  .separador{border-bottom: dotted 1px black; padding-top: 0px; font-size:1px;}
+#Menu1Izq #inferior {background-repeat: no-repeat; background-image: url('../../Images/MRU/IzqInfGris1.gif');
+height: 9px; }
+#Menu2Izq {padding-top: 5px;}
+
+#Centro{ float: left; margin-left: 5px; }
+#centralArriba{ margin-left:10px; width: 600px; }
+#centralArriba #superior{ background-repeat: no-repeat; background-image: url('../../Images/Module/CentralSup.gif');
+height: 8px; line-height: 1px; font-size: 1px; }
+#centralArriba #titulo{ background-repeat: no-repeat; background-color: #4b4a4a; margin-top: -1px;color: White; padding-left: 10px; height: 35px; }
+#centralArriba #medio{ background-repeat: no-repeat; background-color: white; margin-top: -1px;padding-left: 5px; }
+#centralArriba #medio .CentroArribaIzq{ background-repeat: no-repeat;background-color: #cccccc;margin: 5px;color: Red;padding: 5px 30px 5px 5px;font-size: 12px; }
+#centralArriba #medio .CentroArribaDerTitulo{ background-repeat: no-repeat; background-color: #d9d9d9; margin: 5px;border-bottom: solid 1px white; color: red; padding: 5px; }
+#centralArriba #medio .CentroArribaDerDescripcion{ margin-left: 5px; font-size:11px; }
+#centralArriba #medio .CentroArribaDerInfo{ background-repeat: no-repeat; background-color: #999999; margin:0px 5px 5px 5px;border-bottom: solid 1px white; color: white; text-align: right; font-size: 13px;padding: 5px; height: 15px; }
+#centralArriba #inferior{ background-repeat: no-repeat; background-image: url('../../Images/Module/CentralInf.gif');
+height: 8px;  }
+.divScroll { margin-left:0px; padding-left:0px; }
+/*#imageFrame { background-repeat: no-repeat; background-image: url('../../Images/ImageCentral.gif'); height:241px; margin-top:31px;  margin-left:10px; width:600px;}*/
+#Derecha { width: 170px; float: right; margin-left:5px; }
+
+.btnLoginOFF { padding:30px 0px 0px 10px; font-size:10px !important; }
+#linksLogin { margin-left:10px; font-size:10px !important; }
+.linksLogin { margin:10px 0px 0px 10px; font-size:10px;  }
+.linksLogin span a {text-decoration:none; color:White; font-size: 10px !important;   }
+#linkLogOff span a { text-decoration:none; font-size:10px; color:White;}
+.btnLoginOFF span {text-decoration:none; color:White; font-size: 10px !important;   }
+#login #superior{ background-repeat: no-repeat; background-image: url('../../Images/Login/newLoginSup.png');
+height: 9px; line-height: 1px; font-size: 1px; }
+#login #medio{ background-repeat: no-repeat; background-color: #ee2e24; margin-top: -1px; padding-left:2px; height:165px; }
+#login #medio label { color: white; font-family: Arial; font-size: 18px; padding-left: 0px;text-decoration:none; }
+#Derecha #login #medio a{ color: white; font-family: Arial; font-size: 18px; padding-left: 0px;text-decoration:none; }
+#login #inferior{ background-repeat: no-repeat;  );
+height: 9px; }
+.btnPolitic { padding-left: 0px; margin-left:0px;}
+#Menu1Der{ padding-top: 7px; }
+#Menu1Der #superior { background-repeat: no-repeat; background-image: url('../../Images/Message/DerSupGris1.gif');
+height: 9px; line-height: 1px; font-size: 1px; }
+#Menu1Der #medioTitulo{ background-repeat: no-repeat; background-color: #6f6f6f; height: 50px; }
+#Menu1Der #medioTitulo span{ color: white;font-family: Arial;font-size: 18px;margin: 0 0 0 0;padding-left: 15px;  }
+#Menu1Der #medioCuerpo{ background-repeat: no-repeat; background-color: #dedede; height:110px;}
+#Menu1Der #medioCuerpo div{  width: 125px; margin-left: 15px; padding-top: 7px; padding-bottom: 5px; color: Red; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold}
+#Menu1Der #medioCuerpo div .descripcion{ color: Black; font-size: 10px; }
+#Menu1Der #inferior{ background-repeat: no-repeat; background-image: url('../../Images/Message/DerInfGris1.gif');height: 9px; }
+.linksLogin { margin:10px 0px 0px 10px; font-size:10px;  }
+
+ #Menu2Der{ padding-top: 4px; }
+#Menu2Der #superior{ background-repeat: no-repeat; background-image: url('../../Images/Link/DerSupGris1.gif');
+height: 9px; line-height: 1px; font-size: 1px;
+}
+#Menu2Der #medioTitulo{ background-repeat: no-repeat; background-color: #6f6f6f; height: 30px; }
+#Menu2Der #medioTitulo span{ color: white;font-family: Arial;font-size: 18px;margin: 0 0 0 0;padding-left: 15px;  }
+#Menu2Der #medioCuerpo{ background-repeat: no-repeat; background-color: #eeeeee; }
+#Menu2Der #medioCuerpo div{ width: 125px; margin-left: 15px; padding-bottom: 5px; color: Red; font-family: Arial; font-size: 12px; font-weight: bold;  }
+#Menu2Der #medioCuerpo div .descripcion{ color: Black; font-size: 10px; text-decoration:none; padding-bottom:20px; }
+#Menu2Der #inferior{ background-repeat: no-repeat; background-image: url('../../Images/Link/DerInfGris2.gif');
+height: 9px; }
+
+
+#footer{}
+
+#footer #superior{background-repeat: no-repeat; background-image: url('../../Images/Footer/FootSup.gif');height: 8px; line-height: 1px; font-size: 1px; margin-top:15px;}
+#footer #medio{ background-color:#ee2e24; color:White; font-family:Tahoma;height: 20px;}
+#footer #medio .titulo{  padding:5px 0px 0px 10px; font-size:14px; margin-top:-2px;}
+#footer #medio .version{ font-size:9px;  padding-top:5px; padding-right:10px;}
+#footer #inferior{background-repeat: no-repeat; background-image: 
+
+.inputs 
+{
+    border: 1px solid #000;
+    background: white;
+    height: 20px;
+    width: 163px;
+    color: Red; 
+}
+
+/*d #fff;background: white;height: 20px;width: 50px;border-color: #000;color: Red; }*/
+.inputs{ border: 1px solid #fff;background: white;height: 15px;width: 50px;border-color: #000;color: Red; }
+
+.iframeCentral {margin: 20px 10px 0px 10px; width:600px; height:241px;}
+
+.Combo input{ border-style: none;
+    border-color: inherit;
+    border-width: 0px;
+    margin: 0;
+background-image: url('../../Images/botonCombo.png');
+background-position: left top;
+    padding: 2px 0px 0px 8px;    font-size: 11px;    height: 17px;    width: 150px; }
+.Combo button{ border: solid 1px white;height: 19px;width: 19px; }

@@ -1,0 +1,30 @@
+C:\Inetpub\wwwroot\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.dll
+C:\Inetpub\wwwroot\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.pdb
+C:\Inetpub\wwwroot\ConsultaBaseC\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+C:\Inetpub\wwwroot\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+C:\Inetpub\wwwroot\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb
+E:\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.dll
+E:\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.pdb
+E:\ConsultaBaseC\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+E:\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+E:\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb
+C:\Documents and Settings\mferraro\Escritorio\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.dll
+C:\Documents and Settings\mferraro\Escritorio\ConsultaBaseC\ConsultaBaseC\bin\ConsultaBaseC.pdb
+C:\Documents and Settings\mferraro\Escritorio\ConsultaBaseC\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\mferraro\Escritorio\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+C:\Documents and Settings\mferraro\Escritorio\ConsultaBaseC\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb
+C:\Documents and Settings\mferraro\Escritorio\Servicios Web\Merge\ConsultaBaseC\bin\ConsultaBaseC.dll
+C:\Documents and Settings\mferraro\Escritorio\Servicios Web\Merge\ConsultaBaseC\bin\ConsultaBaseC.pdb
+C:\Documents and Settings\mferraro\Escritorio\Servicios Web\Merge\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\mferraro\Escritorio\Servicios Web\Merge\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+C:\Documents and Settings\mferraro\Escritorio\Servicios Web\Merge\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\Servicio Web Home y Org\ConsultaBaseC\bin\ConsultaBaseC.dll
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\Servicio Web Home y Org\ConsultaBaseC\bin\ConsultaBaseC.pdb
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\RHPro\Servicio Web Home y Org\ConsultaBaseC\bin\ConsultaBaseC.dll
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\RHPro\Servicio Web Home y Org\ConsultaBaseC\bin\ConsultaBaseC.pdb
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\RHPro\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\RHPro\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ConsultaBaseC.dll
+C:\Documents and Settings\Martín Regina\My Documents\Visual Studio 2008\Projects\RHPro\Servicio Web Home y Org\ConsultaBaseC\obj\Debug\ConsultaBaseC.pdb

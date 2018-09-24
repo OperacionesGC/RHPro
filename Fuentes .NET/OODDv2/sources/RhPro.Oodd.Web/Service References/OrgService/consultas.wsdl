@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://rhpro.com.ar/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://rhpro.com.ar/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://rhpro.com.ar/">
+      <s:element name="VersionWS">
+        <s:complexType />
+      </s:element>
+      <s:element name="VersionWSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VersionWSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Version">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Patch">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PatchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PatchResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Link">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LinkResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LinkResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Mensaje">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MensajeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MensajeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Banner">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BannerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BannerResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Modulos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModulosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ModulosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MRU">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Cant" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MRUResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MRUResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PagPie">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PagPieResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PagPieResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="comboBase">
+        <s:complexType />
+      </s:element>
+      <s:element name="comboBaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="comboBaseResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Search">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Palabra" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Pass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SegNt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiarPass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassOld" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassNew" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassConfirm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Idioma" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiarPassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CambiarPassResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Padre">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodEmp" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PadreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PadreResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Hijos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodEmp" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HijosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HijosResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DatosEmp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodEmp" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DatosEmpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DatosEmpResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsignarPadre">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodPadre" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="CodHijo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsignarPadreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AsignarPadreResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsignarHijo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodHijo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="CodPadre" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsignarHijoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AsignarHijoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BorrarHijo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodHijo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="CodPadre" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BorrarHijoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BorrarHijoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BorrarPadre">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CodHijo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="CodPadre" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BorrarPadreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BorrarPadreResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscarEmpleado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Legajo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Activo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscarEmpleadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscarEmpleadoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SgtEmpl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Legajo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Activo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SgtEmplResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SgtEmplResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AntEmpl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Legajo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Activo" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Base" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AntEmplResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AntEmplResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EstadoPostulante">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tipoDoc" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Doc" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Sexo" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EstadoPostulanteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EstadoPostulanteResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TablaPlana">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Tabla" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TablaPlanaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TablaPlanaResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="VersionWSSoapIn">
+    <wsdl:part name="parameters" element="tns:VersionWS" />
+  </wsdl:message>
+  <wsdl:message name="VersionWSSoapOut">
+    <wsdl:part name="parameters" element="tns:VersionWSResponse" />
+  </wsdl:message>
+  <wsdl:message name="VersionSoapIn">
+    <wsdl:part name="parameters" element="tns:Version" />
+  </wsdl:message>
+  <wsdl:message name="VersionSoapOut">
+    <wsdl:part name="parameters" element="tns:VersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="PatchSoapIn">
+    <wsdl:part name="parameters" element="tns:Patch" />
+  </wsdl:message>
+  <wsdl:message name="PatchSoapOut">
+    <wsdl:part name="parameters" element="tns:PatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="LinkSoapIn">
+    <wsdl:part name="parameters" element="tns:Link" />
+  </wsdl:message>
+  <wsdl:message name="LinkSoapOut">
+    <wsdl:part name="parameters" element="tns:LinkResponse" />
+  </wsdl:message>
+  <wsdl:message name="MensajeSoapIn">
+    <wsdl:part name="parameters" element="tns:Mensaje" />
+  </wsdl:message>
+  <wsdl:message name="MensajeSoapOut">
+    <wsdl:part name="parameters" element="tns:MensajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="BannerSoapIn">
+    <wsdl:part name="parameters" element="tns:Banner" />
+  </wsdl:message>
+  <wsdl:message name="BannerSoapOut">
+    <wsdl:part name="parameters" element="tns:BannerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModulosSoapIn">
+    <wsdl:part name="parameters" element="tns:Modulos" />
+  </wsdl:message>
+  <wsdl:message name="ModulosSoapOut">
+    <wsdl:part name="parameters" element="tns:ModulosResponse" />
+  </wsdl:message>
+  <wsdl:message name="MRUSoapIn">
+    <wsdl:part name="parameters" element="tns:MRU" />
+  </wsdl:message>
+  <wsdl:message name="MRUSoapOut">
+    <wsdl:part name="parameters" element="tns:MRUResponse" />
+  </wsdl:message>
+  <wsdl:message name="PagPieSoapIn">
+    <wsdl:part name="parameters" element="tns:PagPie" />
+  </wsdl:message>
+  <wsdl:message name="PagPieSoapOut">
+    <wsdl:part name="parameters" element="tns:PagPieResponse" />
+  </wsdl:message>
+  <wsdl:message name="comboBaseSoapIn">
+    <wsdl:part name="parameters" element="tns:comboBase" />
+  </wsdl:message>
+  <wsdl:message name="comboBaseSoapOut">
+    <wsdl:part name="parameters" element="tns:comboBaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchSoapIn">
+    <wsdl:part name="parameters" element="tns:Search" />
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="CambiarPassSoapIn">
+    <wsdl:part name="parameters" element="tns:CambiarPass" />
+  </wsdl:message>
+  <wsdl:message name="CambiarPassSoapOut">
+    <wsdl:part name="parameters" element="tns:CambiarPassResponse" />
+  </wsdl:message>
+  <wsdl:message name="PadreSoapIn">
+    <wsdl:part name="parameters" element="tns:Padre" />
+  </wsdl:message>
+  <wsdl:message name="PadreSoapOut">
+    <wsdl:part name="parameters" element="tns:PadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="HijosSoapIn">
+    <wsdl:part name="parameters" element="tns:Hijos" />
+  </wsdl:message>
+  <wsdl:message name="HijosSoapOut">
+    <wsdl:part name="parameters" element="tns:HijosResponse" />
+  </wsdl:message>
+  <wsdl:message name="DatosEmpSoapIn">
+    <wsdl:part name="parameters" element="tns:DatosEmp" />
+  </wsdl:message>
+  <wsdl:message name="DatosEmpSoapOut">
+    <wsdl:part name="parameters" element="tns:DatosEmpResponse" />
+  </wsdl:message>
+  <wsdl:message name="AsignarPadreSoapIn">
+    <wsdl:part name="parameters" element="tns:AsignarPadre" />
+  </wsdl:message>
+  <wsdl:message name="AsignarPadreSoapOut">
+    <wsdl:part name="parameters" element="tns:AsignarPadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="AsignarHijoSoapIn">
+    <wsdl:part name="parameters" element="tns:AsignarHijo" />
+  </wsdl:message>
+  <wsdl:message name="AsignarHijoSoapOut">
+    <wsdl:part name="parameters" element="tns:AsignarHijoResponse" />
+  </wsdl:message>
+  <wsdl:message name="BorrarHijoSoapIn">
+    <wsdl:part name="parameters" element="tns:BorrarHijo" />
+  </wsdl:message>
+  <wsdl:message name="BorrarHijoSoapOut">
+    <wsdl:part name="parameters" element="tns:BorrarHijoResponse" />
+  </wsdl:message>
+  <wsdl:message name="BorrarPadreSoapIn">
+    <wsdl:part name="parameters" element="tns:BorrarPadre" />
+  </wsdl:message>
+  <wsdl:message name="BorrarPadreSoapOut">
+    <wsdl:part name="parameters" element="tns:BorrarPadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscarEmpleadoSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscarEmpleado" />
+  </wsdl:message>
+  <wsdl:message name="BuscarEmpleadoSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscarEmpleadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SgtEmplSoapIn">
+    <wsdl:part name="parameters" element="tns:SgtEmpl" />
+  </wsdl:message>
+  <wsdl:message name="SgtEmplSoapOut">
+    <wsdl:part name="parameters" element="tns:SgtEmplResponse" />
+  </wsdl:message>
+  <wsdl:message name="AntEmplSoapIn">
+    <wsdl:part name="parameters" element="tns:AntEmpl" />
+  </wsdl:message>
+  <wsdl:message name="AntEmplSoapOut">
+    <wsdl:part name="parameters" element="tns:AntEmplResponse" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPostulanteSoapIn">
+    <wsdl:part name="parameters" element="tns:EstadoPostulante" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPostulanteSoapOut">
+    <wsdl:part name="parameters" element="tns:EstadoPostulanteResponse" />
+  </wsdl:message>
+  <wsdl:message name="TablaPlanaSoapIn">
+    <wsdl:part name="parameters" element="tns:TablaPlana" />
+  </wsdl:message>
+  <wsdl:message name="TablaPlanaSoapOut">
+    <wsdl:part name="parameters" element="tns:TablaPlanaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ConsultasSoap">
+    <wsdl:operation name="VersionWS">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Devuelve la version de Servicio Web</wsdl:documentation>
+      <wsdl:input message="tns:VersionWSSoapIn" />
+      <wsdl:output message="tns:VersionWSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve la version del sistema.</wsdl:documentation>
+      <wsdl:input message="tns:VersionSoapIn" />
+      <wsdl:output message="tns:VersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Patch">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve el Patch del sistema.</wsdl:documentation>
+      <wsdl:input message="tns:PatchSoapIn" />
+      <wsdl:output message="tns:PatchSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Link">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve los links de interes para el banner segun el usuario.</wsdl:documentation>
+      <wsdl:input message="tns:LinkSoapIn" />
+      <wsdl:output message="tns:LinkSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Mensaje">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve un titulo y una descripción de las noticias a mostrar en el banner de comunidad.</wsdl:documentation>
+      <wsdl:input message="tns:MensajeSoapIn" />
+      <wsdl:output message="tns:MensajeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Banner">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve un titulo, una imagen (guardada en el directorio shared\images\ de rhpro) y una desc extendida a mostrar en el banner.</wsdl:documentation>
+      <wsdl:input message="tns:BannerSoapIn" />
+      <wsdl:output message="tns:BannerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Modulos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve los modulos segun el usuario.</wsdl:documentation>
+      <wsdl:input message="tns:ModulosSoapIn" />
+      <wsdl:output message="tns:ModulosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MRU">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve los menu mas utilizados por el usuario.</wsdl:documentation>
+      <wsdl:input message="tns:MRUSoapIn" />
+      <wsdl:output message="tns:MRUSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PagPie">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve la pagina a mostrar en la parte inferior de la pantalla.</wsdl:documentation>
+      <wsdl:input message="tns:PagPieSoapIn" />
+      <wsdl:output message="tns:PagPieSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="comboBase">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve las bases para el combo. Formato de salida es un string separado por coma NombreBase,NroConexion,SegIntegrada(-1),ValorDefault(-1)</wsdl:documentation>
+      <wsdl:input message="tns:comboBaseSoapIn" />
+      <wsdl:output message="tns:comboBaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Devuelve una tabla con Nombre de Modulo, Nombre de Menu y Accion de Menu segun la palabra buscada y usuario.</wsdl:documentation>
+      <wsdl:input message="tns:SearchSoapIn" />
+      <wsdl:output message="tns:SearchSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Retorna si el usuario ingresa, un mensaje de error y si el mismo debe cambiar la password.</wsdl:documentation>
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CambiarPass">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(HOME) Cambia la contraseña del Usuario con contraseña anterior PassOld a la nueva PassNew. Devuelve string que si es vacio entonces cambio password ok, sino devuelve el error.</wsdl:documentation>
+      <wsdl:input message="tns:CambiarPassSoapIn" />
+      <wsdl:output message="tns:CambiarPassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Padre">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un codigo de empleado y un codigo de base retorna el codigo de empleado padre.</wsdl:documentation>
+      <wsdl:input message="tns:PadreSoapIn" />
+      <wsdl:output message="tns:PadreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hijos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un codigo de empleado y un codigo de base retorna todos los codigos de empleados hijos.</wsdl:documentation>
+      <wsdl:input message="tns:HijosSoapIn" />
+      <wsdl:output message="tns:HijosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DatosEmp">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un codigo de empleado y un codigo de base retorna los datos del empleado.</wsdl:documentation>
+      <wsdl:input message="tns:DatosEmpSoapIn" />
+      <wsdl:output message="tns:DatosEmpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AsignarPadre">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Asigna a CodHijo el padre CodPadre para la base Base</wsdl:documentation>
+      <wsdl:input message="tns:AsignarPadreSoapIn" />
+      <wsdl:output message="tns:AsignarPadreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AsignarHijo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Asigna a CodHijo el padre CodPadre para la base Base</wsdl:documentation>
+      <wsdl:input message="tns:AsignarHijoSoapIn" />
+      <wsdl:output message="tns:AsignarHijoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHijo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Borra relacion entre padre e hijo para la base Base</wsdl:documentation>
+      <wsdl:input message="tns:BorrarHijoSoapIn" />
+      <wsdl:output message="tns:BorrarHijoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPadre">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Borra relacion entre padre e hijo para la base Base</wsdl:documentation>
+      <wsdl:input message="tns:BorrarPadreSoapIn" />
+      <wsdl:output message="tns:BorrarPadreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarEmpleado">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un legajo de empleado, un filtro de estados activos (-1), inactivos (0) o ambos (1), y un codigo de base retorna codigo interno y nombre y apellido del empleado. Si Legajo es cero retorna el primer empleado.</wsdl:documentation>
+      <wsdl:input message="tns:BuscarEmpleadoSoapIn" />
+      <wsdl:output message="tns:BuscarEmpleadoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SgtEmpl">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un legajo de empleado, un filtro de estados activos (-1), inactivos (0) o ambos (1), y un codigo de base retorna el siguiente empleado.</wsdl:documentation>
+      <wsdl:input message="tns:SgtEmplSoapIn" />
+      <wsdl:output message="tns:SgtEmplSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AntEmpl">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(ORG) Dado un legajo de empleado, un filtro de estados activos (-1), inactivos (0) o ambos (1), y un codigo de base retorna el anterior empleado.</wsdl:documentation>
+      <wsdl:input message="tns:AntEmplSoapIn" />
+      <wsdl:output message="tns:AntEmplSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPostulante">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(Interfaz Inteligente) Devuelve el estado del postulante: 1) Empleado, 2) ExEmpleado, 3)Postulante Activo, 4)Postulante Inactivo, 5) Lista Negra</wsdl:documentation>
+      <wsdl:input message="tns:EstadoPostulanteSoapIn" />
+      <wsdl:output message="tns:EstadoPostulanteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TablaPlana">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">(Interfaz Inteligente) Devuelve codigo y descripcion de la tabla plana seleccionada.</wsdl:documentation>
+      <wsdl:input message="tns:TablaPlanaSoapIn" />
+      <wsdl:output message="tns:TablaPlanaSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ConsultasSoap" type="tns:ConsultasSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="VersionWS">
+      <soap:operation soapAction="http://rhpro.com.ar/VersionWS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <soap:operation soapAction="http://rhpro.com.ar/Version" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Patch">
+      <soap:operation soapAction="http://rhpro.com.ar/Patch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Link">
+      <soap:operation soapAction="http://rhpro.com.ar/Link" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Mensaje">
+      <soap:operation soapAction="http://rhpro.com.ar/Mensaje" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Banner">
+      <soap:operation soapAction="http://rhpro.com.ar/Banner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Modulos">
+      <soap:operation soapAction="http://rhpro.com.ar/Modulos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MRU">
+      <soap:operation soapAction="http://rhpro.com.ar/MRU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagPie">
+      <soap:operation soapAction="http://rhpro.com.ar/PagPie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="comboBase">
+      <soap:operation soapAction="http://rhpro.com.ar/comboBase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="http://rhpro.com.ar/Search" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://rhpro.com.ar/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarPass">
+      <soap:operation soapAction="http://rhpro.com.ar/CambiarPass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Padre">
+      <soap:operation soapAction="http://rhpro.com.ar/Padre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hijos">
+      <soap:operation soapAction="http://rhpro.com.ar/Hijos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DatosEmp">
+      <soap:operation soapAction="http://rhpro.com.ar/DatosEmp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsignarPadre">
+      <soap:operation soapAction="http://rhpro.com.ar/AsignarPadre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsignarHijo">
+      <soap:operation soapAction="http://rhpro.com.ar/AsignarHijo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHijo">
+      <soap:operation soapAction="http://rhpro.com.ar/BorrarHijo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPadre">
+      <soap:operation soapAction="http://rhpro.com.ar/BorrarPadre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarEmpleado">
+      <soap:operation soapAction="http://rhpro.com.ar/BuscarEmpleado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SgtEmpl">
+      <soap:operation soapAction="http://rhpro.com.ar/SgtEmpl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AntEmpl">
+      <soap:operation soapAction="http://rhpro.com.ar/AntEmpl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPostulante">
+      <soap:operation soapAction="http://rhpro.com.ar/EstadoPostulante" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TablaPlana">
+      <soap:operation soapAction="http://rhpro.com.ar/TablaPlana" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ConsultasSoap12" type="tns:ConsultasSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="VersionWS">
+      <soap12:operation soapAction="http://rhpro.com.ar/VersionWS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <soap12:operation soapAction="http://rhpro.com.ar/Version" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Patch">
+      <soap12:operation soapAction="http://rhpro.com.ar/Patch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Link">
+      <soap12:operation soapAction="http://rhpro.com.ar/Link" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Mensaje">
+      <soap12:operation soapAction="http://rhpro.com.ar/Mensaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Banner">
+      <soap12:operation soapAction="http://rhpro.com.ar/Banner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Modulos">
+      <soap12:operation soapAction="http://rhpro.com.ar/Modulos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MRU">
+      <soap12:operation soapAction="http://rhpro.com.ar/MRU" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagPie">
+      <soap12:operation soapAction="http://rhpro.com.ar/PagPie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="comboBase">
+      <soap12:operation soapAction="http://rhpro.com.ar/comboBase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap12:operation soapAction="http://rhpro.com.ar/Search" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://rhpro.com.ar/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarPass">
+      <soap12:operation soapAction="http://rhpro.com.ar/CambiarPass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Padre">
+      <soap12:operation soapAction="http://rhpro.com.ar/Padre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hijos">
+      <soap12:operation soapAction="http://rhpro.com.ar/Hijos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DatosEmp">
+      <soap12:operation soapAction="http://rhpro.com.ar/DatosEmp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsignarPadre">
+      <soap12:operation soapAction="http://rhpro.com.ar/AsignarPadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsignarHijo">
+      <soap12:operation soapAction="http://rhpro.com.ar/AsignarHijo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHijo">
+      <soap12:operation soapAction="http://rhpro.com.ar/BorrarHijo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPadre">
+      <soap12:operation soapAction="http://rhpro.com.ar/BorrarPadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarEmpleado">
+      <soap12:operation soapAction="http://rhpro.com.ar/BuscarEmpleado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SgtEmpl">
+      <soap12:operation soapAction="http://rhpro.com.ar/SgtEmpl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AntEmpl">
+      <soap12:operation soapAction="http://rhpro.com.ar/AntEmpl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPostulante">
+      <soap12:operation soapAction="http://rhpro.com.ar/EstadoPostulante" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TablaPlana">
+      <soap12:operation soapAction="http://rhpro.com.ar/TablaPlana" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Consultas">
+    <wsdl:port name="ConsultasSoap" binding="tns:ConsultasSoap">
+      <soap:address location="http://190.190.32.15:9004/ws/consultas.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ConsultasSoap12" binding="tns:ConsultasSoap12">
+      <soap12:address location="http://190.190.32.15:9004/ws/consultas.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

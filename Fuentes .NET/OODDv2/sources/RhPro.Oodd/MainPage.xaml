@@ -1,0 +1,426 @@
+﻿<UserControl x:Class="RhPro.Oodd.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:liquid="clr-namespace:Liquid;assembly=Liquid"
+    xmlns:liquidPopup="clr-namespace:Liquid;assembly=Liquid.Popup"
+    xmlns:odnodecontrol="clr-namespace:RhPro.Oodd.Control.Node;assembly=RhPro.Oodd.Control.Node"
+    xmlns:od="clr-namespace:RhPro.Oodd" xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
+
+    <Grid x:Name="LayoutRoot"
+          Background="White" >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="2" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38" />
+            <RowDefinition />
+            <RowDefinition Height="47" />
+        </Grid.RowDefinitions>
+
+        <!-- Barra de herramientas -->
+        <Grid Grid.Column="1" 
+              Grid.Row="0" 
+              Background="WhiteSmoke">
+            
+            <Canvas  x:Name="CanvasToolBar">
+                
+                <Button x:Name="ButtonSave" 
+                        ToolTipService.ToolTip="Guardar" 
+                        IsEnabled="False"
+                        Width="50"
+                        Height="30" 
+                        Canvas.Left="0" 
+                        Canvas.Top="5" 
+                        Click="ButtonSave_Click">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonSave.png" />
+                    </Button.Content>
+                    
+                </Button>
+                
+                <Button x:Name="ButtonPrint" 
+                        ToolTipService.ToolTip="Imprimir" 
+                        IsEnabled="True" 
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="60" 
+                        Canvas.Top="5" 
+                        Click="ButtonPrint_Click">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonPrinter.png" />
+                    </Button.Content>
+                    
+                </Button>
+                
+                <Button x:Name="ButtonUndo" 
+                        ToolTipService.ToolTip="Deshacer cambios" 
+                        IsEnabled="False" 
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="120" 
+                        Canvas.Top="5" 
+                        Click="ButtonUndo_Click">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonUndo.png" />
+                    </Button.Content>
+                    
+                </Button>
+                
+                <Button x:Name="ButtonRedo" 
+                        ToolTipService.ToolTip="Rehacer cambios" 
+                        IsEnabled="False" 
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="180" 
+                        Canvas.Top="5" 
+                        Click="ButtonRedo_Click">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonRedo.png" />
+                    </Button.Content>
+                    
+                </Button>
+                
+                <Button x:Name="ButtonPrevious" 
+                        ToolTipService.ToolTip="Empleado anterior" 
+                        IsEnabled="False"
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="240" 
+                        Canvas.Top="5" 
+                        Click="ButtonPrevious_Click">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonBack.png" />
+                    </Button.Content>
+                    
+                </Button>
+
+                <TextBox x:Name="TextBoxRootDocket" 
+                         ToolTipService.ToolTip="Empleado actual" 
+                         TextAlignment="Center" 
+                         GotFocus="TextBoxRootDocket_GotFocus" 
+                         Width="50" 
+                         Canvas.Left="295" 
+                         Height="20" 
+                         Canvas.Top="10" 
+                         KeyDown="TextBoxRootDocket_KeyDown" />
+
+                <TextBox x:Name="TextBoxRootEmployee" 
+                         ToolTipService.ToolTip="Empleado actual" 
+                         TextAlignment="Left" 
+                         VerticalContentAlignment="Top" 
+                         GotFocus="TextBoxRootDocket_GotFocus" 
+                         Width="205" 
+                         Canvas.Left="350" 
+                         Height="20" 
+                         Canvas.Top="10" 
+                         Text="" 
+                         IsReadOnly="True" />
+
+                <Button x:Name="ButtonNext" 
+                        ToolTipService.ToolTip="Empleado siguiente" 
+                        IsEnabled="False"
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="560" 
+                        Canvas.Top="5" 
+                        Click="ButtonNext_Click" >
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonNext.png" />
+                    </Button.Content>
+                    
+                </Button>
+
+                <toolkit:NumericUpDown Name="NumericUpDownNodeLevel"
+                                       Height="22" Width="37"  
+                                       MaxWidth="37" 
+                                       Margin="8,10,0,0" 
+                                       
+                                       HorizontalAlignment="Left" 
+                                       VerticalAlignment="Top"
+                    
+                                       Grid.Column="1" 
+                                       Canvas.Left="615"
+                                       Canvas.Top="-1" 
+                    
+                                       Minimum="2" 
+                                       Maximum="25" 
+                                       Value="5" 
+                    
+                    KeyDown="NumericUpDownNodeLevel_KeyDown"
+                    ToolTipService.ToolTip="Cantidad de niveles" />
+                
+                <Button x:Name="ButtonUpdate" 
+                        ToolTipService.ToolTip="Actualizar" 
+                        IsEnabled="True"
+                        Width="50" 
+                        Height="30" 
+                        Canvas.Left="670" 
+                        Canvas.Top="5" 
+                        Click="ButtonUpdate_Click" 
+                        Background="White" 
+                        Opacity="1">
+                    
+                    <Button.Content>
+                        <Image Source="images/ButtonReload.png" />
+                    </Button.Content>
+                    
+                </Button>
+
+                <TextBlock x:Name="TextBlockZoom" 
+                           Canvas.Top="14" 
+                           Canvas.Left="720" 
+                           Text="100" 
+                           Visibility="Collapsed" />
+
+            </Canvas>
+            
+        </Grid>
+
+        <!-- Área de trabajo -->
+        <liquid:Viewer x:Name="LiquidViewerMain" 
+                       Grid.Row="1" 
+                       Grid.Column="1" 
+                       VerticalContentAlignment="Top" 
+                       HorizontalContentAlignment="Center"
+                       Maximum="5.0" 
+                       LayoutUpdated="LiquidViewerMain_LayoutUpdated">
+            
+            <StackPanel x:Name="StackPanelOrgChartContainer" 
+                        Background="Transparent">
+                
+                <odnodecontrol:OrganizationChart x:Name="ctlOrgChart" />
+                <od:WaitIndicator x:Name="ODWaits" Margin="0, 100, 0, 0" />
+
+            </StackPanel>
+        </liquid:Viewer>
+
+        <!-- Barra de estado -->
+        <Grid x:Name="GridStatusBar" 
+              Grid.Column="1" 
+              Grid.Row="3" 
+              Background="#DEDEDC" 
+              Margin="0,2">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="161" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="56" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>
+
+            <Image Source="images/rhprox2_01a.jpg" 
+                   Grid.Column="0" 
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+            
+            <StackPanel x:Name="StackPanelStatusBarMessage" 
+                        Grid.Column="1" 
+                        Height="45">
+                
+                <!-- Mensajes al usuario -->
+                <TextBlock x:Name="TextBlockStatusBar" Text=""/>
+            </StackPanel>
+            <Image Source="images/logo50px.png" 
+                   Grid.Column="1" 
+                   Grid.ColumnSpan="2" 
+
+                   HorizontalAlignment="Right" />
+        </Grid>
+
+        <!-- Contenedor Drag & Drop -->
+        <Canvas x:Name="CanvasTop" />
+
+        <!-- Popup Info -->
+        <Canvas x:Name="CanvasPopupInfo" 
+                Background="Transparent" 
+                Visibility="Collapsed">
+            
+            <liquidPopup:Bubble x:Name="bubblePopup" 
+                                Canvas.Left="50" 
+                                Canvas.Top="50" 
+                                Width="186" 
+                                Height="135" 
+                                Lip="TopLeft">
+                
+                <StackPanel x:Name="StackPanelInfo" Margin="0,17,5,5">
+                    <Grid>
+                        
+                        <Grid.ColumnDefinitions>
+                            
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="65" />
+                            <ColumnDefinition />
+                            
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Image x:Name="ImageInfo" 
+                            Height="79" 
+                            Width="63" 
+                            Margin="0" 
+                            Grid.Column="1" 
+                            Grid.Row="0" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Center" 
+                            ImageFailed="ImageInfo_ImageFailed" />
+
+                        <Image x:Name="ImageInfoReflected" 
+                            Height="79" 
+                            Width="63" 
+                            Margin="0" 
+                            Grid.Column="1" 
+                            Grid.Row="0" 
+                            HorizontalAlignment="Center" 
+                            Opacity="0.75">
+                            
+                            <Image.RenderTransform>
+                                <ScaleTransform ScaleY="-0.75" />
+                            </Image.RenderTransform>
+                            
+                            <Image.OpacityMask>
+                                <LinearGradientBrush EndPoint="0.5,1.0" 
+                                    StartPoint="0.5,0.0">
+                                    
+                                    <GradientStop Color="#00000000" 
+                                        Offset="0.0" />
+                                    <GradientStop Color="#FF000000" 
+                                        Offset="1.0" />
+                                    
+                                </LinearGradientBrush>
+
+                            </Image.OpacityMask>
+                            
+                        </Image>
+
+                        <!-- Nombre -->
+                        <TextBlock Grid.Column="2" 
+                                   Grid.Row="0" 
+                                   TextWrapping="Wrap" 
+                                   Padding="5,0" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   FontWeight="ExtraBlack" 
+                                   Text="" 
+                                   Width="115" 
+                                   HorizontalAlignment="Left" />
+                        
+                        <!-- Teléfono -->
+                        <TextBlock Grid.Column="2"
+                                   Grid.Row="0" 
+                                   TextWrapping="Wrap" 
+                                   Padding="5,25" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   FontWeight="ExtraBlack" 
+                                   Text="Teléfono" 
+                                   Foreground="Gray"  />
+                        
+                        <TextBlock x:Name="TextBlockPhone" 
+                                   Grid.Column="2" 
+                                   Grid.Row="0" 
+                                   TextWrapping="Wrap" 
+                                   Padding="5,35" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   Foreground="Gray" />
+                        
+                        <!-- Correo Electrónico -->
+                        <TextBlock Grid.Column="2"
+                                   TextWrapping="Wrap" 
+                                   Padding="5,50" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   FontWeight="ExtraBlack" 
+                                   Text="Correo Electrónico" 
+                                   Foreground="Gray"  />
+                        
+                        <TextBlock x:Name="TextBlockEmail" 
+                                   Grid.Column="2" 
+                                   Grid.Row="0" 
+                                   TextWrapping="Wrap" 
+                                   Padding="5,60" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   Foreground="Gray" />
+
+                        <!-- Empresa -->
+                        <TextBlock Grid.Column="2" 
+                                   TextWrapping="Wrap"  
+                                   Padding="5,75" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   FontWeight="ExtraBlack" 
+                                   Text="Empresa" 
+                                   Foreground="Gray" />
+                        
+                        <TextBlock x:Name="TextBlockEmpresa" 
+                                   Grid.Column="2" 
+                                   Grid.Row="0" 
+                                   TextWrapping="Wrap" 
+                                   Padding="5,85" 
+                                   FontSize="9" 
+                                   FontFamily="Verdana" 
+                                   Foreground="Gray" />
+
+                        <Canvas Grid.Column="2" 
+                                Grid.Row="0">
+                            
+                            <Button Content="x" 
+                                    Canvas.Top="95" 
+                                    Cursor="Hand" 
+                                    Canvas.Left="100" 
+                                    Click="BubbleClose_Click" 
+                                    Height="18" 
+                                    FontSize="9" />
+                            
+                        </Canvas>
+                        
+                    </Grid>
+                
+                </StackPanel>
+                
+            </liquidPopup:Bubble>
+            
+            <TextBlock x:Name="TextBlockPositionX" 
+                       Visibility="Collapsed" />
+            
+            <TextBlock x:Name="TextBlockPositionY" 
+                       Visibility="Collapsed" />
+            
+        </Canvas>
+
+        <Canvas x:Name="CanvasPopupWindow" 
+                Background="Transparent" 
+                Visibility="Collapsed" 
+                Width="0" 
+                Height="0">
+            
+            <liquidPopup:MessageBox x:Name="MessageBoxInfo" 
+                                    StartPosition="CenterParent" 
+                                    TimeUntilClose="3"/>
+            
+        </Canvas>
+        
+    </Grid>
+
+</UserControl>

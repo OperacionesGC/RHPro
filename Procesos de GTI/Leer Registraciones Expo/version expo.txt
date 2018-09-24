@@ -1,0 +1,90 @@
+Private Sub InsertaRegistracion(strReg As String)
+Dim nroLegajo As String
+Dim Ternro As Long
+Dim Fecha As Date
+Dim hora As String
+Dim EntradaSalida As String
+Dim nroReloj As Long
+Dim pos1 As Byte
+Dim pos2 As Byte
+Dim codReloj As Integer
+Dim TipoTarj As Integer
+
+    RegLeidos = RegLeidos + 1
+    
+    pos1 = 1
+    pos2 = InStr(pos1, strReg, " ")
+    nroLegajo = Mid(strReg, pos1, pos2 - pos1)
+    
+    pos1 = pos2
+    pos2 = InStr(pos1 + 1, strReg, " ")
+    Fecha = Mid(strReg, pos1, pos2 - pos1)
+    RegFecha = Fecha
+    
+    pos1 = pos2
+    pos2 = InStr(pos1 + 1, strReg, " ")
+    hora = Trim(Mid(strReg, pos1, pos2 - pos1))
+    If Not objFechasHoras.ValidarHora(hora) Then
+        InsertaError 4, 38
+        Exit Sub
+    End If
+    
+    pos1 = pos2
+    pos2 = InStr(pos1 + 1, strReg, " ")
+    nroReloj = Mid(strReg, pos1, pos2 - pos1)
+    
+    StrSql = "SELECT relnro, tptrnro FROM gti_reloj WHERE relcodext = '" & nroReloj & "'"
+    OpenRecordset StrSql, objRs
+    If objRs.EOF Then
+        InsertaError 4, 32
+        Exit Sub
+    Else
+        codReloj = objRs!relnro
+        TipoTarj = objRs!tptrnro
+    End If
+    
+
+    pos1 = pos2
+    pos2 = InStr(pos1 + 1, strReg, " ")
+    EntradaSalida = IIf(Trim(Mid(strReg, pos1)) = "20", "E", "S")
+       
+    ' 15/07/2003
+    ' no poner comillas al nroLegajo porque no toma bien los legajos que comienzan con 000...
+    'If codReloj = 13 Then
+    '    StrSql = "SELECT ternro FROM gti_histarjeta WHERE hstjnrotar = " & nroLegajo & " AND tptrnro = 2 AND (hstjfecdes <= " & ConvFecha(Fecha) & ") AND ( (" & ConvFecha(Fecha) & " <= hstjfechas) OR ( hstjfechas is null ))"
+    'Else
+    '    StrSql = "SELECT ternro FROM gti_histarjeta WHERE hstjnrotar = " & nroLegajo & " AND tptrnro = 1 AND (hstjfecdes <= " & ConvFecha(Fecha) & ") AND ( (" & ConvFecha(Fecha) & " <= hstjfechas) OR ( hstjfechas is null ))"
+    'End If
+
+    ' ----------------------------------------------------
+    'FZG 06/08/2003
+    StrSql = "SELECT ternro FROM gti_histarjeta WHERE tptrnro = " & TipoTarj & " AND hstjnrotar = " & nroLegajo & " AND (hstjfecdes <= " & ConvFecha(Fecha) & ") AND ( (" & ConvFecha(Fecha) & " <= hstjfechas) OR ( hstjfechas is null ))"
+    OpenRecordset StrSql, objRs
+    If Not objRs.EOF Then
+       Ternro = objRs!Ternro
+    Else
+      StrSql = "SELECT ternro FROM gti_histarjeta WHERE hstjnrotar = " & nroLegajo & " AND (hstjfecdes <= " & ConvFecha(Fecha) & ") AND ( (" & ConvFecha(Fecha) & " <= hstjfechas) OR ( hstjfechas is null ))"
+      OpenRecordset StrSql, objRs
+      If Not objRs.EOF Then
+         Ternro = objRs!Ternro
+      Else
+         InsertaError 1, 33
+         Exit Sub
+      End If
+    End If
+    ' Primero se busca con el numero de tarjeta y el tipo asociado al reloj. Si no se encuentra,
+    ' se busca solo con el número de la tarjeta. O.D.A. 06/08/2003
+    ' ----------------------------------------------------
+        
+    
+    StrSql = "SELECT * FROM gti_registracion WHERE regfecha = " & ConvFecha(Fecha) & " AND reghora = '" & hora & "' AND ternro = " & Ternro & " AND regentsal = '" & EntradaSalida & "' AND relnro = " & codReloj
+    OpenRecordset StrSql, objRs
+    If objRs.EOF Then
+        StrSql = " INSERT INTO gti_registracion(ternro,crpnnro,regfecha,reghora,regentsal,relnro,regestado) VALUES (" & _
+                Ternro & "," & crpNro & "," & ConvFecha(Fecha) & ",'" & hora & "','" & EntradaSalida & "'," & codReloj & ",'I')"
+        objConn.Execute StrSql, , adExecuteNoRecords
+    Else
+        InsertaError 1, 92
+    End If
+        
+End Sub

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Home>
+
+  <Acceso>
+    <nroAcceso>1</nroAcceso>
+    <Nombre>Autogestión</Nombre>
+    <URL>../../ess/ess/indexJPB4.asp</URL>
+    <isLogin>false</isLogin>
+    <Activo>true</Activo>
+    <ArchivoDescripcion></ArchivoDescripcion>
+  </Acceso>
+
+  <Acceso>
+    <nroAcceso>2</nroAcceso>
+    <Nombre>E-Recruiting</Nombre>
+    <URL>http://rhdesa:10012/index.asp</URL>
+    <isLogin>false</isLogin>
+    <Activo>true</Activo>
+    <ArchivoDescripcion>Erecruiting/index.html</ArchivoDescripcion>
+  </Acceso>
+
+  <Acceso>
+    <nroAcceso>3</nroAcceso>
+    <Nombre>E-learning</Nombre>
+    <URL>http://www.produccion-2.com/website/login/index.php</URL>
+    <isLogin>false</isLogin>
+    <Activo>true</Activo>
+    <ArchivoDescripcion></ArchivoDescripcion>
+  </Acceso>
+
+  <Acceso>
+    <nroAcceso>4</nroAcceso>
+    <Nombre>CRM</Nombre>
+    <URL>http://www.rhpro.com/CRM/tabid/196/language/es-AR/Default.aspx</URL>
+    <isLogin>false</isLogin>
+    <Activo>true</Activo>
+    <ArchivoDescripcion></ArchivoDescripcion>
+  </Acceso>
+
+  <Acceso>
+    <nroAcceso>5</nroAcceso>
+    <Nombre>Parches</Nombre>
+    <URL>http://www.rhpro.com/Portals/0/DESCARGAS/DescargaPatch/tabid/364/Default.aspx</URL>
+    <isLogin>false</isLogin>
+    <Activo>true</Activo>
+    <ArchivoDescripcion></ArchivoDescripcion>
+  </Acceso>
+
+</Home>

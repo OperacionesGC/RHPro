@@ -1,0 +1,135 @@
+/*Parametro de entrada*/
+DEF VAR nro-analisis AS INT NO-UNDO INIT 1.
+
+
+DEF VAR cantdiasper AS INT NO-UNDO.
+DEF VAR cantdiasran AS INT NO-UNDO.
+DEF VAR porcentaje AS INT NO-UNDO.
+DEF VAR monto_saldo AS DEC NO-UNDO.
+DEF VAR monto_total AS DEC NO-UNDO.
+DEF VAR cant_saldo AS DEC NO-UNDO.
+DEF VAR cant_total AS DEC NO-UNDO.
+DEF BUFFER bhis_estructura FOR his_estructura.
+
+
+FIND FIRST anrcab WHERE anrcab.anrcabnro = nro-analisis NO-LOCK NO-ERROR.
+
+/* Limpio los cubos del analisis que no son manuales y del tipo de factor que estoy procesando*/
+FOR EACH anrcubo WHERE anrcubo.anrcabnro = anrcab.anrcabnro 
+                   AND anrcubo.anrcubmanual = FALSE,
+    EACH anrfactor WHERE anrfactor.facnro = anrcubo.facnro AND anrfactor.tipfacnro = 4 NO-LOCK:
+       DELETE anrcubo.
+END.
+
+/* Recorre para el analisis los acumulados diario de tipos de horas configurados */
+FOR EACH anrcab_fact WHERE anrcab_fact.anrcabnro = anrcab.anrcabnro NO-LOCK,
+    EACH anrfact_ori WHERE anrfact_ori.facnro = anrcab_fact.facnro 
+                     AND   anrfact_ori.tipfacnro = 4 NO-LOCK,
+    EACH anrfactor WHERE anrfactor.facnro = anrcab_fact.facnro NO-LOCK,
+    EACH gti_acumdiario WHERE gti_acumdiario.adfecha >= anrcabfecdesde AND gti_acumdiario.adfecha <= anrcabfechasta
+                          AND gti_acumdiario.thnro = anrfact_ori.faccodorig NO-LOCK,
+    EACH anrrangofec WHERE anrrangofec.anrcabnro = anrcab.anrcabnro 
+                       AND anrrangofec.anrrangfecdesde <= gti_acumdiario.adfecha 
+                       AND anrrangofec.anrrangfechasta >= gti_acumdiario.adfecha NO-LOCK,
+    EACH his_estructura WHERE his_estructura.ternro = gti_acumdiario.ternro 
+                          AND his_estructura.htetdesde <= anrrangfechasta
+                          AND (his_estructura.htethasta >= anrrangfecdesde
+                           OR his_estructura.htethasta = ?) NO-LOCK 
+                 BREAK BY gti_acumdiario.ternro BY anrfact_ori.facnro BY his_estructura.tenro BY his_estructura.estrnro:
+               
+            IF FIRST-OF(anrfact_ori.facnro)
+                 THEN
+                   ASSIGN cantdiasper = anrrangofec.anrrangfechasta - anrrangofec.anrrangfecdesde + 1
+                          monto_total = 0
+                          cant_total  = 0.
+
+             /* Acumulo por Factor */
+            ASSIGN monto_total = monto_total + gti_acumdiario.adcanthoras
+                   cant_total  = 0.
+
+            /* Calculo los dias de rango entre las fechas del rango y el his_estruct para proporcionar*/       
+            IF anrfactor.facpropor 
+                THEN DO:
+                    IF his_estructura.htetdesde < anrrangfecdesde 
+                        THEN DO:          
+                            IF his_estructura.htethasta < anrrangfechasta AND his_estructura.htethasta <> ?
+                                THEN
+                                   ASSIGN cantdiasran = his_estructura.htethasta - anrrangfecdesde + 1.
+                                ELSE
+                                   ASSIGN cantdiasran = anrrangfechasta - anrrangfecdesde + 1.
+                        END.
+                        ELSE DO:  
+                            IF his_estructura.htethasta < anrrangfechasta AND his_estructura.htethasta <> ?
+                                THEN
+                                   ASSIGN cantdiasran = his_estructura.htethasta - his_estructura.htetdesde + 1.
+                                ELSE
+                                   ASSIGN cantdiasran = anrrangfechasta - his_estructura.htetdesde + 1.
+            
+                        END.
+                 /* Porcentaje segun la cant. de dias en la his_estrutura */
+                 ASSIGN porcentaje  = cantdiasran * 100 / cantdiasper.
+                 IF LAST-OF(anrfact_ori.facnro) OR LAST-OF(his_estructura.estrnro)
+                   THEN DO:
+                     /* Creo el cubo */
+                     CREATE anrcubo.
+                     ASSIGN anrcubo.anrcabnro    = anrcab.anrcabnro
+                            anrcubo.anrcubmanual = FALSE
+                            anrcubo.anrcubvalor1 = monto_total * porcentaje / 100
+                            anrcubo.anrcubvalor2 = cant_total * porcentaje / 100
+                            anrcubo.anrrangnro   = anrrangofec.anrrangnro
+                            anrcubo.estrnro      = his_estructura.estrnro
+                            anrcubo.facnro       = anrfactor.facnro
+                            anrcubo.tenro        = his_estructura.tenro
+                            anrcubo.ternro       = gti_acumdiario.ternro
+                            anrcubo.tipnro       = 1
+                            monto_saldo          = (monto_total - anrcubo.anrcubvalor1 - monto_saldo) 
+                            cant_saldo           = (cant_total - anrcubo.anrcubvalor2 - cant_saldo)
+                            monto_total          = 0
+                            cant_total           = 0.  
+                     /* Para que no quede saldo cuando proporciona */
+                     IF monto_saldo <= 1 AND monto_saldo > 0
+                       THEN
+                         ASSIGN anrcubo.anrcubvalor1 = anrcubo.anrcubvalor1 + monto_saldo.
+                     IF cant_saldo <= 1 AND cant_saldo > 0
+                       THEN
+                        ASSIGN anrcubo.anrcubvalor2 = anrcubo.anrcubvalor2 + cant_saldo.
+
+                 END.
+              END.
+              ELSE DO: /* Si no proporciona tomo al 100% y la ultima his_estruc del rango*/
+                 ASSIGN porcentaje  = 100.
+                 IF LAST-OF(anrfact_ori.facnro) OR LAST-OF(his_estructura.estrnro) 
+                  THEN DO:
+                   IF NOT LAST-OF(his_estructura.tenro) 
+                    THEN 
+                      ASSIGN monto_total          = 0
+                             cant_total           = 0.
+                   ELSE DO:
+                     /*Busco la ultima his_estr dentro del rango*/
+                     FIND LAST bhis_estructura WHERE bhis_estructura.ternro = gti_acumdiario.ternro 
+                          AND bhis_estructura.tenro = his_estructura.tenro
+                          AND bhis_estructura.htetdesde <= anrrangfechasta
+                          AND (bhis_estructura.htethasta >= anrrangfecdesde
+                           OR bhis_estructura.htethasta = ?) USE-INDEX his_tet3_1 NO-LOCK NO-ERROR.
+                     IF AVAIL bhis_estructura
+                      THEN DO:
+                       /* Creo el cubo */
+                       CREATE anrcubo.
+                       ASSIGN anrcubo.anrcabnro    = anrcab.anrcabnro
+                              anrcubo.anrcubmanual = FALSE
+                              anrcubo.anrcubvalor1 = monto_total * porcentaje / 100
+                              anrcubo.anrcubvalor2 = cant_total * porcentaje / 100
+                              anrcubo.anrrangnro   = anrrangofec.anrrangnro
+                              anrcubo.estrnro      = bhis_estructura.estrnro
+                              anrcubo.facnro       = anrfactor.facnro
+                              anrcubo.tenro        = bhis_estructura.tenro
+                              anrcubo.ternro       = gti_acumdiario.ternro
+                              anrcubo.tipnro       = 1
+                              monto_total          = 0
+                              cant_total           = 0.
+                         END.
+                   END.
+                 END.
+             END.
+          
+END.

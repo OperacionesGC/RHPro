@@ -1,0 +1,11 @@
+mdlPagoDto = 22, 22, 1312, 613, Z
+MdlGlobal = 0, 0, 0, 0, C
+mdlDataAccess = 0, 0, 0, 0, C
+mdlConstantes = 0, 0, 0, 0, C
+BuscarTurno = 0, 0, 0, 0, C
+BuscarDia = 0, 0, 0, 0, C
+Feriado = 0, 0, 0, 0, C
+FechasHoras = 0, 0, 0, 0, C
+mdlPoliticasVac = 0, 0, 0, 0, C
+mdlValidarBD = 44, 44, 1334, 635, 
+MdlMidioma = 0, 0, 0, 0, C

@@ -1,0 +1,124 @@
+﻿<UserControl xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"  
+    x:Class="RhPro.Oodd.Control.Node.NodeContent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:od="clr-namespace:RhPro.Oodd.Control.Node"
+    xmlns:liquidPopup="clr-namespace:Liquid;assembly=Liquid.Popup"
+    MouseEnter="OnMouseEnter" MouseLeave="OnMouseLeave">
+    
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="btnStyle">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="#FF47484a"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- VIEJO -->
+                        <Border CornerRadius="0,0,0,4.5" BorderThickness="1,0,0,1" BorderBrush="#80000000"
+                                Background="Transparent">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ButtonFlatStyle">
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderThickness="0">
+                                <ContentPresenter Content="{TemplateBinding Content}" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="TooltipStyle" TargetType="ToolTip">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border CornerRadius="5" Background="WhiteSmoke" BorderBrush="DarkGray" BorderThickness="1">
+                            <ContentPresenter Margin="5" Content="{TemplateBinding Content}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+
+        <od:StackPanelNode x:Name="StackPanelDrop" Orientation="Vertical">
+
+            <od:StackPanelNode x:Name="StackPanelDrag" Orientation="Vertical">
+            
+                <Border x:Name="brdLowerRectangle" CornerRadius="8,8,8,8" BorderThickness="1" BorderBrush="#19000000" 
+                VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="150" >
+
+                    <Border CornerRadius="7,7,7,7" BorderThickness="1" BorderBrush="#33000000">
+                        <Border x:Name="brdHover" CornerRadius="6,6,6,6" BorderThickness="1">
+                            <Border x:Name="brdMain" CornerRadius="5,5,5,5" BorderThickness="1" BorderBrush="#80000000" >
+                                <!-- End Dropshadow -->
+
+                                <StackPanel Orientation="Vertical">
+                                    
+                                    <Button x:Name="btnMinimize" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                    BorderThickness="0" Style="{StaticResource btnStyle}" Opacity="0" Click="OnStateButtonClicked">
+                                        <Polygon Points="0, 7 10, 7 10, 5 0, 5 0, 7" StrokeThickness="0" Fill="#80000000" />
+                                    </Button>
+                                    
+                                    <Button x:Name="btnMaximize" Width="20" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                    BorderThickness="0" Style="{StaticResource btnStyle}" Opacity="0" Click="OnStateButtonClicked">
+                                        <Path StrokeThickness="2" Stroke="#80000000" Data="M 1,5 H 11 M 6,0 V 10" />
+                                    </Button>
+                                    
+                                    <StackPanel x:Name="NodeBody">
+
+                                        <!-- Main content ClickMode="Hover" -->
+                                        <Button x:Name="lblName" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                                             FontWeight="ExtraBlack" FontSize="9" Padding="15,0,15,0" Click="lblName_Click"
+                                             Background="Transparent" Cursor="Hand" BorderThickness="0" Style="{StaticResource ButtonFlatStyle}">
+                                        </Button>
+                                        
+                                        <Button x:Name="lblLastName" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                                             FontWeight="ExtraBlack" FontSize="9" Padding="15,0,15,0" Click="lblName_Click"
+                                             Background="Transparent" Cursor="Hand" BorderThickness="0" Style="{StaticResource ButtonFlatStyle}">
+                                        </Button>
+
+                                        <TextBlock x:Name="lblPosition0" Text="Empresa" HorizontalAlignment="Center" VerticalAlignment="Center"  
+                                           Padding="15,0,15,0" FontSize="9" />
+
+                                        <TextBlock x:Name="lblPosition1" Text="Division"  HorizontalAlignment="Center" VerticalAlignment="Center"  
+                                           Padding="15,0,15,0" FontSize="9" />
+                                        
+                                        <TextBlock x:Name="lblPosition2" Text="Gerente"  HorizontalAlignment="Center" VerticalAlignment="Center"  
+                                           Padding="15,0,15,5" FontSize="9" />
+                                        
+                                    </StackPanel>
+                                    
+                                </StackPanel>
+
+                                <!-- Dropshadow -->
+                            </Border>
+                        </Border>
+                    </Border>
+
+                </Border>
+
+            </od:StackPanelNode>
+            
+        </od:StackPanelNode>
+
+    </Grid>
+</UserControl>

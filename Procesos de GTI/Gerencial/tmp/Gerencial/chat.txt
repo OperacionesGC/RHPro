@@ -1,0 +1,37 @@
+Winsy says:
+Daniel?
+ODA says:
+Si?
+Winsy says:
+Como estas
+Winsy says:
+estaba hablando Alvaro y me dijó de los cambios que sigeris
+Winsy says:
+creo que tenes razon, aunque el resultado cro, va a ser el mismo pero seguramente va a correr mas rapido
+Winsy says:
+asi que voy a modificarlo y te lo mando.
+ODA says:
+Ok.
+ODA says:
+Recién termina, después de correr más de 1 hora, sobre un servidor UNIX de prueba que es medio pedorro...
+ODA says:
+un análisis que terminó generando 1232 filas en ANRCUBO.
+ODA says:
+Mirando más el código del GERENCIAL.BAS, creo que vamos a ganar en perfomance si cuando se arma el ciclo principal, que recorre HISTLIQ y LEGALIQ, en ese momento ya se conoce el conjunto de legajos a considerar.
+ODA says:
+El problema que el conjunto de legajos lo determinamos en nuestra BdD...
+ODA says:
+y el ciclo principal está en la BdD de Nexus.
+ODA says:
+¿Se te ocurre algo para implementar esto?
+
+
+*******************************************************
+
+
+ODA says:
+Hay 2 toques más para el Gerencial.bas que yo hice acá.
+ODA says:
+El primero tiene que ver con la recuperación de los argumentos desde BPRCPARAM. Cuando se recupera el 3er. argumento, FILTRAR, falta "pos1 = pos2 + 2".
+ODA says:
+El 2do. toque es que tuve que anular la referencia a ANRRANGOREPRO, porque no la tengo definida en la BdD y tampoco se usa desde las ventanas ASP que tengo.

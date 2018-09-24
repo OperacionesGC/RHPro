@@ -1,0 +1,1044 @@
+/****************************************************************************************************************/
+/*										GENERALES																*/
+/****************************************************************************************************************/
+/*
+
+AZUL = #003F77
+ROJO = #822433
+
+Modificaciones:  12/03/2014 - JPB - CAS-24326 - Raffo - E-RE Look and Feel
+                 18/07/2014 - CAS-25961 - Raffo - Adecuación Logo y firma de emails Proceso de selección
+*/
+ 
+@font-face {
+font-family: "MyWebFont";
+/*src: url("../Tipografias/HelveticaNeueLTStd-LtCn.eot");*/
+/*src: url("../Tipografias/helveticaneue-webfont.eot");*/
+ src: url('../Tipografias/HelveticaNeueLTStd-LtCn.eot?') format('eot'), url('../Tipografias/HelveticaNeueLTStd-LtCn.woff') format('woff'), url('../Tipografias/HelveticaNeueLTStd-LtCn.ttf') format('truetype');
+}
+ 
+ 
+*{ 
+FONT-FAMILY:"Helvetica Neue Ltd Std 57 Condensed", Helvetica ,  Arial;
+/*font-family:"MyWebFont","Arial";*/
+
+color:#333333 !important;
+
+}
+
+.Volver  { 
+ cursor:pointer; 
+ text-decoration:none; 
+ color: #333333; 
+ padding-top:2px;
+ padding-bottom:1px;
+ padding-left:2px; 
+ padding-right:2px;
+ background-color:#FFFFFF;
+ border-color: #999999;
+ border-style:solid;
+ border-width:1px;
+ height:18px;  
+ } 
+.lineaIzquierda{
+border-left-color:#CCCCCC;
+border-left-style:solid;
+border-left-width:1px;
+}
+.imgF{
+ 
+border-color:#CCCCCC;
+border-style:solid;
+border-width:2px;
+}
+
+body {
+	color: #000000;
+	/*background-color:#f4f4f4;*/
+ /* background-image:url(../Imagenes/bgbody2.jpg);	*/
+/* background-color:#CCCCCC; */
+/*background-image:url(../Imagenes/bg-body.gif);*/
+background:url(../Imagenes/ImgErec/FondoBody.png) repeat-x top ;
+    margin: 0px;
+	padding:0;
+	font: bold;	 
+	background-color:#a9a9a9;
+	overflow-x: hidden;
+}
+
+.TablaBienvenidos{
+border-color: #CCCCCC;
+border-style:solid;
+border-width:2px;
+margin-top:10px;
+background-color:#FFFFFF;
+
+
+color: #333333;
+font-size:9pt;
+
+/*font-variant:small-caps;*/
+ 
+/*    filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#F3F3F3', startColorstr='#ffffff', gradientType='0');          
+  background: -webkit-gradient(linear, left top, left bottom, from(#ed5c5c), to(#b41b1b));
+  background: -moz-linear-gradient(top, #ed5c5c,#b41b1b);*/
+ 
+}
+
+.TablaBienvenidos TH{
+  background:url("../Imagenes/Top/tabrightF2.png");
+  background-position:top; background-repeat:repeat-x;
+  height:25px; 
+}
+
+ 
+
+.body2 {
+	color: #000000;
+	background-color:#bcbcbc;
+	margin: 0px;
+	padding:0;
+	font: bold;
+
+}
+
+.BotonImagen
+{
+	border-top:1px;
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	/*background-color:transparent;*/
+}
+a {
+text-decoration:none;
+}
+
+.calenderColor {
+	BACKGROUND-COLOR: #999999;
+	background-image:url(../Imagenes/fondoCalendario.png);
+	background-position:top;
+	background-repeat: repeat-x;
+ 
+ 
+}
+
+
+.td_img
+{
+border:0px;
+vertical-align:top
+}
+
+span
+{
+border:0px;
+}
+ 
+.img
+{
+border:0px;
+}
+
+h2 {
+        font: bold 14px Helvetica Neue Ltd Std 57 Condensed, Helvetica ,Verdana, Arial, Helvetica, sans-serif;
+        color: #000;
+        margin: 0px;
+        padding: 0px 0px 0px 15px;
+}
+.img_CV_Red{
+border:0px;
+vertical-align:top;
+width:24px;
+height:24px;
+background-image:url(../Imagenes/bull_red.gif)
+}
+
+.img_CV_Green{
+border:0px;
+vertical-align:top;
+width:24px;
+height:24px;
+background-image:url(../Imagenes/bull_Green.gif)
+}
+
+.TD_Img_Cierra_Div
+{
+border:0px;
+vertical-align:middle;  
+}
+.Separador{
+	width:100%;
+	height:1px; /*2px*/
+	background-color:#CCCCCC;
+	vertical-align:top;	 
+}
+
+/****************************************************************************************************************/
+/*										TEXTOS																	*/
+/****************************************************************************************************************/
+
+.Texto_Comun_Gris_Link{
+	
+	font-size: 11px; 
+	color:#666666;
+	font-weight:bold;
+	text-decoration:none;
+	cursor:hand; 
+	cursor:pointer;
+}
+.Texto_Comun_Negro {
+	
+	font-size: 11px; 
+	color: #333333;
+	font-weight:bold;
+	line-height:26px;
+}
+.Texto_Comun_Gris {
+	
+	font-size: 11px; 
+	color:#666666;
+	font-weight:bold; 
+}
+
+.Texto_Comun_Error{
+	
+	font-size: 9pt; 
+	color: #333333;
+	font-weight:bold; 
+}
+
+.Texto_Comunicado{
+	
+	font-size: 11px; 
+	color:#822433;
+	font-weight:bold;	
+	}
+	
+.Texto_Mensaje_Rojo {
+	
+	font-size: 11px; 
+	color: #D2362A;
+	font-weight:bold;
+}
+.Txt
+{
+border-color:#333333;
+border:thin;
+text-align:left;
+height:20px;
+border-bottom-width:1px;
+border-bottom-style:solid;
+border-bottom-color:#AAAAAA;
+border-top-width:1px;
+border-top-style:solid;
+border-top-color:#CCCCCC;
+border-left-width:1px;
+border-left-style:solid;
+border-left-color:#CCCCCC;
+border-right-width:1px;
+border-right-style:solid;
+border-right-color:#AAAAAA;
+
+}
+
+.Titulo_Login{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	font-weight:bold;
+}
+
+.Titulo_Info{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	font-weight:bold;
+}
+.Titulo_General{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	font-weight:bold;
+	text-align:left;
+}
+
+.Titulo_Cont{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	font-weight:bold;
+	text-align:left;
+}
+
+.Titulo_QuienesSomos{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	text-align:left;
+	
+	
+}
+
+.Titulo_Busqueda{
+	FONT-SIZE: 12px; 
+	COLOR:#822433; /* #C4261D */
+	
+	font-weight:bold;
+	text-align:left;
+}
+.Titulo_ListaBusqueda{
+	
+	font-size: 12px; 
+	font-weight:bold;
+	color: #333333; /* #C4261D */ 
+	width:100%;
+	border-bottom:2px #AAAAAA dotted;
+	vertical-align:top;
+	text-decoration:none;
+ 
+	
+}
+
+
+
+
+.Texto_Novedad {
+	
+	font-size: 12px; 
+	color: #D2362A; 
+}
+.Texto_Campos_secc{
+	
+	font-size: 12px; 
+	color: #70838F;
+	width:40%;
+	text-align:right;
+}
+.Texto_Busqueda {
+	
+	font-size: 12px; 
+	color: #70838F; 
+}
+.Texto_Busqueda_Postularse {
+	
+	font-size: 12px;
+	font-weight:bold;
+	text-align:center;
+	color: #D2362A;
+	border-bottom:2px #D2362A solid;
+	border-top:2px #D2362A solid;
+	border-left:2px #D2362A solid;
+	border-right:2px #D2362A solid;
+}
+.Texto_Login {
+	
+	font-size: 10pt; 
+	color: #666666;
+	font-weight:bold;
+}
+
+/****************************************************************************************************************/
+/*										CELDAS																	*/
+/****************************************************************************************************************/
+
+.td_25w		{width:25%;}
+.td_35w		{width:35%;}
+.td_50w		{width:50%;}
+.td_65w		{width:65%;}
+.td_75w		{width:75%;}
+.td_100w	{width:100%;}
+
+
+.td_10p		{width:12px;}
+.td_15p		{width:15px;}
+
+.tr_7p		{height:7px;}
+.tr_5p		{height:5px;}
+.tr_25p		{height:25px;}
+.tr_20p		{height:20px;}
+
+.tec25 {
+text-align: right;
+height:10px;
+}
+.tec20 {
+text-align:center;
+height:20px;
+}
+
+/****************************************************************************************************************/
+/*										SEPARADORES																	*/
+/****************************************************************************************************************/
+.TopSepDer{
+	width:35%;
+	height:5px;
+	background-color:#822433; /* #D32E12*/
+	vertical-align:top;
+}
+.TopSepDer1{
+	width:100%;
+	height:5px;
+	background-color:#822433; /* #D32E12*/
+	vertical-align:top;
+}
+.TopSepIzq{
+	width:65%;
+	height:5px;
+	background-color:#822433; /* #D32E12*/
+	vertical-align:top;
+}
+
+/****************************************************************************************************************/
+/*										BOTONES																	*/
+/****************************************************************************************************************/
+
+.Boton_Login
+{
+	BACKGROUND-COLOR: Transparent;
+	COLOR: #333333;
+	
+	FONT-SIZE:9pt;
+	HEIGHT: 19px;
+	LETTER-SPACING: 0;
+	LINE-HEIGHT: 8pt;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+/*	WIDTH: 100px;*/
+	cursor : hand;
+	font-weight : bold;
+	border:1px solid #cccccc;
+	vertical-align:bottom;
+	padding-left:3px; 
+	padding-right:3px;
+	padding-bottom:2px;
+	padding-top:2px; 
+	
+		
+	 
+}
+.Boton_Login:hover {
+/*	BACKGROUND-COLOR:#822433;  
+	border-bottom:2px #CCCCCC solid;
+	border-top:2px #CCCCCC solid;
+	border-left:2px #CCCCCC solid;
+	border-right:2px #CCCCCC solid;
+	COLOR: #FFFFFF;
+	
+	FONT-SIZE: 8pt;
+	HEIGHT: 20px;
+	LETTER-SPACING: 0;
+	
+	LINE-HEIGHT: 8pt;
+	PADDING-LEFT: 2px;
+	PADDING-RIGHT: 2px;
+	PADDING-TOP: 2px;
+	PADDING-BOTTOM: 2px;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+	WIDTH: 120px;
+	font-weight : bold;*/
+		COLOR: #006699  ;
+}
+
+.Boton_3D
+{
+	COLOR: #333333;
+	
+	FONT-SIZE: 8pt;
+ 
+ 
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+	cursor : hand;
+ 
+ background:url(../Imagenes/ImgErec/FondoBoton.png) repeat-x top ; 
+ 
+ 	border:1px solid  #999999;
+	vertical-align:middle;
+ 	/*
+	padding-left:4px; 
+	padding-right:4px;
+	padding-bottom:2px;
+	padding-top:0px; 
+	margin-right:1px;
+	 */
+	padding:3px !important; margin:2px !important;
+display:inline-block;
+}
+.Boton_3D:hover {
+	COLOR: #000000;
+	background:none;
+	background-color:#ccc; 
+	/*font-weight:bold;*/
+ 
+	/*FONT-FAMILY: Helvetica Neue Ltd Std 57 Condensed, Helvetica ,  Arial, Helvetica, sans-serif;
+	FONT-SIZE: 8pt;
+	LETTER-SPACING: 0;
+	LINE-HEIGHT: 8pt;
+	TEXT-ALIGN: center;
+	TEXT-DECORATION: none;
+	cursor : hand;
+ 
+	border:1px solid #666666;
+	vertical-align:middle;
+	padding-left:7px; 
+	padding-right:7px;
+	padding-bottom:4px;
+	padding-top:2px;
+	margin-right:1px;*/
+
+	
+		
+}
+/****************************************************************************************************************/
+/*										DIVS																	*/
+/****************************************************************************************************************/
+.Div_Top
+{
+	z-index:1;
+	width:100%;
+	height:70px;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+
+}
+
+.Div_Top2
+{
+	z-index:1;
+	width:100%;
+	height:85px;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	text-align: right;
+	
+	
+
+}
+
+.Div_Index
+{
+	display:inline;
+}
+
+.Div_Index_oculto
+{
+	display:none;
+}
+.MensajeFlotante{
+    width:100%;
+	z-index:50;	 
+	position:absolute;
+	left:40%;
+	top:32%;
+}
+
+.Div_Login
+{
+
+	/*z-index:50;
+	background-image:url(../Imagenes/Login.gif);
+	
+ 
+	position:absolute;
+	width:300;
+	height:150; 
+	border:0px; 
+	font-family:Helvetica Neue Ltd Std 57 Condensed, Helvetica , Verdana, Arial, Helvetica, sans-serif; 
+	color:#000000;
+	font-weight:bold;
+	left:710;
+	top:126;
+*/
+	z-index:50;	 
+	background-image:url(../Imagenes/fondoLoguin.png);
+	background-position:top;
+	background-repeat: no-repeat;
+	position:absolute;
+	width:300px;
+	height:160px; 
+	border:0px; 
+	
+	color:#000000;
+	font-weight:bold;	
+	left:30%;
+	top:23%;
+	//top:24%; /*Para IE*/
+ 
+	 
+	
+	 
+}
+
+.Div_Login_oculto
+{
+	display:none;
+}
+
+.Div_Menu
+{
+	z-index:1;
+	width:100%;
+	height:25px;
+	border:0px; 
+	
+	font-size:11px;
+	color:#000000;
+	font-weight:bold;
+	left:10;
+	white-space:nowrap !important;
+ 
+}
+
+.Div_Estadisticas
+{
+  	float:inherit;
+	z-index:50;
+	background-color:#FFFFFF;
+	width:200px;
+	height:480px;
+	
+	font-size:12px; 
+	color:#666666;
+    margin: 12px;
+	font-weight:bold;
+	vertical-align:middle;
+}
+.Div_Estadisticas_oculto
+{
+	display:none;
+}
+
+
+.Div_Mensajes_Sector
+{
+  	float:inherit;
+	z-index:50;
+	width:100%;
+	height:35px;
+	
+	font-size:12px; 
+	color:#666666;
+	font-weight:bold;
+	vertical-align:middle;
+}
+
+
+.Div_Mensajes
+{
+  	float:inherit;
+	z-index:50;
+	width:100%;
+	height:38px;
+	border:0px; 
+	
+	font-size:9px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+}
+.Div_Mensajes_oculto
+{ 
+	display:none;
+}
+
+
+
+.Div_Registra
+{
+	z-index:1;
+	width:100%;
+	height:100%;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+}
+
+.Div_Datos_Prin
+{
+	z-index:1;
+	width:100%;
+	height:70px;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+	top:20px;
+}
+.Div_Novedades
+{
+	z-index:0;
+	width:100%;
+	height:70px;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+}
+.Div_Busqueda
+{
+	z-index:0;
+	width:100%;
+	height:70px;
+	border:0px; 
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+}
+.Div_Publicidad
+{
+	z-index:1;
+	width:100%;
+	height:100px;
+	border:0px;
+	background-color:#333333;	
+	
+	font-size:12px; 
+	color:#000000;
+	font-weight:bold;
+	left:10;
+}
+.Div_Cargando
+{
+	z-index:20;
+	position:absolute;
+	background-color: #FFFFFF; /* #D32E12*/ 
+	width:150px; 
+	padding:5px;
+	border:2px solid #000000; 
+	
+	font-size:11px; 
+	color:#000000;
+	font-weight:bold;
+	display:none;
+	top:8px;
+	left:15px;
+	text-align:left;
+	 
+}
+/****************************************************************************************************************/
+/*										TABLAS	ESTA															*/
+/****************************************************************************************************************/
+.Info_Esta 
+{
+	width:100px;
+	border-bottom:1px #2D5783 solid;
+	border-top:1px #2D5783 solid;
+	border-left:1px #2D5783 solid;
+	border-right:1px #2D5783 solid;
+}
+
+/****************************************************************************************************************/
+/*										TABLAS	INFO															*/
+/****************************************************************************************************************/
+.Info_Tab { width:756px; background-color:#FFFFFF;
+height:390px; 
+/*height:681px;*/
+
+}
+.Info_Tab .Lateral{
+	width:25%;
+	vertical-align:top;	
+}
+.Info_Tab .Centro{
+	width:75%;
+	vertical-align:top;
+}
+
+.Info_Tab .Destacado{
+	vertical-align:top;	
+}
+.Info_Tab .Cierra{
+	width:2px; /*background:url(../Imagenes/linea.jpg);*/
+	/*	background-color:#C4261D; 
+	/*background-color:#822433; /* #C4261D Laterales ----------*/
+	
+}
+
+/****************************************************************************************************************/
+/*										TABLAS	INFO															*/
+/****************************************************************************************************************/
+.Info_Msg { width:756px; background-color:#FFFFFF;}
+.Info_Msg .Lateral{
+	width:25%;
+	vertical-align:top;	
+}
+.Info_Msg .Centro{
+	width:75%;
+	vertical-align:top;
+}
+
+.Info_Msg .Destacado{
+	vertical-align:top;	
+}
+.Info_Msg .Cierra{
+	width:5px;
+	background-color:#822433; /* #C4261D */
+	
+}
+
+
+
+/****************************************************************************************************************/
+/*										TABLAS	NOVEDADES														*/
+/****************************************************************************************************************/
+.Nove_Tab { width:100%;}
+
+/****************************************************************************************************************/
+/*										TABLAS	SECCIONES														*/
+/****************************************************************************************************************/
+.Secc_Tab { width:100%;}
+
+
+/****************************************************************************************************************/
+/*										TABLAS	BUSQUEDA														*/
+/****************************************************************************************************************/
+.Busq_Tab {width:100%;}
+
+/****************************************************************************************************************/
+/*										TABLAS	BUSQUEDA RAPIDA															*/
+/****************************************************************************************************************/
+.Busq_Tab_Rap { width:95%; height:250;}
+
+.Busq_Tab_Rap img {
+	border:0;
+	vertical-align:middle;
+}
+
+
+
+/****************************************************************************************************************/
+/*										TABLAS	LOGIN															*/
+/****************************************************************************************************************/
+.Login_Tab {
+margin-top:20px;
+ width:280px;
+ height:20px;   
+ }
+
+.Login_Tab img {
+	border:0;
+	vertical-align:middle;
+}
+
+.Login_Tab TR TD { white-space:nowrap}
+/****************************************************************************************************************/
+/*										TABLAS	LOGIN															*/
+/****************************************************************************************************************/
+.Pie {
+	width:756;
+	/*background-image:url(../Imagenes/Fondo-Pie.gif);*/
+	background-image:url(../Imagenes/Fondopie.png);
+	 
+	height:25px;
+}
+
+
+
+.Pie {
+	width:100%;
+	height:3px;
+	background-color: #822433;  /* #C4261D */
+	vertical-align:top;
+}
+
+	
+/****************************************************************************************************************/
+/*										TABLAS	TOP MENU														*/
+/****************************************************************************************************************/
+.Titulo_Buscador{ width:99%; color:#999; font-size:9pt; text-align: justify; }
+
+.Buscador{
+border-width:0px;
+width:120px;
+ 
+font-size:9pt;
+font-weight:bold;
+color: #999999;
+height:17px;
+margin-top: 1px;}
+
+.InputLoguin{
+border-width:0px;
+width:120px;
+ 
+font-size:9pt;
+font-weight:bold;
+color: #999999;
+margin-left:5px;
+}
+
+
+.Menu_Redes tr {
+	 background-color: ;
+ 
+	 
+}
+
+.Texto_Menu {
+ 
+	font-size: 11px; 
+	color: #822433; /* #C4261D */
+}
+.Top_Menu { width:756;   }
+.Top_Menu tr {
+  /* background-color:#dededc;  */
+  
+}
+.Top_Menu .Toptd {
+	background-color:#D2362A;
+	 
+}
+
+.Top_Banda {
+ 
+ 
+}
+
+.Top_Menu {
+	width:100%;
+	height:5px;
+	background-color: #822433;  /* #C4261D */
+	vertical-align:top;
+	background:url("../imagenes/Top/franjaM.png") repeat-x bottom;
+}
+
+.Cierre{
+	width:100%;
+	height:5px;
+	/*background-color: #822433;*/  /* #C4261D */
+	vertical-align:top;
+	filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#ffffff', startColorstr='#860038', gradientType='1') !important;            
+	background: -webkit-gradient(linear, left top , right top, from(#860038), to(#ffffff))  !important; 
+	background: -moz-linear-gradient(left, #860038,#ffffff);	 
+
+/*	background:url("../imagenes/Top/barra-degrade.png") no-repeat bottom left;*/
+}
+ 
+.ContenedorLogo{height:124px; overflow:hidden; } 
+
+#Menu {
+  float:left;
+  width:100%;
+  background:#dededc;
+  font-size:80%;
+  line-height:normal;
+  font-size:8pt;
+
+  }
+#Menu ul {
+	margin:0;
+ 	padding:0px 3px 0px 0px;   
+	list-style:none;	
+  }
+
+#Menu li {
+  display:inline;
+  margin:0;
+  padding:0; 
+  
+  }
+#Menu a {
+  float: left;
+  /*background:url("../imagenes/Top/tableftF.gif") no-repeat left top;*/
+  margin:0;
+  padding:0 0 0 0px;
+  text-decoration:none;
+  text-align:left;
+  border-color: #9B9B9B; border-style:solid; border-width:1px;
+  
+  }
+#Menu a span {
+  float:right;
+  display:block;
+  background:url("../Imagenes/Top/tabrightF2.png") no-repeat right top;  
+ /* background:url("../Imagenes/Top/tabrightF.png") no-repeat right top;*/
+  /* padding:5px 15px 4px 6px; */padding:6px 12px 6px 11px;
+  color: #000000;
+  }
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#Menu a span {float:none;}
+/* End IE5-Mac hack */
+#Menu a:hover span {
+  color:#FFF;
+  }
+#Menu a:hover {
+  background-position:0% -42px;
+  }
+#Menu a:hover span {
+  background-position:100% -42px;
+  }
+
+#Menu #current a {
+		background-position:0% -42px;
+}
+#Menu #current a span {
+		background-position:100% -42px;
+}
+-->
+
+
+/****************************************************************************************************************/
+/*										MENU SECCIONES															*/
+/****************************************************************************************************************/
+
+#Seccion {
+        width: 190px;
+        border: 1px solid #ccc;
+        font-size: 60%;
+        font-weight: bold;
+		
+	 
+		
+        }
+#Seccion ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+	 
+		
+        }
+
+#Seccion img{
+        border: 0px;
+        }
+
+#Seccion li a {
+		voice-family: "\"}\"";
+		voice-family: inherit;
+		height: 20px;
+		text-decoration: none;
+        }
+
+#Seccion li a:link, #Seccion li a:visited {
+        color: #888;
+        display: block;
+        background: url(../imagenes/menu3.png);
+        padding: 8px 0px 5px 5px;
+		font-size:8pt;
+        }
+
+#Seccion li a:hover, #Seccion li #current, #Seccion li a:active {
+        color: #283A50;
+        background: url(../imagenes/menu3.png) 0 -32px;
+         padding: 8px 0px 5px 5px;
+        }
+
+
+

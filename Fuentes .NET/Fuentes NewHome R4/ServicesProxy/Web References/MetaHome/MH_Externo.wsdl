@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http:/www.rhpro.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http:/www.rhpro.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http:/www.rhpro.com/">
+      <s:element name="GetToken">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTokenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TokenAutorizado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TokenAutorizadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TokenAutorizadoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="get_Data_TokenAcceso">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="get_Data_TokenAccesoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="get_Data_TokenAccesoResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="get_UsuarioLogueado">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nroTemp" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="get_UsuarioLogueadoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="get_UsuarioLogueadoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="WS_Actualizar_Multiples_Bases">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PassEncript" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="InitialCatalog" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DataSource" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="keyConnStr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="WS_Actualizar_Multiples_BasesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WS_Actualizar_Multiples_BasesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="logout_TempLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nroTemp" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="logout_TempLoginResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="get_Bases">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passEncriptado" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TipoFiltroLogin" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="get_BasesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="get_BasesResult" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetToken" />
+  </wsdl:message>
+  <wsdl:message name="GetTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="TokenAutorizadoSoapIn">
+    <wsdl:part name="parameters" element="tns:TokenAutorizado" />
+  </wsdl:message>
+  <wsdl:message name="TokenAutorizadoSoapOut">
+    <wsdl:part name="parameters" element="tns:TokenAutorizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_Data_TokenAccesoSoapIn">
+    <wsdl:part name="parameters" element="tns:get_Data_TokenAcceso" />
+  </wsdl:message>
+  <wsdl:message name="get_Data_TokenAccesoSoapOut">
+    <wsdl:part name="parameters" element="tns:get_Data_TokenAccesoResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_UsuarioLogueadoSoapIn">
+    <wsdl:part name="parameters" element="tns:get_UsuarioLogueado" />
+  </wsdl:message>
+  <wsdl:message name="get_UsuarioLogueadoSoapOut">
+    <wsdl:part name="parameters" element="tns:get_UsuarioLogueadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="WS_Actualizar_Multiples_BasesSoapIn">
+    <wsdl:part name="parameters" element="tns:WS_Actualizar_Multiples_Bases" />
+  </wsdl:message>
+  <wsdl:message name="WS_Actualizar_Multiples_BasesSoapOut">
+    <wsdl:part name="parameters" element="tns:WS_Actualizar_Multiples_BasesResponse" />
+  </wsdl:message>
+  <wsdl:message name="logout_TempLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:logout_TempLogin" />
+  </wsdl:message>
+  <wsdl:message name="logout_TempLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:logout_TempLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_BasesSoapIn">
+    <wsdl:part name="parameters" element="tns:get_Bases" />
+  </wsdl:message>
+  <wsdl:message name="get_BasesSoapOut">
+    <wsdl:part name="parameters" element="tns:get_BasesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MH_ExternoSoap">
+    <wsdl:operation name="GetToken">
+      <wsdl:input message="tns:GetTokenSoapIn" />
+      <wsdl:output message="tns:GetTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TokenAutorizado">
+      <wsdl:input message="tns:TokenAutorizadoSoapIn" />
+      <wsdl:output message="tns:TokenAutorizadoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="get_Data_TokenAcceso">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Datos de acceso</wsdl:documentation>
+      <wsdl:input message="tns:get_Data_TokenAccesoSoapIn" />
+      <wsdl:output message="tns:get_Data_TokenAccesoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="get_UsuarioLogueado">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Datos de logueo</wsdl:documentation>
+      <wsdl:input message="tns:get_UsuarioLogueadoSoapIn" />
+      <wsdl:output message="tns:get_UsuarioLogueadoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="WS_Actualizar_Multiples_Bases">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Actualiza el password de un usuario en todas las bases a la que pertenece</wsdl:documentation>
+      <wsdl:input message="tns:WS_Actualizar_Multiples_BasesSoapIn" />
+      <wsdl:output message="tns:WS_Actualizar_Multiples_BasesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="logout_TempLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Elimina una linea de la tabla de logueo</wsdl:documentation>
+      <wsdl:input message="tns:logout_TempLoginSoapIn" />
+      <wsdl:output message="tns:logout_TempLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="get_Bases">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Dado una URL y opcionalmente un usuario retorna una lista de claves de string de conexion</wsdl:documentation>
+      <wsdl:input message="tns:get_BasesSoapIn" />
+      <wsdl:output message="tns:get_BasesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MH_ExternoSoap" type="tns:MH_ExternoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetToken">
+      <soap:operation soapAction="http:/www.rhpro.com/GetToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TokenAutorizado">
+      <soap:operation soapAction="http:/www.rhpro.com/TokenAutorizado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_Data_TokenAcceso">
+      <soap:operation soapAction="http:/www.rhpro.com/get_Data_TokenAcceso" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_UsuarioLogueado">
+      <soap:operation soapAction="http:/www.rhpro.com/get_UsuarioLogueado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WS_Actualizar_Multiples_Bases">
+      <soap:operation soapAction="http:/www.rhpro.com/WS_Actualizar_Multiples_Bases" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout_TempLogin">
+      <soap:operation soapAction="http:/www.rhpro.com/logout_TempLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_Bases">
+      <soap:operation soapAction="http:/www.rhpro.com/get_Bases" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MH_ExternoSoap12" type="tns:MH_ExternoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetToken">
+      <soap12:operation soapAction="http:/www.rhpro.com/GetToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TokenAutorizado">
+      <soap12:operation soapAction="http:/www.rhpro.com/TokenAutorizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_Data_TokenAcceso">
+      <soap12:operation soapAction="http:/www.rhpro.com/get_Data_TokenAcceso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_UsuarioLogueado">
+      <soap12:operation soapAction="http:/www.rhpro.com/get_UsuarioLogueado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WS_Actualizar_Multiples_Bases">
+      <soap12:operation soapAction="http:/www.rhpro.com/WS_Actualizar_Multiples_Bases" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout_TempLogin">
+      <soap12:operation soapAction="http:/www.rhpro.com/logout_TempLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_Bases">
+      <soap12:operation soapAction="http:/www.rhpro.com/get_Bases" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MH_Externo">
+    <wsdl:port name="MH_ExternoSoap" binding="tns:MH_ExternoSoap">
+      <soap:address location="http://rhdesa:4002/wsExt/MH_Externo.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MH_ExternoSoap12" binding="tns:MH_ExternoSoap12">
+      <soap12:address location="http://rhdesa:4002/wsExt/MH_Externo.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

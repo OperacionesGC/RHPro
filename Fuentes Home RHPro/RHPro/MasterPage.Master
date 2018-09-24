@@ -1,0 +1,163 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs"
+    Inherits="RHPro.MasterPage" EnableViewState="true" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link type="text/css" href="./Controls/Select/Css/stylish-select.css" rel="Stylesheet" />
+    <link type="text/css" href="App_Themes/Default/MainDefault.css" rel="Stylesheet" />
+    <!--[if IE 6]>
+    <link  type="text/css" href="App_Themes/Default/MainIE6.css" rel="Stylesheet" />
+    <![endif]-->
+    <!--[if IE 7]>
+    <link  type="text/css" href="App_Themes/Default/MainIE7.css" rel="Stylesheet" />
+    <![endif]-->
+    <!--[if IE 8]>
+    <link  type="text/css" href="App_Themes/Default/MainIE8.css" rel="Stylesheet" />
+    <![endif]-->
+    <title>RHPro </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<script type="text/javascript">
+
+    var keyCode;
+    var myclose = false;
+    var sessionClosedVar;
+    
+    function tecla(e) {
+        if (window.event) 
+            keyCode = window.event.keyCode;
+                else if (e) keyCode = e.which;
+    }
+     
+    function ConfirmClose() {
+        if ((event.clientY < 0 && keyCode != 116)
+            || keyCode == 115 
+            || keyCode == 87 
+            || (event.clientX < 100 && keyCode != 116)) {
+            myclose = true;            
+        }
+    }
+
+    function HandleOnClose() {
+
+        if (myclose == true) {
+            if (sessionClosedVar != '') {
+                javascript: __doPostBack('ctl00$content$cLogin$btnLogOut', '');
+                window.focus();
+                self.focus();
+                alert(sessionClosedVar);
+            }
+        }
+    }
+    
+</script>
+
+<body onbeforeunload="ConfirmClose()" onunload="HandleOnClose()" onkeydown="tecla(window.event.keyCode)">
+
+<form id="form1" runat="server" style="font-family: Arial;">    
+    <div class="barraSuperior">
+        <div>
+        
+            <asp:ImageButton ID="flagSpain" OnClick="flagSpain_Click" runat="server"  
+                ImageUrl="~/Images/Flags/flag_spain.png" 
+                meta:resourcekey="flagSpainResource1" /> &nbsp
+            <asp:ImageButton ID="flagEngland" OnClick="flagEngland_Click" runat="server" 
+                ImageUrl="~/Images/Flags/flag_usa.png" 
+                meta:resourcekey="flagEnglandResource1" />&nbsp 
+            <asp:ImageButton ID="flagBrazil" OnClick="flagBrazil_Click" runat="server" 
+                ImageUrl="~/Images/Flags/flag_brazil.png" 
+                meta:resourcekey="flagBrazilResource1" />&nbsp 
+            <%=DateTime.Now.ToLongDateString() %>
+            |<a href="mailto:<%=ConfigurationManager.AppSettings["Mailto"] %>" style="vertical-align: bottom;
+                text-decoration: none;"><img src="Images/contact.gif" style="height: 8px; border-color: #4A4A4A;
+                    text-decoration: none;" /></a>
+        </div>
+    </div>
+<div class="form" style="font-family: Arial;">   
+ 
+    <asp:ScriptManager ID="scriptManager" runat="server" OnAsyncPostBackError="scriptManager_AsyncPostBackError">
+        <Scripts>
+            <asp:ScriptReference Path="~/Controls/Select/Js/jquery-1.3.2.js" />
+            <asp:ScriptReference Path="~/Controls/Select/Js/jquery.stylish-select.js" />
+            <asp:ScriptReference Path="~/Controls/Select/Js/jquery.stylish-select.min.js" />
+            <asp:ScriptReference Path="~/Js/Utils.js" />
+        </Scripts>
+    </asp:ScriptManager>
+    
+    <script type="text/javascript" language="javascript">
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+
+        function EndRequestHandler(sender, args)
+        {
+           if (args.get_error() != undefined && args.get_error().httpStatusCode == '500')
+           {
+               var errorMessage = args.get_error().message
+               args.set_errorHandled(true);
+               alert(errorMessages);
+               window.location = "Default.aspx";
+           }
+        }
+    </script>
+    
+    <div id="logo">
+    </div>
+    <asp:SiteMapDataSource ID="menuDataSource" runat="server" SiteMapProvider="defaultSitemap"
+        ShowStartingNode="False" />
+    <div id="botonera">
+        <div id="superior">
+        </div>
+        <div id="medio">
+        <div style="float:left;">
+            <ul class="menu_list">
+            <div id="botones">
+                <asp:Repeater runat="server" ID="menuRepeater" DataSourceID="menuDataSource">
+                    <ItemTemplate>
+                        <li><a href="<%# Eval("url") %>" target="_blank">
+                            <%# Eval("title") %>
+                        </a></li>
+                    </ItemTemplate>
+                </asp:Repeater>
+                </div>
+                </ul>
+                </div>
+            <div style="float:right;">
+            <asp:Panel ID="panelSearch" runat="server" DefaultButton="btnSearchButton" 
+                    meta:resourcekey="panelSearchResource1"> 
+            <ul class="menu_list">
+                <li style=" border: 0px; font-size: 14px; margin-top: -1px; color: #fff;
+                    font-weight: normal;"><asp:Label ID="buscador" runat="server" meta:resourcekey="lbBuscador"  /></li>
+                    
+                <li style="border: 0px; margin-top: -3px;">
+                    <asp:TextBox ID="txtSearch" runat="server" CssClass="inputSearch" 
+                        Style="width: 200px;" meta:resourcekey="txtSearchResource1"></asp:TextBox></li>
+                <li style="border: 0px;">
+                    <asp:UpdatePanel  ID="UPSearch" runat="server" RenderMode="Inline" 
+                        UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:LinkButton ID="btnSearchButton" OnClick="btnSearchButton_Click" CssClass="searchButton"
+                                runat="server" meta:resourcekey="lbGo" />
+                        </ContentTemplate>
+                        
+                    </asp:UpdatePanel>
+                </li>
+            </ul>
+            </asp:Panel>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div id="inferior">
+        </div>
+    </div>
+    <asp:ContentPlaceHolder ID="content" runat="server"></asp:ContentPlaceHolder>
+    <div id="footer">
+        <cc:footer id="footerMain" runat="server"></cc:footer>
+    </div>
+    </div>
+    </form>
+</body>
+</html>

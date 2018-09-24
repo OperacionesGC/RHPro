@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RHPro.Documentos.WebSetup", "RHPro.Documentos.WebSetup\RHPro.Documentos.WebSetup.vdproj", "{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "RHPro.Documentos.WebSite", "RHPro.Documentos.WebSite\", "{A13DA291-15FF-4131-ACB9-479FA9BCE442}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/RHPro.Documentos.WebSite"
+		Debug.AspNetCompiler.PhysicalPath = "RHPro.Documentos.WebSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\RHPro.Documentos.WebSite\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/RHPro.Documentos.WebSite"
+		Release.AspNetCompiler.PhysicalPath = "RHPro.Documentos.WebSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\RHPro.Documentos.WebSite\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "64687"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+		Debug|Any CPU = Debug|Any CPU
+		Release|.NET = Release|.NET
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Debug|.NET.ActiveCfg = Debug
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Debug|Any CPU.ActiveCfg = Debug
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Debug|Any CPU.Build.0 = Debug
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Release|.NET.ActiveCfg = Release
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Release|Any CPU.ActiveCfg = Release
+		{30EC5098-E5AE-49A3-9D0C-D07D50E5879A}.Release|Any CPU.Build.0 = Release
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13DA291-15FF-4131-ACB9-479FA9BCE442}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

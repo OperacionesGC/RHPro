@@ -1,0 +1,10 @@
+Prc06 = 47, 46, 514, 366, Z
+MdlGlobal = 66, 66, 718, 485, 
+FechasHoras = 150, 150, 1038, 611, 
+mdlDataAccess = 88, 88, 795, 441, 
+mdlConstantes = 0, 0, 0, 0, C
+BuscarTurno = 175, 175, 829, 792, 
+Politicas = 44, 44, 643, 464, 
+mdlTurno = 110, 110, 762, 529, 
+Feriado = 0, 0, 0, 0, C
+mdlHoras = 110, 110, 898, 722, 

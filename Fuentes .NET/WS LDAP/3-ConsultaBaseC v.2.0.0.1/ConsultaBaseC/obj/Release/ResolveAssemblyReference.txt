@@ -1,0 +1,5 @@
+﻿ARCHIVO ELIMINADO
+
+Microsoft Forefront Protection for Exchange Server quitó un archivo porque coincidía con un filtro.
+Nombre de archivo: "winmail.dat->CAS-19293 - SIDERSA - Error en instalacion multiidioma.zip->ResolveAssemblyReference.cache"
+Nombre de filtro: "FILTRO DE ARCHIVO= Delete_Executable: *"

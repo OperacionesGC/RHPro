@@ -1,0 +1,5 @@
+﻿ARCHIVO ELIMINADO
+
+Microsoft Forefront Protection for Exchange Server quitó un archivo porque coincidía con un filtro.
+Nombre de archivo: "winmail.dat->v01.0- Vestiditos - Nueva versión de WS QuickPass - Importación registraciones.rar->v01.0- Vestiditos\.NET\LeerRegistraciones\LeerRegistraciones\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache"
+Nombre de filtro: "FILTRO DE ARCHIVO= Delete_Executable: *"

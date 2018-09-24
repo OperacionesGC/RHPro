@@ -1,0 +1,933 @@
+Attribute VB_Name = "mdlGerencial"
+Option Explicit
+
+'Para Sql server
+'Global Const strConexionNexus = "DSN=Nexushr-RHPro;database=nexus;uid=sa;pwd="
+
+'Para Informix
+Global Const strConexionNexus = "DSN=Nexushr-RHPro"
+
+Dim objConnNexus As New ADODB.Connection
+
+'Variables de ADO
+Dim objRs As New ADODB.Recordset
+Dim rsEmp As New ADODB.Recordset
+Dim rsAnrcab As New ADODB.Recordset
+Dim rsHistliq As New ADODB.Recordset
+Dim rsFactor As New ADODB.Recordset
+Dim rsHistCon As New ADODB.Recordset
+Dim rsEstructura As New ADODB.Recordset
+Dim rsRango As New ADODB.Recordset
+Dim rsConc As New ADODB.Recordset
+Dim rsAcumDiario As New ADODB.Recordset
+Dim rsFiltro As New ADODB.Recordset
+Dim IncPorc As Single
+Dim CantFactor As Integer
+Dim Progreso As Single
+Dim NroProceso As Long
+
+Public Sub Main()
+Dim fechaDesde As Date
+Dim fechaHasta As Date
+Dim Fecha As Date
+Dim objRs As New ADODB.Recordset
+Dim objrsEmpleado As New ADODB.Recordset
+Dim strCmdLine  As String
+Dim nro_analisis As Long
+Dim tipo_factor As Integer
+Dim Filtrar As Boolean
+Dim pos1 As Integer
+Dim pos2 As Integer
+
+On Error GoTo ce
+
+    ' carga las configuraciones basicas, formato de fecha, string de conexion,
+    ' tipo de BD y ubicacion del archivo de log
+    Call CargarConfiguracionesBasicas
+
+    
+    strCmdLine = Command()
+    'strCmdLine = "15678"
+    If IsNumeric(strCmdLine) Then
+        NroProceso = strCmdLine
+    Else
+        Exit Sub
+    End If
+    
+    
+    OpenConnection strconexion, objConn
+    
+    StrSql = "SELECT bprcfecdesde,bprcfechasta,bprcparam FROM batch_proceso WHERE bpronro = " & NroProceso
+    objRs.Open StrSql, objConn
+    
+    'Levanto dos parámetros: el primero es número de análisis
+                            'el segundo es el tipo de factor a analizar
+                            'el tercero es el nro de cabecera
+                            'el cuarto es si se usa o no el filtro de estructuras
+    If Not IsNull(objRs!bprcparam) Then
+        If Len(objRs!bprcparam) >= 1 Then
+            pos1 = 1
+            pos2 = InStr(pos1, objRs!bprcparam, ",") - 1
+            nro_analisis = Mid(objRs!bprcparam, pos1, pos2)
+            
+            pos1 = pos2 + 2
+            pos2 = InStr(pos1, objRs!bprcparam, ",") - 1
+            tipo_factor = CInt(Mid(objRs!bprcparam, pos1, pos2 - pos1 + 1))
+            
+            pos1 = pos2 + 2
+            pos2 = Len(objRs!bprcparam)
+            Filtrar = CBool(Mid(objRs!bprcparam, pos1, pos2 - pos1 + 1))
+            
+        End If
+    End If
+    
+    objRs.Close
+
+    'Cambio el estado del proceso a Procesando
+    StrSql = "UPDATE batch_proceso SET bprchorainicioej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecinicioej = " & ConvFecha(Date) & ", bprcestado = 'Procesando' WHERE bpronro = " & NroProceso
+    objConn.Execute StrSql, , adExecuteNoRecords
+        
+    'En funcion del tipo de factor ejecuto un procedimiento u otro.
+    Select Case tipo_factor
+    Case 7
+        Call ConceptosNexus(nro_analisis, Filtrar)
+        'Call ProcesoGerencial(1)
+    Case 4
+        Call AcumuladoDiario(nro_analisis)
+    End Select
+    
+    
+    StrSql = "UPDATE batch_proceso SET bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Procesado' WHERE bpronro = " & NroProceso
+    objConn.Execute StrSql, , adExecuteNoRecords
+    
+        
+    If objConn.State = adStateOpen Then objConn.Close
+
+    Exit Sub
+ce:
+'    MyRollbackTrans
+    StrSql = "UPDATE batch_proceso SET bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Error' WHERE bpronro = " & NroProceso
+    objConn.Execute StrSql, , adExecuteNoRecords
+    If objConn.State = adStateOpen Then objConn.Close
+End Sub
+
+Public Sub OpenRecordsetNexus(strSQLQuery As String, ByRef objRs As ADODB.Recordset, Optional lockType As LockTypeEnum = adLockReadOnly)
+    'Abre un recordset con la consulta strSQLQuery
+    If objRs.State <> adStateClosed Then
+        If objRs.lockType <> adLockReadOnly Then objRs.UpdateBatch
+        objRs.Close
+    End If
+    objRs.Open strSQLQuery, objConnNexus, adOpenDynamic, lockType, adCmdText
+End Sub
+
+Function Last_OF_Factor() As Boolean
+Dim resultado As Boolean
+Dim Actual As Long
+
+    Actual = rsFactor!facnro
+    'Trato de obtener el próximo
+    rsFactor.MoveNext
+    'Si es vacío entonces tengo al último del grupo
+    If rsFactor.EOF Then
+        resultado = True
+    Else
+        'Si el proximo es distinto del actual entonces el actual es el ultimo
+        If rsFactor!facnro <> Actual Then
+            resultado = True
+        Else
+            resultado = False
+        End If
+    End If
+    
+    rsFactor.MovePrevious
+    Last_OF_Factor = resultado
+    
+End Function
+
+Function Last_OF_tenro() As Boolean
+Dim resultado As Boolean
+Dim Actual As Long
+
+    Actual = rsEstructura!tenro
+    'Trato de obtener el próximo
+    rsEstructura.MoveNext
+    'Si es vacío entonces tengo al último del grupo
+    If rsEstructura.EOF Then
+        resultado = True
+    Else
+        'Si el proximo es distinto del actual entonces el actual es el ultimo
+        If rsEstructura!tenro <> Actual Then
+            resultado = True
+        Else
+            resultado = False
+        End If
+    End If
+    
+    rsEstructura.MovePrevious
+    Last_OF_tenro = resultado
+    
+End Function
+
+Function Last_OF_estrnro() As Boolean
+Dim resultado As Boolean
+Dim Actual As Long
+
+    Actual = rsEstructura!estrnro
+    'Trato de obtener el próximo
+    rsEstructura.MoveNext
+    'Si es vacío entonces tengo al último del grupo
+    If rsEstructura.EOF Then
+        resultado = True
+    Else
+        'Si el proximo es distinto del actual entonces el actual es el ultimo
+        If rsEstructura!estrnro <> Actual Then
+            resultado = True
+        Else
+            resultado = False
+        End If
+    End If
+    
+    rsEstructura.MovePrevious
+    Last_OF_estrnro = resultado
+    
+End Function
+
+
+Private Sub ConceptosNexus(nro_analisis As Long, Filtrar As Boolean)
+
+'Variables locales
+Dim cant_flt As Long
+Dim desde As Date
+Dim hasta As Date
+Dim horas As Single
+Dim NroCab As Long
+Dim perpago_desde As Long
+Dim perpago_hasta As Long
+Dim tercero As Long
+
+Dim cantdiasper As Integer
+Dim cantdiasran As Integer
+Dim porcentaje As Single
+Dim monto_saldo As Single
+Dim monto_total As Single
+Dim cant_saldo As Single
+Dim cant_total As Single
+Dim cubvalor1 As Single
+Dim cubvalor2 As Single
+
+'Variables para los first y last
+Dim PrimerFactOri As Boolean
+Dim TipoEstr As Long
+Dim EstrAct As Long
+Dim FactOri As Long
+Dim MiConcepto As String
+
+Dim rs As New ADODB.Recordset
+
+Dim estr_liqNex As String
+Dim cod_cptoNex As String
+
+'Código -------------------------------------------------------------------
+
+'Abro la conexion para Nexus
+OpenConnection strConexionNexus, objConnNexus
+
+'Obtengo la cabecera
+StrSql = " SELECT anrcabnro,anrcabfecdesde,anrcabfechasta FROM anrcab " & _
+    " WHERE anrcabnro = " & nro_analisis
+
+
+OpenRecordset StrSql, rsAnrcab
+    
+If rsAnrcab.EOF Then
+    Exit Sub
+End If
+    
+'Estoy reprocesando
+'StrSql = "DELETE FROM anrcubo " & _
+    " WHERE facnro IN " & _
+    " (SELECT anrcubo.facnro FROM anrcubo" & _
+    " INNER JOIN anrfactor on anrcubo.facnro = anrfactor.facnro" & _
+    " AND tipfacnro = 7" & _
+    " WHERE anrcabnro = " & nro_analisis & _
+    " AND anrcubmanual = 0)"
+StrSql = "DELETE FROM anrcubo " & _
+    " WHERE facnro IN " & _
+    " (SELECT facnro FROM anrfactor" & _
+    " WHERE tipfacnro = 7)" & _
+    " AND anrcabnro = " & nro_analisis & _
+    " AND anrcubmanual = 0"
+
+objConn.Execute StrSql, , adExecuteNoRecords
+
+
+    If Filtrar Then
+      StrSql = " SELECT COUNT( DISTINCT anrcab_filtro.tenro) AS Cant" & _
+               " FROM   anrcab_filtro" & _
+               " WHERE  anrcab_filtro.anrcabnro = " & rsAnrcab!anrcabnro
+      OpenRecordset StrSql, rsFiltro
+      
+      If rsFiltro.EOF Then
+        cant_flt = 0
+      Else
+        cant_flt = rsFiltro!cant
+      End If
+      
+      If (cant_flt <= 0) Then
+        Filtrar = False
+      End If
+    End If
+' Se recupera la cantidad de filtros configurados. O.D.A. 27/06/2003
+
+
+' 09/06/2003
+' obtengo el conjunto de legajos a procesar
+    If Filtrar Then
+      StrSql = " SELECT     empleado.empleg, empleado.ternro, COUNT(*) " & _
+               " FROM       empleado " & _
+               " INNER JOIN his_estructura " & _
+               " ON         his_estructura.ternro     = empleado.ternro " & _
+               " AND        his_estructura.htetdesde <= " & ConvFecha(rsAnrcab!anrcabfecdesde) & _
+               " AND       (his_estructura.htethasta >= " & ConvFecha(rsAnrcab!anrcabfechasta) & " OR " & _
+               "            his_estructura.htethasta IS NULL) " & _
+               " INNER JOIN anrcab_filtro " & _
+               " ON         anrcab_filtro.estrnro     = his_estructura.estrnro " & _
+               " AND        anrcab_filtro.anrcabnro   = " & rsAnrcab!anrcabnro & _
+               " GROUP BY   1, 2" & _
+               " HAVING COUNT(*) = " & cant_flt & _
+               " ORDER BY   1"
+' Se exige que los empleados cumplan con todas las condiciones especificadas. O.D.A. 27/06/2003
+
+    Else
+      StrSql = " SELECT     DISTINCT empleado.empleg, empleado.ternro " & _
+               " FROM       empleado " & _
+               " INNER JOIN his_estructura " & _
+               " ON         his_estructura.ternro     = empleado.ternro " & _
+               " AND        his_estructura.htetdesde <= " & ConvFecha(rsAnrcab!anrcabfecdesde) & _
+               " AND       (his_estructura.htethasta >= " & ConvFecha(rsAnrcab!anrcabfechasta) & " OR " & _
+               "            his_estructura.htethasta IS NULL) "
+    End If
+    
+    OpenRecordset StrSql, rsFiltro
+
+    Progreso = 0
+    If Not rsFiltro.EOF Then
+        IncPorc = 100 / rsFiltro.RecordCount
+    End If
+
+
+    perpago_desde = Year(rsAnrcab!anrcabfecdesde)
+    If (Month(rsAnrcab!anrcabfecdesde) < 10) Then
+      perpago_desde = perpago_desde & "0"
+    End If
+    perpago_desde = perpago_desde & Month(rsAnrcab!anrcabfecdesde)
+    
+    perpago_hasta = Year(rsAnrcab!anrcabfechasta)
+    If (Month(rsAnrcab!anrcabfechasta) < 10) Then
+      perpago_hasta = perpago_hasta & "0"
+    End If
+    perpago_hasta = perpago_hasta & Month(rsAnrcab!anrcabfechasta)
+' Segun el intervalo de análisis, se determinan las cadenas en formato AAAAMM que son utilizadas
+' para acceder a la tabla HISTLIQ. O.D.A. 30/06/2003
+
+Do While Not rsFiltro.EOF
+
+    ' Recorre para el analisis las tablas de nexus segun los factores configurados
+    ' Comienzo con las tablas de Nexus
+    StrSql = " SELECT * FROM histliq " & _
+             " INNER JOIN legaliq " & _
+             " ON    legaliq.periodo_pago   = histliq.periodo_pago" & _
+             " AND   legaliq.nro_corr_liq   = histliq.nro_corr_liq" & _
+             " WHERE histliq.liq_confirmada = 'S' " & _
+             " AND   histliq.periodo_pago  >= '" & perpago_desde & "'" & _
+             " AND   histliq.periodo_pago  <= '" & perpago_hasta & "'" & _
+             " AND   legaliq.nro_leg        = " & rsFiltro!empleg & _
+             " ORDER BY nro_leg"
+    OpenRecordsetNexus StrSql, rsHistliq
+   
+    Do While Not rsHistliq.EOF
+        StrSql = "SELECT * FROM anrcab_fact" & _
+            " INNER JOIN anrfact_ori ON anrfact_ori.facnro = anrcab_fact.facnro " & _
+            " AND anrfact_ori.tipfacnro = 7" & _
+            " INNER JOIN anrfactor ON anrfactor.facnro = anrcab_fact.facnro" & _
+            " INNER JOIN concepto ON concepto.concnro = anrfact_ori.faccodorig" & _
+            " WHERE anrcab_fact.anrcabnro = " & rsAnrcab!anrcabnro & _
+            " ORDER BY anrfact_ori.facnro"
+    
+        OpenRecordset StrSql, rsFactor
+        
+        If Not rsFactor.EOF Then
+            'Para el simular el first_of
+            PrimerFactOri = True
+            'Para el simular el last_of en la tabla anrfact_ori
+            FactOri = rsFactor!facnro
+        End If
+        
+        'Corto para poder enganchar con Nexus
+        Do While Not rsFactor.EOF
+            estr_liqNex = Mid(rsFactor!conccod, 1, Len(rsFactor!conccod) - 4)
+            cod_cptoNex = Mid(rsFactor!conccod, Len(rsFactor!conccod) - 3, 4)
+        
+'        ' ----------FGZ 03/06/2003
+'        ' reviso que este en el filtro
+'        If Filtrar Then
+'            StrSql = " SELECT * FROM anrcab_filtro " & _
+'            "INNER JOIN estructura ON estructura.estrnro = anrcab_filtro.estrnro " & _
+'            "WHERE estructura.estrcodext = '" & estr_liqNex & "'"
+'            OpenRecordset StrSql, rsFiltro
+'
+'            ' si la estructura no está en el filtro ==> sigo con el siguiente factor
+'            If rsFiltro.EOF Then
+'                GoTo siguientefactor
+'            End If
+'        End If
+'        ' ----------FGZ 03/06/2003
+        
+             StrSql = " SELECT * " & _
+            " FROM histcon " & _
+            " WHERE histcon.periodo_pago = '" & rsHistliq!periodo_pago & "'" & _
+            " AND   histcon.nro_corr_liq = " & rsHistliq!nro_corr_liq & _
+            " AND   histcon.nro_leg      = " & rsHistliq!nro_leg & _
+            " AND   histcon.estr_liq     = '" & estr_liqNex & "'" & _
+            " AND   histcon.cod_cpto     = '" & cod_cptoNex & "'" & _
+            " ORDER BY nro_leg"
+            
+            OpenRecordsetNexus StrSql, rsHistCon
+        
+            Do While Not rsHistCon.EOF
+                
+                tercero = rsFiltro!Ternro
+                
+                ' fgz 30/05/2003
+                ' Aca deberia controlar que los de la cabecera que viene como parametro
+                ' tengan el campo "anrrangorepro" esten en TRUE
+                ' " WHERE anrrangofec.anrrangorepro = -1 AND anrrangofec.anrcabnro = " & rsAnrcab!anrcabnro &
+                ' Este WHERE estaba en el SELECT de abajo, pero la columna ANRRANGOREPRO no existe!
+                ' O.D.A. 09/06/2003
+                
+                StrSql = "SELECT * FROM anrrangofec" & _
+                    " WHERE anrrangofec.anrcabnro = " & rsAnrcab!anrcabnro & _
+                    " AND anrrangofec.anrrangfecdesde <= " & ConvFecha(rsHistliq!fec_liq) & _
+                    " AND anrrangofec.anrrangfechasta >= " & ConvFecha(rsHistliq!fec_liq)
+               ' ------------------------
+                
+                ' estaba esto hasta el 30/05/2003
+                'StrSql = "SELECT * FROM anrrangofec" & _
+                '    " WHERE anrrangofec.anrcabnro = " & rsAnrcab!anrcabnro & _
+                '    " AND anrrangofec.anrrangfecdesde <= " & ConvFecha(rsHistliq!fec_liq) & _
+                '    " AND anrrangofec.anrrangfechasta >= " & ConvFecha(rsHistliq!fec_liq)
+                    
+                OpenRecordset StrSql, rsRango
+                
+                Do While Not rsRango.EOF
+                
+                    StrSql = "SELECT * FROM his_estructura" & _
+                        " WHERE his_estructura.ternro = " & tercero & _
+                        " AND his_estructura.htetdesde <= " & ConvFecha(rsRango!anrrangfechasta) & _
+                        " AND (his_estructura.htethasta >= " & ConvFecha(rsRango!anrrangfecdesde) & _
+                        " OR his_estructura.htethasta IS NULL)" & _
+                        " ORDER BY ternro,tenro,estrnro"
+                    OpenRecordset StrSql, rsEstructura
+                
+                    If Not rsEstructura.EOF Then
+                        TipoEstr = rsEstructura!tenro
+                        EstrAct = rsEstructura!estrnro
+                    End If
+                
+                    Do While Not rsEstructura.EOF
+                        If PrimerFactOri Then
+                            cantdiasper = DateDiff("d", rsRango!anrrangfecdesde, rsRango!anrrangfechasta) + 1
+                            monto_total = 0
+                            cant_total = 0
+                            cant_saldo = 0
+                            PrimerFactOri = False
+                        End If
+                                       
+                        '/* Acumulo por Factor */
+                        monto_total = monto_total + rsHistCon!importe_final
+                        cant_total = cant_total + (0 & rsHistCon!cantidad)
+                        
+                        '/* Calculo los dias de rango entre las fechas del rango y
+                        ' el his_estruct para proporcionar*/
+                        If rsFactor!facpropor = -1 Then
+                            If rsEstructura!htetdesde < rsRango!anrrangfecdesde Then
+                                    If rsEstructura!htethasta < rsRango!anrrangfechasta And (Not IsNull(rsEstructura!htethasta)) Then
+                                        cantdiasran = DateDiff("d", rsRango!anrrangfecdesde, rsEstructura!htethasta) + 1
+                                    Else
+                                        cantdiasran = DateDiff("d", rsRango!anrrangfecdesde, rsRango!anrrangfechasta) + 1
+                                    End If
+                            Else
+                                If (rsEstructura!htethasta < rsRango!anrrangfechasta) And (Not IsNull(rsEstructura!htethasta)) Then
+                                    cantdiasran = DateDiff("d", rsEstructura!htetdesde, rsEstructura!htethasta) + 1
+                                Else
+                                    cantdiasran = DateDiff("d", rsEstructura!htetdesde, rsRango!anrrangfechasta) + 1
+                                End If
+                            End If
+                            
+                            '/* Porcentaje segun la cant. de dias en la his_estrutura */
+                            porcentaje = cantdiasran * 100 / cantdiasper
+                            
+                            If Last_OF_Factor() Or Last_OF_estrnro() Then
+                                
+                                cubvalor1 = monto_total * porcentaje / 100
+                                cubvalor2 = cant_total * porcentaje / 100
+                                
+                                StrSql = "SELECT * FROM anrcubo" & _
+                                    " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                    " AND facnro = " & rsFactor!facnro & _
+                                    " AND tenro = " & rsEstructura!tenro & _
+                                    " AND estrnro = " & rsEstructura!estrnro & _
+                                    " AND ternro = " & tercero & _
+                                    " AND anrrangnro = " & rsRango!anrrangnro
+                                OpenRecordset StrSql, rs
+    
+                                'Si el cubo no existe lo creo
+                                If rs.EOF Then
+                                '/* Creo el cubo */
+                                    StrSql = "INSERT INTO anrcubo(anrcabnro,anrcubmanual" & _
+                                        ",anrrangnro,estrnro,facnro,tenro,Ternro,tipnro" & _
+                                        ",anrcubvalor1,anrcubvalor2) VALUES (" & _
+                                        rsAnrcab!anrcabnro & ",0," & rsRango!anrrangnro & "," & _
+                                        rsEstructura!estrnro & "," & rsFactor!facnro & "," & _
+                                        rsEstructura!tenro & "," & tercero & ",1"
+                                End If
+                                
+                                monto_saldo = (monto_total - cubvalor1 - monto_saldo)
+                                cant_saldo = (cant_total - cubvalor2 - cant_saldo)
+                                monto_total = 0
+                                cant_total = 0
+                                
+                                '* Para que no quede saldo cuando proporciona */
+                                If monto_saldo <= 1 And monto_saldo > 0 Then
+                                    cubvalor1 = cubvalor1 + monto_saldo
+                                End If
+                                
+                                If cant_saldo <= 1 And cant_saldo > 0 Then
+                                    'cubvalor2 = cubvalor2 + cant_saldo
+                                End If
+                                   
+                                'Si existe el cubo entonces actualizo
+                                If Not rs.EOF Then
+                                    StrSql = "UPDATE anrcubo SET" & _
+                                        " anrcubvalor1 = " & rs!anrcubvalor1 + cubvalor1 & _
+                                        " ,anrcubvalor2 = " & rs!anrcubvalor2 + cubvalor2 & _
+                                        " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                        " AND facnro = " & rsFactor!facnro & _
+                                        " AND tenro = " & rsEstructura!tenro & _
+                                        " AND estrnro = " & rsEstructura!estrnro & _
+                                        " AND ternro = " & tercero & _
+                                        " AND anrrangnro = " & rsRango!anrrangnro
+                                Else
+                                    StrSql = StrSql & "," & cubvalor1 & "," & cubvalor2 & ")"
+                                End If
+                                
+                                objConn.Execute StrSql, , adExecuteNoRecords
+                                
+                            End If
+                        Else
+                            '/* Si no proporciona tomo al 100% y la ultima his_estruc del rango*/
+                            porcentaje = 100
+                            'If Last_OF(rsFactor!facnro) Or Last_OF(rsEstructura!estrnro) Then
+                            If Last_OF_Factor() Or Last_OF_estrnro() Then
+                                If Not Last_OF_tenro() Then
+                                    monto_total = 0
+                                    cant_total = 0
+                                Else
+                                '/*Busco la ultima his_estr dentro del rango*/
+                                    StrSql = "SELECT * FROM his_estructura " & _
+                                        " WHERE his_estructura.ternro = " & tercero & _
+                                        " AND his_estructura.tenro = " & rsEstructura!tenro & _
+                                        " AND his_estructura.htetdesde <= " & ConvFecha(rsRango!anrrangfechasta) & _
+                                        " AND (his_estructura.htethasta >= " & ConvFecha(rsRango!anrrangfecdesde) & _
+                                        " OR his_estructura.htethasta IS NULL) "
+                                    OpenRecordset StrSql, objRs
+                                    objRs.MoveLast
+                                    
+                                    If Not objRs.EOF Then
+                                    
+                                        StrSql = "SELECT * FROM anrcubo" & _
+                                            " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                            " AND facnro = " & rsFactor!facnro & _
+                                            " AND tenro = " & objRs!tenro & _
+                                            " AND estrnro = " & objRs!estrnro & _
+                                            " AND ternro = " & tercero & _
+                                            " AND anrrangnro = " & rsRango!anrrangnro
+                                        OpenRecordset StrSql, rs
+                                        
+                                        cubvalor1 = monto_total * porcentaje / 100
+                                        cubvalor2 = cant_total * porcentaje / 100
+                                        
+                                        If rs.EOF Then
+                                            '/* Creo el cubo */
+                                            StrSql = "INSERT INTO anrcubo(anrcabnro,anrcubmanual" & _
+                                                ",anrrangnro,estrnro,facnro,tenro,Ternro,tipnro" & _
+                                                ",anrcubvalor1,anrcubvalor2) VALUES (" & _
+                                                rsAnrcab!anrcabnro & ",0," & rsRango!anrrangnro & "," & _
+                                                objRs!estrnro & "," & rsFactor!facnro & "," & _
+                                                objRs!tenro & "," & tercero & ",1" & _
+                                                "," & cubvalor1 & "," & cubvalor2 & ")"
+                                        Else
+                                            StrSql = "UPDATE anrcubo SET" & _
+                                                " anrcubvalor1 = " & rs!anrcubvalor1 + cubvalor1 & _
+                                                " ,anrcubvalor2 = " & rs!anrcubvalor2 + cubvalor2 & _
+                                                " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                                " AND facnro = " & rsFactor!facnro & _
+                                                " AND tenro = " & objRs!tenro & _
+                                                " AND estrnro = " & objRs!estrnro & _
+                                                " AND ternro = " & tercero & _
+                                                " AND anrrangnro = " & rsRango!anrrangnro
+                                        End If
+                                        objConn.Execute StrSql, , adExecuteNoRecords
+                                        
+                                        monto_total = 0
+                                        cant_total = 0
+                                        
+                                        
+                                    End If
+                                    objRs.Close
+                                    
+                                End If
+                            End If
+                            
+                        End If
+                    
+                        rsEstructura.MoveNext
+                    Loop
+            
+                    rsRango.MoveNext
+                Loop
+            
+           '     rsConc.MoveNext
+           ' Loop
+            
+            rsHistCon.MoveNext
+        Loop
+
+'siguientefactor:
+    
+        rsFactor.MoveNext
+    Loop
+
+    rsHistliq.MoveNext
+Loop
+
+siguienteLegajo:
+    Progreso = Progreso + IncPorc
+   ' Actualizo el progreso
+   StrSql = "UPDATE batch_proceso SET bprcprogreso = " & CInt(Progreso) & " WHERE bpronro = " & NroProceso
+   objConn.Execute StrSql, , adExecuteNoRecords
+
+    rsFiltro.MoveNext
+Loop
+    
+End Sub
+
+
+
+
+Private Sub AcumuladoDiario(nro_analisis As Long)
+
+'Variables locales
+Dim desde As Date
+Dim hasta As Date
+Dim horas As Single
+Dim NroCab As Long
+Dim tercero As Long
+
+Dim cantdiasper As Integer
+Dim cantdiasran As Integer
+Dim porcentaje As Single
+Dim monto_saldo As Single
+Dim monto_total As Single
+Dim cant_saldo As Single
+Dim cant_total As Single
+Dim cubvalor1 As Single
+Dim cubvalor2 As Single
+
+'Variables para los first y last
+Dim PrimerFactOri As Boolean
+Dim TipoEstr As Long
+Dim EstrAct As Long
+Dim FactOri As Long
+
+Dim rs As New ADODB.Recordset
+
+'Código -------------------------------------------------------------------
+
+'Abro la conexion para Nexus
+OpenConnection strConexionNexus, objConnNexus
+
+'Obtengo la cabecera
+StrSql = " SELECT anrcabnro,anrcabfecdesde,anrcabfechasta FROM anrcab " & _
+    " WHERE anrcabnro = " & nro_analisis
+OpenRecordset StrSql, rsAnrcab
+    
+If rsAnrcab.EOF Then
+    Exit Sub
+End If
+    
+    
+'Estoy reprocesando
+'StrSql = "DELETE FROM anrcubo " & _
+    " WHERE facnro IN " & _
+    " (SELECT anrcubo.facnro FROM anrcubo" & _
+    " INNER JOIN anrfactor on anrcubo.facnro = anrfactor.facnro" & _
+    " AND tipfacnro = 4" & _
+    " WHERE anrcabnro = " & nro_analisis & _
+    " AND anrcubmanual = 0)"
+
+StrSql = "DELETE FROM anrcubo " & _
+    " WHERE facnro IN " & _
+    " (SELECT facnro FROM anrfactor" & _
+    " WHERE tipfacnro = 4)" & _
+    " AND anrcabnro = " & nro_analisis & _
+    " AND anrcubmanual = 0"
+    objConn.Execute StrSql, , adExecuteNoRecords
+
+
+'Comienzo el procesamiento
+
+'/* Recorre para el analisis los acumulados diario de tipos de horas configurados */
+
+StrSql = "SELECT * FROM anrcab_fact" & _
+    " INNER JOIN anrfact_ori ON anrfact_ori.facnro = anrcab_fact.facnro" & _
+    " AND anrfact_ori.tipfacnro = 4" & _
+    " INNER JOIN anrfactor ON anrfactor.facnro = anrcab_fact.facnro" & _
+    " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+    " ORDER BY anrfact_ori.facnro"
+OpenRecordset StrSql, rsFactor
+    
+If Not rsFactor.EOF Then
+    'Para el simular el first_of
+    PrimerFactOri = True
+    'Para el simular el last_of en la tabla anrfact_ori
+    FactOri = rsFactor!facnro
+End If
+    
+Progreso = 0
+CantFactor = 0
+If Not rsFactor.EOF Then
+    CantFactor = rsFactor.RecordCount
+End If
+    
+'Recorro los acumulados diarios
+Do While Not rsFactor.EOF
+    
+    StrSql = " SELECT * " & _
+        " FROM gti_acumdiario " & _
+        " WHERE gti_acumdiario.adfecha <= " & ConvFecha(rsAnrcab!anrcabfechasta) & _
+        " AND gti_acumdiario.adfecha >= " & ConvFecha(rsAnrcab!anrcabfecdesde) & _
+        " AND gti_acumdiario.thnro = " & rsFactor!faccodorig & _
+        " ORDER BY ternro"
+    OpenRecordset StrSql, rsAcumDiario
+    
+    
+    If Not rsAcumDiario.EOF Then
+        IncPorc = ((100 / CantFactor) * (100 / rsAcumDiario.RecordCount)) / 100
+    End If
+
+    Do While Not rsAcumDiario.EOF
+        
+                
+                StrSql = "SELECT * FROM anrrangofec" & _
+                    " WHERE anrrangofec.anrcabnro = " & rsAnrcab!anrcabnro & _
+                    " AND anrrangofec.anrrangfecdesde <= " & ConvFecha(rsAcumDiario!adfecha) & _
+                    " AND anrrangofec.anrrangfechasta >= " & ConvFecha(rsAcumDiario!adfecha)
+                OpenRecordset StrSql, rsRango
+                
+                Do While Not rsRango.EOF
+                
+                    StrSql = "SELECT * FROM his_estructura" & _
+                        " WHERE his_estructura.ternro = " & rsAcumDiario!Ternro & _
+                        " AND his_estructura.htetdesde <= " & ConvFecha(rsRango!anrrangfechasta) & _
+                        " AND (his_estructura.htethasta >= " & ConvFecha(rsRango!anrrangfecdesde) & _
+                        " OR his_estructura.htethasta IS NULL)" & _
+                        " ORDER BY ternro,tenro,estrnro"
+                    OpenRecordset StrSql, rsEstructura
+                
+                    If Not rsEstructura.EOF Then
+                        TipoEstr = rsEstructura!tenro
+                        EstrAct = rsEstructura!estrnro
+                    End If
+                
+                    Do While Not rsEstructura.EOF
+                        If PrimerFactOri Then
+                            cantdiasper = DateDiff("d", rsRango!anrrangfecdesde, rsRango!anrrangfechasta) + 1
+                            monto_total = 0
+                            cant_total = 0
+                            cant_saldo = 0
+                            PrimerFactOri = False
+                        End If
+                                       
+                        '/* Acumulo por Factor */
+                        monto_total = monto_total + rsAcumDiario!adcanthoras
+                        cant_total = cant_total
+                        
+                        '/* Calculo los dias de rango entre las fechas del rango y
+                        ' el his_estruct para proporcionar*/
+                        If rsFactor!facpropor = -1 Then
+                            If rsEstructura!htetdesde < rsRango!anrrangfecdesde Then
+                                    If rsEstructura!htethasta < rsRango!anrrangfechasta And (Not IsNull(rsEstructura!htethasta)) Then
+                                        cantdiasran = DateDiff("d", rsRango!anrrangfecdesde, rsEstructura!htethasta) + 1
+                                    Else
+                                        cantdiasran = DateDiff("d", rsRango!anrrangfecdesde, rsRango!anrrangfechasta) + 1
+                                    End If
+                            Else
+                                If (rsEstructura!htethasta < rsRango!anrrangfechasta) And (Not IsNull(rsEstructura!htethasta)) Then
+                                    cantdiasran = DateDiff("d", rsEstructura!htetdesde, rsEstructura!htethasta) + 1
+                                Else
+                                    cantdiasran = DateDiff("d", rsEstructura!htetdesde, rsRango!anrrangfechasta) + 1
+                                End If
+                            End If
+                            
+                            '/* Porcentaje segun la cant. de dias en la his_estrutura */
+                            porcentaje = cantdiasran * 100 / cantdiasper
+                            
+                            If Last_OF_Factor() Or Last_OF_estrnro() Then
+                                
+                                cubvalor1 = monto_total * porcentaje / 100
+                                cubvalor2 = cant_total * porcentaje / 100
+                                
+                                StrSql = "SELECT * FROM anrcubo" & _
+                                    " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                    " AND facnro = " & rsFactor!facnro & _
+                                    " AND tenro = " & rsEstructura!tenro & _
+                                    " AND estrnro = " & rsEstructura!estrnro & _
+                                    " AND ternro = " & rsAcumDiario!Ternro & _
+                                    " AND anrrangnro = " & rsRango!anrrangnro
+                                OpenRecordset StrSql, rs
+    
+                                'Si el cubo no existe lo creo
+                                If rs.EOF Then
+                                '/* Creo el cubo */
+                                    StrSql = "INSERT INTO anrcubo(anrcabnro,anrcubmanual" & _
+                                        ",anrrangnro,estrnro,facnro,tenro,Ternro,tipnro" & _
+                                        ",anrcubvalor1,anrcubvalor2) VALUES (" & _
+                                        rsAnrcab!anrcabnro & ",0," & rsRango!anrrangnro & "," & _
+                                        rsEstructura!estrnro & "," & rsFactor!facnro & "," & _
+                                        rsEstructura!tenro & "," & rsAcumDiario!Ternro & ",1"
+                                End If
+                                
+                                If Not rs.EOF Then
+                                    monto_saldo = (monto_total - cubvalor1 - rs!anrcubvalor1)
+                                    cant_saldo = (cant_total - cubvalor2 - cant_saldo)
+                                End If
+                                'monto_saldo = (monto_total - cubvalor1 - monto_saldo)
+                                monto_total = 0
+                                cant_total = 0
+                                
+                                '* Para que no quede saldo cuando proporciona */
+                                If monto_saldo <= 1 And monto_saldo > 0 Then
+                                    'cubvalor1 = cubvalor1 + monto_saldo
+                                End If
+                                
+                                If cant_saldo <= 1 And cant_saldo > 0 Then
+                                    'cubvalor2 = cubvalor2 + cant_saldo
+                                End If
+                                   
+                                'Si existe el cubo entonces actualizo
+                                If Not rs.EOF Then
+                                    StrSql = "UPDATE anrcubo SET" & _
+                                        " anrcubvalor1 = " & Round(rs!anrcubvalor1 + cubvalor1, 2) & _
+                                        " ,anrcubvalor2 = " & rs!anrcubvalor2 + cubvalor2 & _
+                                        " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                        " AND facnro = " & rsFactor!facnro & _
+                                        " AND tenro = " & rsEstructura!tenro & _
+                                        " AND estrnro = " & rsEstructura!estrnro & _
+                                        " AND ternro = " & rsAcumDiario!Ternro & _
+                                        " AND anrrangnro = " & rsRango!anrrangnro
+                                Else
+                                    StrSql = StrSql & "," & cubvalor1 & "," & cubvalor2 & ")"
+                                End If
+                                
+                                objConn.Execute StrSql, , adExecuteNoRecords
+                                
+                            End If
+                        Else
+                            '/* Si no proporciona tomo al 100% y la ultima his_estruc del rango*/
+                            porcentaje = 100
+                            'If Last_OF(rsFactor!facnro) Or Last_OF(rsEstructura!estrnro) Then
+                            If Last_OF_Factor() Or Last_OF_estrnro() Then
+                                If Not Last_OF_tenro() Then
+                                    monto_total = 0
+                                    cant_total = 0
+                                Else
+                                '/*Busco la ultima his_estr dentro del rango*/
+                                    StrSql = "SELECT * FROM his_estructura " & _
+                                        " WHERE his_estructura.ternro = " & rsAcumDiario!Ternro & _
+                                        " AND his_estructura.tenro = " & rsEstructura!tenro & _
+                                        " AND his_estructura.htetdesde <= " & ConvFecha(rsRango!anrrangfechasta) & _
+                                        " AND (his_estructura.htethasta >= " & ConvFecha(rsRango!anrrangfecdesde) & _
+                                        " OR his_estructura.htethasta IS NULL) "
+                                    OpenRecordset StrSql, objRs
+                                    objRs.MoveLast
+                                    
+                                    If Not objRs.EOF Then
+                                    
+                                        StrSql = "SELECT * FROM anrcubo" & _
+                                            " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                            " AND facnro = " & rsFactor!facnro & _
+                                            " AND tenro = " & objRs!tenro & _
+                                            " AND estrnro = " & objRs!estrnro & _
+                                            " AND ternro = " & rsAcumDiario!Ternro & _
+                                            " AND anrrangnro = " & rsRango!anrrangnro
+                                        OpenRecordset StrSql, rs
+                                        
+                                        cubvalor1 = monto_total * porcentaje / 100
+                                        cubvalor2 = cant_total * porcentaje / 100
+                                        
+                                        If rs.EOF Then
+                                            '/* Creo el cubo */
+                                            StrSql = "INSERT INTO anrcubo(anrcabnro,anrcubmanual" & _
+                                                ",anrrangnro,estrnro,facnro,tenro,Ternro,tipnro" & _
+                                                ",anrcubvalor1,anrcubvalor2) VALUES (" & _
+                                                rsAnrcab!anrcabnro & ",0," & rsRango!anrrangnro & "," & _
+                                                objRs!estrnro & "," & rsFactor!facnro & "," & _
+                                                objRs!tenro & "," & rsAcumDiario!Ternro & ",1" & _
+                                                "," & cubvalor1 & "," & cubvalor2 & ")"
+                                        Else
+                                            StrSql = "UPDATE anrcubo SET" & _
+                                                " anrcubvalor1 = " & rs!anrcubvalor1 + cubvalor1 & _
+                                                " ,anrcubvalor2 = " & rs!anrcubvalor2 + cubvalor2 & _
+                                                " WHERE anrcabnro = " & rsAnrcab!anrcabnro & _
+                                                " AND facnro = " & rsFactor!facnro & _
+                                                " AND tenro = " & objRs!tenro & _
+                                                " AND estrnro = " & objRs!estrnro & _
+                                                " AND ternro = " & rsAcumDiario!Ternro & _
+                                                " AND anrrangnro = " & rsRango!anrrangnro
+                                        End If
+                                        objConn.Execute StrSql, , adExecuteNoRecords
+                                        
+                                        monto_total = 0
+                                        cant_total = 0
+                                        
+                                        
+                                    End If
+                                    objRs.Close
+                                    
+                                End If
+                            End If
+                            
+                        End If
+                    
+                        rsEstructura.MoveNext
+                    Loop
+            
+                    rsRango.MoveNext
+                Loop
+    
+        ' Actualizo el progreso
+        Progreso = Progreso + IncPorc
+        StrSql = "UPDATE batch_proceso SET bprcprogreso = " & CInt(Progreso) & " WHERE bpronro = " & NroProceso
+        objConn.Execute StrSql, , adExecuteNoRecords
+    
+        rsAcumDiario.MoveNext
+    Loop
+    
+    rsFactor.MoveNext
+Loop
+           
+End Sub
+
+
+

@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using ServicesProxy;
+using Common;
+
+namespace HomeGadget_Corporativa
+{	
+    public partial class Gadget_Corporativa : UserControl
+    {
+    	public RHPro.Lenguaje ObjLenguaje;
+        protected void Page_Load(object sender, EventArgs e)
+        {      
+ 	
+            int contador=0;
+		    //Levanto inicialmente las imagenes del pais por defecto
+			if (Imagenes_Por_Pais_Activa()==-1)
+				contador = Cargar_Banners_X_Pais();  		
+		 
+			int nroImagen = 1;
+			String sql = "";		 
+			String SalidaBanners = "";			 
+			sql +=" SELECT  DISTINCT hbanimage ";
+			sql +=" FROM home_banner ";
+			sql +="  where hbanactivo=-1 and rhpro=-1 ";
+			sql +="  ORDER BY hbanimage desc ";
+			
+			//Luego levanto las imagenes banners configuradas para el home
+		    
+		   ServicesProxy.rhdesa.Consultas cc = new ServicesProxy.rhdesa.Consultas();				
+		   System.Data.DataSet ds = cc.get_DataSet(sql,Utils.SessionBaseID);
+		   if ( ds.Tables[0].Rows.Count > 0 )
+		   {            
+				foreach (DataRow dr in ds.Tables[0].Rows)
+				{
+					SalidaBanners +=" <li id='Imagen_Corporativa_Nro_"+contador+"'><img src='Images/Banner/"+dr["hbanimage"]+"'   /></li> ";
+					contador++;	
+				}
+				 
+				BannersCorp.Controls.Add(new LiteralControl(SalidaBanners));						
+			}	 
+		 
+		}
+		
+		
+		protected int Imagenes_Por_Pais_Activa()
+		{					   
+		   String sql = "";		 
+		   int Mostrar = 0;			 
+		    
+		   if (Convert.ToString(Session["RHPRO_Imagenes_Por_Pais_Activa"])=="")	
+		   {
+			   sql =" select confactivo from confper where confnro = 20 ";			 			
+			   ServicesProxy.rhdesa.Consultas cc = new ServicesProxy.rhdesa.Consultas();				
+			   System.Data.DataSet ds = cc.get_DataSet(sql,Utils.SessionBaseID);
+			   
+			   if (ds.Tables[0].Rows.Count>0)
+			   {
+					Mostrar = Convert.ToInt32(ds.Tables[0].Rows[0]["confactivo"]);
+			   }
+			   Session["RHPRO_Imagenes_Por_Pais_Activa"] = Mostrar;
+		   }
+		   else Mostrar = Convert.ToInt32(Session["RHPRO_Imagenes_Por_Pais_Activa"]);
+		   
+		   
+		   return Mostrar;
+						
+		}
+		
+		//Metodo que iserta las imagenes por pais al carrousel
+		 protected int Cargar_Banners_X_Pais()
+        {
+            String sql = "";
+            String SalidaBanners="";          
+            String Lenguaje_Pais = "";
+			int contador = 0; 
+			//Busco la nomenclatura del idioma del pais por defecto 
+			sql +=" select L.lencod from pais P ";
+			sql +=" inner join lenguaje L on L.paisnro = P.paisnro  ";
+			sql +="  where P.paisdef=-1 ";
+
+            ServicesProxy.rhdesa.Consultas cc = new ServicesProxy.rhdesa.Consultas();
+            System.Data.DataSet ds = cc.get_DataSet(sql, Utils.SessionBaseID);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+				//Recupero la nomenclatura del idioma del pais por defecto
+                Lenguaje_Pais = Convert.ToString(ds.Tables[0].Rows[0]["lencod"]);              						 
+			    
+				//Armo la url de las imagenes por pais
+				String URL_Log = "./Images/Banner/"+Lenguaje_Pais;
+				URL_Log = Server.MapPath(URL_Log);								 
+				URL_Log = URL_Log.Replace("/","\\");
+                string[] files;
+				String NombreImagen="";
+                try
+                { 
+				   //Recupero todas las imagenes del directorio de las imagenes del pais
+				   files = System.IO.Directory.GetFiles(URL_Log);
+				 
+				   foreach (String imagen in files)                   
+				   {
+					NombreImagen = System.IO.Path.GetFileName(imagen);
+					//Restringir solo imagenes
+					if ( (NombreImagen.Contains(".png")) ||  (NombreImagen.Contains(".jpg")) ||  (NombreImagen.Contains(".gif"))||  (NombreImagen.Contains(".jpeg")) )
+					{
+					    SalidaBanners +=" <li id='Imagen_Corporativa_Nro_"+contador+"'><img src='Images/Banner/"+Lenguaje_Pais+"/"+NombreImagen+"'  /></li> ";
+						contador++;	
+				    }					 
+				   }				     
+                }
+                catch(Exception ex)
+                {                    
+					  Response.Write("-"+ex.Message);
+                }              
+
+                BannersCorp.Controls.Add(new LiteralControl(SalidaBanners));
+            }	
+
+			return contador;
+        }
+		
+    }
+}

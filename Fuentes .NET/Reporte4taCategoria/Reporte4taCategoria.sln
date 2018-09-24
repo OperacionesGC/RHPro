@@ -1,0 +1,174 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Shared.Ganancias.Data", "..\..\Vacaciones\RHPro.Shared.Ganancias.Data\RHPro.Shared.Ganancias.Data\RHPro.Shared.Ganancias.Data.csproj", "{18507BE4-32CA-4BAD-846B-CB786364895C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Shared.Data", "..\..\Vacaciones\RHPro.Shared.Data\RHPro.Shared.Data\RHPro.Shared.Data.csproj", "{E67E7BCC-4B60-46DD-A22E-090718172294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.ADP.Data", "..\..\Vacaciones\RHPro.ADP.Data\RHPro.ADP.Data\RHPro.ADP.Data.csproj", "{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporte4taCategoria", "Reporte4taCategoria\Reporte4taCategoria.csproj", "{3068DB84-4670-41AD-9117-EAEA66CE9DA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Repository", "..\..\Vacaciones\RHPro.Repository\RHPro.Repository\RHPro.Repository.csproj", "{985342DA-55A8-4308-9666-7287F17B2FBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Shared.IO", "..\..\Vacaciones\RHPro.Shared.IO\RHPro.Shared.IO.csproj", "{DCC449C0-557F-4016-A67B-6C39E895AB44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Shared.Sys", "..\..\Vacaciones\RHPro.Shared.Sys\RHPro.Shared.Sys\RHPro.Shared.Sys.csproj", "{844932D3-6511-496E-BF30-5D91D5C92C80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHPro.Shared.Interface.Data", "..\..\Vacaciones\RHPro.Shared.Interface.Data\RHPro.Shared.Interface.Data\RHPro.Shared.Interface.Data.csproj", "{1C35E3EE-5D93-4AA1-B73A-6BE607632495}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporte4taCategoria.Test", "Reporte4taCategoria.Test\Reporte4taCategoria.Test.csproj", "{87250F9B-788A-49FE-937A-499C09252FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RHProLog", "..\..\RHProLog\RHProLog\RHProLog.csproj", "{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependences", "Dependences", "{6983F31C-352B-4A31-897C-961D0B4EA228}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Debug|x86.Build.0 = Debug|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Release|x86.ActiveCfg = Release|Any CPU
+		{18507BE4-32CA-4BAD-846B-CB786364895C}.Release|x86.Build.0 = Release|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Debug|x86.Build.0 = Debug|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Release|x86.ActiveCfg = Release|Any CPU
+		{E67E7BCC-4B60-46DD-A22E-090718172294}.Release|x86.Build.0 = Release|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA}.Release|x86.Build.0 = Release|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{3068DB84-4670-41AD-9117-EAEA66CE9DA1}.Release|x86.Build.0 = Release|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Debug|x86.Build.0 = Debug|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{985342DA-55A8-4308-9666-7287F17B2FBC}.Release|x86.Build.0 = Release|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Debug|x86.Build.0 = Debug|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Release|x86.ActiveCfg = Release|Any CPU
+		{DCC449C0-557F-4016-A67B-6C39E895AB44}.Release|x86.Build.0 = Release|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Debug|x86.Build.0 = Debug|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Release|x86.ActiveCfg = Release|Any CPU
+		{844932D3-6511-496E-BF30-5D91D5C92C80}.Release|x86.Build.0 = Release|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Debug|x86.Build.0 = Debug|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495}.Release|x86.Build.0 = Release|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Debug|x86.Build.0 = Debug|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{87250F9B-788A-49FE-937A-499C09252FEC}.Release|x86.Build.0 = Release|Any CPU
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Debug|x86.ActiveCfg = Debug|x86
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Debug|x86.Build.0 = Debug|x86
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Release|x86.ActiveCfg = Release|x86
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18507BE4-32CA-4BAD-846B-CB786364895C} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{E67E7BCC-4B60-46DD-A22E-090718172294} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{4EE65AC4-FCF0-4619-8A58-249C8C1B30AA} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{985342DA-55A8-4308-9666-7287F17B2FBC} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{DCC449C0-557F-4016-A67B-6C39E895AB44} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{844932D3-6511-496E-BF30-5D91D5C92C80} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{1C35E3EE-5D93-4AA1-B73A-6BE607632495} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+		{56C8DAF4-BB73-4DA1-B505-8AB4AFFA625F} = {6983F31C-352B-4A31-897C-961D0B4EA228}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 11
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://rhpro.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\..\\Vacaciones\\RHPro.Shared.Ganancias.Data\\RHPro.Shared.Ganancias.Data\\RHPro.Shared.Ganancias.Data.csproj
+		SccProjectTopLevelParentUniqueName1 = Reporte4taCategoria.sln
+		SccProjectName1 = ../../Vacaciones/RHPro.Shared.Ganancias.Data/RHPro.Shared.Ganancias.Data
+		SccLocalPath1 = ..\\..\\Vacaciones\\RHPro.Shared.Ganancias.Data\\RHPro.Shared.Ganancias.Data
+		SccProjectUniqueName2 = ..\\..\\Vacaciones\\RHPro.Shared.Data\\RHPro.Shared.Data\\RHPro.Shared.Data.csproj
+		SccProjectTopLevelParentUniqueName2 = Reporte4taCategoria.sln
+		SccProjectName2 = ../../Vacaciones/RHPro.Shared.Data/RHPro.Shared.Data
+		SccLocalPath2 = ..\\..\\Vacaciones\\RHPro.Shared.Data\\RHPro.Shared.Data
+		SccProjectUniqueName3 = ..\\..\\Vacaciones\\RHPro.ADP.Data\\RHPro.ADP.Data\\RHPro.ADP.Data.csproj
+		SccProjectTopLevelParentUniqueName3 = Reporte4taCategoria.sln
+		SccProjectName3 = ../../Vacaciones/RHPro.ADP.Data/RHPro.ADP.Data
+		SccLocalPath3 = ..\\..\\Vacaciones\\RHPro.ADP.Data\\RHPro.ADP.Data
+		SccProjectUniqueName4 = Reporte4taCategoria\\Reporte4taCategoria.csproj
+		SccProjectName4 = Reporte4taCategoria
+		SccLocalPath4 = Reporte4taCategoria
+		SccProjectUniqueName5 = ..\\..\\Vacaciones\\RHPro.Repository\\RHPro.Repository\\RHPro.Repository.csproj
+		SccProjectTopLevelParentUniqueName5 = Reporte4taCategoria.sln
+		SccProjectName5 = ../../Vacaciones/RHPro.Repository/RHPro.Repository
+		SccLocalPath5 = ..\\..\\Vacaciones\\RHPro.Repository\\RHPro.Repository
+		SccProjectUniqueName6 = ..\\..\\Vacaciones\\RHPro.Shared.IO\\RHPro.Shared.IO.csproj
+		SccProjectTopLevelParentUniqueName6 = Reporte4taCategoria.sln
+		SccProjectName6 = ../../Vacaciones/RHPro.Shared.IO
+		SccLocalPath6 = ..\\..\\Vacaciones\\RHPro.Shared.IO
+		SccProjectUniqueName7 = ..\\..\\Vacaciones\\RHPro.Shared.Sys\\RHPro.Shared.Sys\\RHPro.Shared.Sys.csproj
+		SccProjectTopLevelParentUniqueName7 = Reporte4taCategoria.sln
+		SccProjectName7 = ../../Vacaciones/RHPro.Shared.Sys/RHPro.Shared.Sys
+		SccLocalPath7 = ..\\..\\Vacaciones\\RHPro.Shared.Sys\\RHPro.Shared.Sys
+		SccProjectUniqueName8 = ..\\..\\Vacaciones\\RHPro.Shared.Interface.Data\\RHPro.Shared.Interface.Data\\RHPro.Shared.Interface.Data.csproj
+		SccProjectTopLevelParentUniqueName8 = Reporte4taCategoria.sln
+		SccProjectName8 = ../../Vacaciones/RHPro.Shared.Interface.Data/RHPro.Shared.Interface.Data
+		SccLocalPath8 = ..\\..\\Vacaciones\\RHPro.Shared.Interface.Data\\RHPro.Shared.Interface.Data
+		SccProjectUniqueName9 = Reporte4taCategoria.Test\\Reporte4taCategoria.Test.csproj
+		SccProjectName9 = Reporte4taCategoria.Test
+		SccLocalPath9 = Reporte4taCategoria.Test
+		SccProjectUniqueName10 = ..\\..\\RHProLog\\RHProLog\\RHProLog.csproj
+		SccProjectTopLevelParentUniqueName10 = Reporte4taCategoria.sln
+		SccProjectName10 = ../../RHProLog/RHProLog
+		SccLocalPath10 = ..\\..\\RHProLog\\RHProLog
+	EndGlobalSection
+EndGlobal

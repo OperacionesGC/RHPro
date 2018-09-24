@@ -1,0 +1,1962 @@
+Public Sub Politica1500_Uruguay()
+'-----------------------------------------------------------------------
+'Descripcion: Version para Monresa
+' Autor     : FGZ
+' Fecha     : 11/08/2010
+'-----------------------------------------------------------------------
+'Descripcion
+'   Se manejan 3 situaciones
+'   A) Dias correspondientes = 20
+'   B) Dias correspondientes < 20
+'   C) Dias correspondientes > 20
+'   ----------------------------------
+
+    'A) Dias correspondientes = 20
+    'Si es la 1er salida se pagan siempre 10 días independientemente a los días que son gozados.
+    
+    'A la 2da salida(o sucesivas) del empleado el sistema debe
+        'ir a buscar los días gozados en la primer salida y sumarlos a los días informados para la segunda salida.
+        'suma de Días salidas anteriores + Días lic actual= "C"
+            'Si "C"  es < a 10 el pago es = 0  (porque gozo menos de 10 y ya cobro 10)
+            'Si "C" es > a 10 el pago es = 10  (porque gozo mas de 10 y cobro sólo 10,
+            '                                   es el segundo pago y se paga de a 10 días)
+    '-------------------------------------------------------------------------------------------------------------
+    'B) Dias Correspondientes > 20
+    '1er salida(3 posibilidades):
+        'Si los días de licencia es > días correspondientes/2, pago los días correspondientes.
+        'Si los días de licencia < días correspondientes/2 y > a 10, pago los días reales.
+        'Si los días de licencia < días correspondientes/2 y <= a 10, pago 10 días.
+
+    '2da salida
+        'Se deberían manejar dos acumuladores:
+        'Dr= días reales gozados (sumatoria de todos los días gozados reales)
+        'Dp= días pagados (sumatoria de todos los días pagados)
+    
+        'el sistema debe ir a buscar los días pagados en la primer salida y compararlos
+        '   con los días correspondientes (dc), siendo (dp) días pagados en primer salida o salidas anteriores:
+
+        'Si  días correspondientes(dc) - dp es = a cero el pago es cero.
+        'Si  días correspondientes(dc) - dp es > 0 y dr es > a dp y > a 10 el pago es = a la diferencia
+        '                                                       entre los días correspondientes(dc) - dp.
+        'Si  días correspondientes - dp es > 0 y dr es <= a dp y <= a 10 el pago es = cero
+    '-------------------------------------------------------------------------------------------------------------
+    'C) Dias Correspondientes < 20
+    'A la 1er salida pago los días correspondientes totales.
+' ---------------------------------------------------------------------------------------
+Const Dias_Tope = 10
+
+Dim Fin_Licencia  As Boolean
+Dim Mes_Afecta    As Integer
+Dim Ano_Afecta    As Integer
+Dim Primero_Mes   As Date
+Dim Ultimo_Mes    As Date
+Dim Dias_Pendientes As Integer
+Dim Dias_Restantes As Integer
+Dim Dias_Afecta As Integer
+Dim Dias_ya_tomados As Integer
+Dim Fecha_limite    As Date
+Dim Legajo As Long
+Dim NroTer As Long
+Dim Nombre As String
+Dim Quincena_Inicio As Integer
+Dim Quincena_Fin As Integer
+Dim Quincena_Siguiente As Integer
+
+Dim Aux_TipDiaPago As Integer
+Dim Aux_TipDiaDescuento As Integer
+Dim Jornal As Boolean
+Dim Existe_Pago As Boolean
+Dim Primer_Pago As Boolean
+
+Dim Dias_Correspondientes As Integer
+
+Dim Dias_Gozados As Integer
+Dim Dias_Pagados As Integer
+Dim Dias_Acumulados As Integer
+
+Dim Dias_Lic  As Integer
+Dim Dias_Pago As Integer
+Dim Dias_Dto  As Integer
+
+Dim Mes_Inicio As Integer
+Dim Ano_Inicio As Integer
+Dim Mes_Fin    As Integer
+Dim Ano_Fin    As Integer
+Dim Aux_Fecha_Desde As Date
+Dim Aux_Fecha_Hasta As Date
+
+Dim TipoVac As Long
+Dim CHabiles As Integer
+Dim cNoHabiles As Integer
+Dim cFeriados As Integer
+
+Dim rs As New ADODB.Recordset
+Dim rs_Estructura  As New ADODB.Recordset
+'===================================================================
+
+'Busco la licencia dentro del intervalo especificado
+Dias_Lic = 0
+StrSql = "SELECT * FROM emp_lic "
+StrSql = StrSql & " INNER JOIN lic_vacacion ON emp_lic.emp_licnro = lic_vacacion.emp_licnro"
+StrSql = StrSql & " WHERE emp_lic.emp_licnro = " & nrolicencia
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    NroVac = rs!vacnro
+    'Dias_Lic = rs!elcantdiashab
+    Dias_Lic = rs!elcantdias
+    Aux_Fecha_Desde = rs!elfechadesde
+    Aux_Fecha_Hasta = rs!elfechahasta
+    Mes_Inicio = Month(rs!elfechadesde)
+    Ano_Inicio = Year(rs!elfechadesde)
+    Mes_Fin = Month(rs!elfechahasta)
+    Ano_Fin = Year(rs!elfechahasta)
+End If
+
+
+
+Call Politica(1503)
+If Not PoliticaOK Then
+    Flog.writeline "Error cargando configuracion de la Politica 1503. Seteo Parametros default."
+    TipDiaPago = 23
+    TipDiaDescuento = 23
+End If
+If st_ModeloDto2 = 0 Then
+    st_ModeloDto2 = st_ModeloDto
+End If
+If st_ModeloPago2 = 0 Then
+    st_ModeloPago2 = st_ModeloPago
+End If
+
+Genera_Pagos = False
+Genera_Descuentos = False
+Call Politica(1507)
+If Not PoliticaOK Then
+    Flog.writeline "Error cargando configuracion de la Politica 1507. Default. Se generarán los pagos y los descuentos."
+    Genera_Pagos = True
+    Genera_Descuentos = True
+End If
+
+'Reproceso
+If Reproceso Then
+    If Not Ya_Pago Then
+        'verificar si no tiene pagos/descuentos ya procesados, sino depurarlos
+        StrSql = "SELECT * FROM vacpagdesc "
+        StrSql = StrSql & " WHERE ternro = " & Ternro
+        StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+        StrSql = StrSql & " AND vacpagdesc.pronro is not null"
+        OpenRecordset StrSql, rs
+        If Not rs.EOF Then
+            Flog.writeline "No se puede Reprocesar, hay pagos y/o descuentos Liquidados. "
+        Else
+            StrSql = "DELETE FROM vacpagdesc"
+            StrSql = StrSql & " WHERE ternro = " & Ternro
+            StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+            If Genera_Pagos And Genera_Descuentos Then
+                StrSql = StrSql & " AND (pago_dto = 3" 'pagos
+                StrSql = StrSql & " OR pago_dto = 4)" 'Descuentos
+            Else
+                If Genera_Pagos Then
+                    StrSql = StrSql & " AND pago_dto = 3" 'pagos
+                End If
+                If Genera_Descuentos Then
+                    StrSql = StrSql & " AND pago_dto = 4" 'Descuentos
+                End If
+            End If
+            objConn.Execute StrSql, , adExecuteNoRecords
+        End If
+    End If
+Else
+    'si no es reproceso y existe el desglose de pago/descuento, salir
+    StrSql = "SELECT * FROM vacpagdesc WHERE emp_licnro = " & nrolicencia
+    OpenRecordset StrSql, rs
+    If Not rs.EOF Then
+        Flog.writeline "Reproceso y existe el desglose de pago/descuento, salir"
+        rs.Close
+        Set rs = Nothing
+        Exit Sub
+    End If
+    rs.Close
+End If
+
+
+'Busco los dias correspondientes
+StrSql = "SELECT * FROM vacdiascor WHERE vacdiascor.ternro = " & Ternro
+StrSql = StrSql & " AND vacdiascor.vacnro = " & NroVac
+StrSql = StrSql & " AND (venc is null OR venc = 0)"
+OpenRecordset StrSql, rs
+If rs.EOF Then
+    Flog.writeline "No hay dias correspondientes a ese periodo. SQL: " & StrSql
+    Exit Sub
+Else
+    Dias_Correspondientes = rs!vdiascorcant
+    'FGZ - 18/11/2010 -------------------------
+    TipoVac = rs!tipvacnro
+    'FGZ - 18/11/2010 -------------------------
+End If
+
+
+'Determino si es el primer pago del periodo
+Existe_Pago = False
+StrSql = "SELECT * FROM vacpagdesc "
+StrSql = StrSql & " WHERE ternro = " & Ternro
+StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    'Existe_Pago = True
+    Primer_Pago = False
+Else
+    'Existe_Pago = False
+    Primer_Pago = True
+End If
+'Primer_Pago = Not Ya_Pago Or Existe_Pago
+
+'Busco la cantidad de licencias ya gozadas
+Dias_Gozados = 0
+StrSql = "SELECT sum(elcantdias) dias FROM emp_lic "
+StrSql = StrSql & " INNER JOIN lic_vacacion ON emp_lic.emp_licnro = lic_vacacion.emp_licnro"
+StrSql = StrSql & " WHERE empleado = " & Ternro
+StrSql = StrSql & " AND emp_lic.emp_licnro <> " & nrolicencia
+StrSql = StrSql & " AND elfechadesde <=" & ConvFecha(Aux_Fecha_Desde)
+'FGZ - 18/11/2010 ------
+StrSql = StrSql & " AND lic_vacacion.vacnro = " & NroVac
+'FGZ - 18/11/2010 ------
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    Dias_Gozados = IIf(EsNulo(rs!dias), 0, rs!dias)
+End If
+
+'Busco los dias ya pagados
+Dias_Pagados = 0
+StrSql = "SELECT sum(cantdias) dias FROM vacpagdesc "
+StrSql = StrSql & " WHERE ternro = " & Ternro
+StrSql = StrSql & " AND vacnro = " & NroVac
+StrSql = StrSql & " AND pago_dto = 3" 'pagos
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    Dias_Pagados = IIf(EsNulo(rs!dias), 0, rs!dias)
+End If
+
+
+'Pago segun..
+Select Case Dias_Correspondientes
+Case Is = 20
+    If Primer_Pago Then
+        Dias_Pago = 10
+    Else
+        If (Dias_Gozados + Dias_Lic) > Dias_Tope Then
+            If Dias_Pagados >= Dias_Correspondientes Then
+                Dias_Pago = 0
+            Else
+                Dias_Pago = 10
+            End If
+        Else
+            Dias_Pago = 0
+        End If
+    End If
+Case Is > 20
+    If Primer_Pago Then
+        If Dias_Lic > (Dias_Correspondientes / 2) Then
+            Dias_Pago = Dias_Correspondientes
+        Else
+            If Dias_Lic > 10 Then
+                Dias_Pago = Dias_Lic
+            Else
+                Dias_Pago = 10
+            End If
+        End If
+    Else
+        If (Dias_Correspondientes - Dias_Pagados) = 0 Then
+            Dias_Pago = 0
+        Else
+            If (Dias_Correspondientes - Dias_Pagados) > 0 Then
+                If (Dias_Gozados + Dias_Lic) > Dias_Pagados And (Dias_Gozados + Dias_Lic) > 10 Then
+                    Dias_Pago = Dias_Correspondientes - Dias_Pagados
+                Else
+                    Dias_Pago = 0
+                End If
+            Else
+                'como se logró esto???
+                Dias_Pago = 0
+                Flog.writeline "Dias_Correspondientes - Dias_Pagados es menor a 0"
+            End If
+        End If
+    
+    End If
+Case Else '(< 20)
+    'A la primer salida pago los días correspondientes totales.
+    If Primer_Pago Then
+        Dias_Pago = Dias_Correspondientes
+        Dias_Dto = Dias_Lic
+    Else
+        Dias_Pago = 0
+        Dias_Dto = Dias_Lic
+    End If
+End Select
+
+'Descuento segun Lic
+'Dias_Dto = Dias_Lic
+'FGZ - 25/08/2010 - Descuento segun dias de Pago
+'If Dias_Pago = 0 Then
+'    Dias_Dto = Dias_Lic
+'Else
+'    Dias_Dto = Dias_Pago
+'End If
+Dias_Dto = Dias_Lic
+'------------------------------
+
+'Busco la forma de liquidacion
+Flog.writeline "Busco la forma de liquidacion"
+StrSql = " SELECT estructura.estrnro, estructura.estrcodext  FROM his_estructura"
+StrSql = StrSql & " INNER JOIN estructura ON his_estructura.estrnro = estructura.estrnro "
+StrSql = StrSql & " WHERE ternro = " & Ternro & " AND "
+StrSql = StrSql & " his_estructura.tenro = 22 AND "
+StrSql = StrSql & " (his_estructura.htetdesde <= " & ConvFecha(Aux_Fecha_Hasta) & ") AND "
+StrSql = StrSql & " ((" & ConvFecha(Aux_Fecha_Hasta) & " <= his_estructura.htethasta) or (his_estructura.htethasta is null))"
+OpenRecordset StrSql, rs_Estructura
+If Not rs_Estructura.EOF Then
+    If Not IsNull(rs_Estructura!estrcodext) Then
+        If rs_Estructura!estrcodext = "2" Then
+            Jornal = True
+            Flog.writeline "Jornal"
+        Else
+            Jornal = False
+            Flog.writeline "Mensual"
+        End If
+    Else
+        Flog.writeline "Codigo externo de la Forma de liq Nulo. Se asume No Jornal"
+        Jornal = False
+        Flog.writeline "Mensual"
+    End If
+Else
+    Flog.writeline "No existe Forma de liq. Se asume No Jornal. SQL: " & StrSql
+    Jornal = False
+    Flog.writeline "Mensual"
+End If
+
+
+'------------------------------------------------------------------------------------------------
+'------------------------------------------------------------------------------------------------
+'Genero los pagos y/o descuentos
+'----------------------------------------------------------------------------------------------------------
+'PAGOS
+If Genera_Pagos And Dias_Pago > 0 Then
+    Mes_Afecta = Mes_Inicio
+    Ano_Afecta = Ano_Inicio
+    Aux_TipDiaPago = TipDiaPago
+    Dias_Afecta = Dias_Pago
+
+    Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaPago, Dias_Afecta, 3) 'Pago
+End If
+
+'Descuentos ---------------------------------------------
+If Genera_Descuentos And Dias_Dto > 0 Then
+    Dias_Pagados = 0
+    Ya_Pago = True
+    
+    Fin_Licencia = False
+    Mes_Afecta = Mes_Inicio
+    Ano_Afecta = Ano_Inicio
+    Dias_Pendientes = 0
+    Dias_Restantes = Dias_Dto 'Dias_Pago
+    Dias_Afecta = Dias_Dto  'Dias_Pago
+    
+    Aux_TipDiaPago = TipDiaPago
+    Aux_TipDiaDescuento = TipDiaDescuento
+    
+    'FGZ - 18/11/2010 ------------------------------------------------------
+    Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+    'Dias_Afecta = CHabiles
+    'If Dias_Afecta > (DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1) Then
+    If Dias_Afecta > CHabiles Then
+        Dias_Afecta = CHabiles
+        Aux_Fecha_Hasta = DateAdd("d", Dias_Afecta - 1, Aux_Fecha_Desde)
+        Mes_Fin = Month(Aux_Fecha_Hasta)
+        Ano_Fin = Year(Aux_Fecha_Hasta)
+    End If
+    
+    If Jornal Then
+        If Day(Aux_Fecha_Desde) > 15 Then
+            Aux_TipDiaDescuento = st_ModeloDto2
+            Quincena_Inicio = 2
+        Else
+            Aux_TipDiaDescuento = st_ModeloDto
+            Quincena_Inicio = 1
+        End If
+        If Day(Aux_Fecha_Hasta) > 15 Then
+            Quincena_Fin = 2
+        Else
+            Quincena_Fin = 1
+        End If
+        Flog.writeline "Quincena Inicio " & Quincena_Inicio
+        Flog.writeline "Quincena Fin " & Quincena_Fin
+        Flog.writeline "Modelo Pago " & Aux_TipDiaPago
+        Flog.writeline "Modelo Descuento " & Aux_TipDiaDescuento
+    Else
+        Quincena_Inicio = 1
+    End If
+    Quincena_Siguiente = Quincena_Inicio
+
+    If Mes_Afecta = 2 Then
+        Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+        If Not Jornal Then
+            Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+        Else
+            If Quincena_Siguiente = 1 Then
+                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+            Else
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            End If
+        End If
+    Else
+        If Not Jornal Then
+            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+            If Mes_Afecta = 12 Then
+                Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+            Else
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            End If
+        Else
+            If Quincena_Siguiente = 1 Then
+                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+            Else
+                Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+                If Mes_Afecta = 12 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            End If
+        End If
+    End If
+
+    'EAM- Preguntar
+    If (Aux_Fecha_Hasta <= Ultimo_Mes) Then 'termina en el mes
+        'Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1
+        Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+        Dias_Afecta = CHabiles
+    Else 'continua en el mes siguiente
+        'Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Ultimo_Mes) + 1
+        Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+        Dias_Afecta = CHabiles
+    End If
+   
+    Primero_Mes = AFecha(Mes_Afecta, Day(Aux_Fecha_Desde), Ano_Afecta)
+    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+    Aux_TipDiaPago = TipDiaPago
+    Aux_TipDiaDescuento = TipDiaDescuento
+    
+    If Jornal Then 'reviso a que quincena corresponde
+        If Day(Primero_Mes) > 15 Then
+            Aux_TipDiaDescuento = st_ModeloDto2
+            Quincena_Siguiente = 2
+        Else
+            Aux_TipDiaDescuento = st_ModeloDto
+            Quincena_Siguiente = 1
+        End If
+    End If
+    
+    
+    Do While Not (Fin_Licencia) Or Dias_Acumulados > 0
+        If Jornal Then
+            If Dias_Afecta > 15 Then
+                Dias_Afecta = 15
+                Dias_Acumulados = 1
+            End If
+            If Dias_Acumulados > 0 And Dias_Afecta < 15 Then
+                If (Dias_Acumulados + Dias_Afecta) <= 15 Then
+                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+                    Dias_Acumulados = 0
+                End If
+            End If
+        Else
+            If Dias_Afecta > 30 Then
+                Dias_Afecta = 30
+                Dias_Acumulados = 1
+            End If
+            If Dias_Acumulados > 0 And Dias_Afecta < 30 Then
+                If (Dias_Acumulados + Dias_Afecta) <= 30 Then
+                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+                    Dias_Acumulados = 0
+                End If
+            End If
+            Aux_TipDiaDescuento = 7
+        End If
+        
+        Dias_Restantes = Dias_Restantes - Dias_Afecta
+        
+        'Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaPago, Dias_Afecta, 3) 'Pago
+        Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaDescuento, Dias_Afecta, 4) 'Descuento
+        
+        If Jornal Then
+            If Quincena_Siguiente = 1 Then
+                Quincena_Siguiente = 2
+            Else
+                Quincena_Siguiente = 1
+            End If
+        End If
+        
+        'determinar a que continua en el proximo mes
+        If (Mes_Afecta = 12) Then
+            If Not Jornal Then
+                Mes_Afecta = 1
+                Ano_Afecta = Ano_Afecta + 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Mes_Afecta = 1
+                    Ano_Afecta = Ano_Afecta + 1
+                Else
+                    'Queda como esta, en el mismo mes y año
+                End If
+            End If
+        Else
+            If Not Jornal Then
+                Mes_Afecta = Mes_Afecta + 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Mes_Afecta = Mes_Afecta + 1
+                Else
+                    'Queda como esta, en el mismo mes y año
+                End If
+            End If
+        End If
+        
+        If (Ano_Afecta = Ano_Fin) Then
+            If (Mes_Afecta > Mes_Fin) Then
+                Fin_Licencia = True
+            Else
+                If (Mes_Afecta = Mes_Fin) And Jornal Then
+                    If Quincena_Siguiente > Quincena_Fin Then
+                        Fin_Licencia = True
+                    End If
+                End If
+            End If
+        Else
+            If (Ano_Afecta > Ano_Fin) Then
+                Fin_Licencia = True
+            End If
+        End If
+    
+        If Mes_Afecta = 2 Then
+            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+            If Not Jornal Then
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            End If
+        Else
+            If Not Jornal Then
+                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                If Mes_Afecta = 12 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+                Else
+                    Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+                    If Mes_Afecta = 12 Then
+                        Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                    Else
+                        Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                    End If
+                End If
+            End If
+        End If
+    
+        Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+        If (Aux_Fecha_Hasta <= Ultimo_Mes) Then
+            'If (Dias_Restantes < DateDiff("d", Primero_Mes, Ultimo_Mes)) Then
+            If (Dias_Restantes < CHabiles) Then
+                Dias_Afecta = Dias_Restantes
+            Else
+                'Dias_Afecta = DateDiff("d", Primero_Mes, rs!Aux_Fecha_Hasta) + 1
+                'Dias_Afecta = DateDiff("d", Primero_Mes, Aux_Fecha_Hasta) + 1
+                Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+                Dias_Afecta = CHabiles
+            End If
+        Else
+            'Dias_Afecta = DateDiff("d", Primero_Mes, Ultimo_Mes) + 1
+            Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+            Dias_Afecta = CHabiles
+        End If
+        
+        If Not Jornal Then
+            If Dias_Afecta > 30 Then
+               Dias_Afecta = 30
+            End If
+        Else
+            If Dias_Afecta > 15 Then
+               Dias_Afecta = 15
+            End If
+        End If
+        
+        If Jornal Then
+            If Day(Primero_Mes) > 15 Then
+                Aux_TipDiaDescuento = st_ModeloDto2
+            Else
+                Aux_TipDiaDescuento = st_ModeloDto
+            End If
+        End If
+    Loop
+End If
+'----------------------------------------------------------------------------------------------------------
+'----------------------------------------------------------------------------------------------------------
+
+''Descuentos
+'If Genera_Descuentos And Dias_Dto > 0 Then
+'    Ya_Pago = True
+'
+'    Fin_Licencia = False
+'    Mes_Afecta = Mes_Inicio
+'    Ano_Afecta = Ano_Inicio
+'    Dias_Pendientes = 0
+'    Dias_Restantes = Dias_Dto
+'
+'    Aux_TipDiaPago = TipDiaPago
+'    Aux_TipDiaDescuento = TipDiaDescuento
+'
+'    Dias_Afecta = Dias_Dto
+'    If Dias_Afecta > (DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1) Then
+'        Aux_Fecha_Hasta = DateAdd("d", Dias_Afecta - 1, Aux_Fecha_Desde)
+'        Mes_Fin = Month(Aux_Fecha_Hasta)
+'        Ano_Fin = Year(Aux_Fecha_Hasta)
+'    End If
+'
+'
+'    If Jornal Then
+'        If Day(Aux_Fecha_Desde) > 15 Then
+'            Aux_TipDiaDescuento = st_ModeloDto2
+'            Quincena_Inicio = 2
+'        Else
+'            Aux_TipDiaDescuento = st_ModeloDto
+'            Quincena_Inicio = 1
+'        End If
+'        If Day(Aux_Fecha_Hasta) > 15 Then
+'            Quincena_Fin = 2
+'        Else
+'            Quincena_Fin = 1
+'        End If
+'        Flog.writeline "Quincena Inicio " & Quincena_Inicio
+'        Flog.writeline "Quincena Fin " & Quincena_Fin
+'        Flog.writeline "Modelo Pago " & Aux_TipDiaPago
+'        Flog.writeline "Modelo Descuento " & Aux_TipDiaDescuento
+'    Else
+'        Quincena_Inicio = 1
+'    End If
+'    Quincena_Siguiente = Quincena_Inicio
+'
+'    If Mes_Afecta = 2 Then
+'        Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'        If Not Jornal Then
+'            Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'        Else
+'            If Quincena_Siguiente = 1 Then
+'                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'            Else
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            End If
+'        End If
+'    Else
+'        If Not Jornal Then
+'            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'            If Mes_Afecta = 12 Then
+'                Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'            Else
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            End If
+'        Else
+'            If Quincena_Siguiente = 1 Then
+'                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'            Else
+'                Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+'                If Mes_Afecta = 12 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            End If
+'        End If
+'    End If
+'
+'    Dias_Afecta = Dias_Dto
+'    If (Aux_Fecha_Hasta <= Ultimo_Mes) Then 'termina en el mes
+'        Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1
+'    Else 'continua en el mes siguiente
+'        Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Ultimo_Mes) + 1
+'    End If
+'
+'    Primero_Mes = AFecha(Mes_Afecta, Day(Aux_Fecha_Desde), Ano_Afecta)
+'    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'    Aux_TipDiaPago = TipDiaPago
+'    Aux_TipDiaDescuento = TipDiaDescuento
+'
+'    If Jornal Then 'reviso a que quincena corresponde
+'        If Day(Primero_Mes) > 15 Then
+'            Aux_TipDiaDescuento = st_ModeloDto2
+'            Quincena_Siguiente = 2
+'        Else
+'            Aux_TipDiaDescuento = st_ModeloDto
+'            Quincena_Siguiente = 1
+'        End If
+'    End If
+'
+'
+'    Do While Not (Fin_Licencia) Or Dias_Acumulados > 0
+'        If Jornal Then
+'            If Dias_Afecta > 15 Then
+'                Dias_Afecta = 15
+'                Dias_Acumulados = 1
+'            End If
+'            If Dias_Acumulados > 0 And Dias_Afecta < 15 Then
+'                If (Dias_Acumulados + Dias_Afecta) <= 15 Then
+'                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+'                    Dias_Acumulados = 0
+'                End If
+'            End If
+'        Else
+'            If Dias_Afecta > 30 Then
+'                Dias_Afecta = 30
+'                Dias_Acumulados = 1
+'            End If
+'            If Dias_Acumulados > 0 And Dias_Afecta < 30 Then
+'                If (Dias_Acumulados + Dias_Afecta) <= 30 Then
+'                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+'                    Dias_Acumulados = 0
+'                End If
+'            End If
+'            Aux_TipDiaDescuento = 7
+'        End If
+'
+'        Dias_Restantes = Dias_Restantes - Dias_Afecta
+'
+'        If Dias_Afecta <> 0 Then
+'            Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaDescuento, Dias_Afecta, 4) 'Descuento
+'        End If
+'
+'        If Jornal Then
+'            If Quincena_Siguiente = 1 Then
+'                Quincena_Siguiente = 2
+'            Else
+'                Quincena_Siguiente = 1
+'            End If
+'        End If
+'
+'        'determinar a que continua en el proximo mes
+'        If (Mes_Afecta = 12) Then
+'            If Not Jornal Then
+'                Mes_Afecta = 1
+'                Ano_Afecta = Ano_Afecta + 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Mes_Afecta = 1
+'                    Ano_Afecta = Ano_Afecta + 1
+'                Else
+'                    'Queda como esta, en el mismo mes y año
+'                End If
+'            End If
+'        Else
+'            If Not Jornal Then
+'                Mes_Afecta = Mes_Afecta + 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Mes_Afecta = Mes_Afecta + 1
+'                Else
+'                    'Queda como esta, en el mismo mes y año
+'                End If
+'            End If
+'        End If
+'
+'        If (Ano_Afecta = Ano_Fin) Then
+'            If (Mes_Afecta > Mes_Fin) Then
+'                Fin_Licencia = True
+'            Else
+'                If (Mes_Afecta = Mes_Fin) And Jornal Then
+'                    If Quincena_Siguiente > Quincena_Fin Then
+'                        Fin_Licencia = True
+'                    End If
+'                End If
+'            End If
+'        Else
+'            If (Ano_Afecta > Ano_Fin) Then
+'                Fin_Licencia = True
+'            End If
+'        End If
+'
+'        If Mes_Afecta = 2 Then
+'            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'            If Not Jornal Then
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            End If
+'        Else
+'            If Not Jornal Then
+'                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                If Mes_Afecta = 12 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'                Else
+'                    Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+'                    If Mes_Afecta = 12 Then
+'                        Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                    Else
+'                        Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                    End If
+'                End If
+'            End If
+'        End If
+'
+'        If (Aux_Fecha_Hasta <= Ultimo_Mes) Then
+'            If (Dias_Restantes < DateDiff("d", Primero_Mes, Ultimo_Mes)) Then
+'                Dias_Afecta = Dias_Restantes
+'            Else
+'                Dias_Afecta = DateDiff("d", Primero_Mes, Aux_Fecha_Hasta) + 1
+'            End If
+'        Else
+'            Dias_Afecta = DateDiff("d", Primero_Mes, Ultimo_Mes) + 1
+'        End If
+'
+'        If Not Jornal Then
+'            If Dias_Afecta > 30 Then
+'               Dias_Afecta = 30
+'            End If
+'        Else
+'            If Dias_Afecta > 15 Then
+'               Dias_Afecta = 15
+'            End If
+'        End If
+'
+'        If Jornal Then
+'            If Day(Primero_Mes) > 15 Then
+'                Aux_TipDiaDescuento = st_ModeloDto2
+'            Else
+'                Aux_TipDiaDescuento = st_ModeloDto
+'            End If
+'        End If
+'    Loop
+'End If
+
+rs.Close
+Set rs = Nothing
+End Sub
+
+
+
+Public Sub Politica1500_Monresa()
+'-----------------------------------------------------------------------
+'Descripcion: Version para Monresa (Uruguay)
+' Autor     : FGZ
+' Fecha     : 11/08/2010
+'-----------------------------------------------------------------------
+'Descripcion
+'   Para el PAGO Se manejan 3 situaciones
+'       A) Dias correspondientes = 20
+'       B) Dias correspondientes < 20
+'       C) Dias correspondientes > 20
+'   Para el descuento se genera por la misma cantidad que el PAGO con la diferencia que se desglosan
+'       cuando pasan de un mes a otro. A diferencia del pago que se genera en un solo mes
+'   ----------------------------------------------------------------------------
+
+    'PAGOS ---------------------------------------------------------------------
+    'A) Dias correspondientes = 20
+    ' PAGO = FIX( (SUM(Licencias del periodo) / 10)*10) - Dias Pagados.
+    '---------------------------------------------------------------------------
+    'B) Dias Correspondientes > 20
+    '   SI SUM(Pagos del periodo) = 0 THEN
+    '       SI SUM(Licencias del Periodo) = Dias Correspondientes THEN
+    '           PAGO = Dias Correspondientes
+    '       ELSE
+    '           SI SUM(Licencias del Periodo) >= 10 THEN
+    '               PAGO = MINIMO(SUM(Licencias del Periodo), Dias Correspondientes - 10)
+    '           ELSE
+    '               PAGO = 0
+    '           END
+    '       END
+    '   ELSE
+    '       SI SUM(Licencias del Periodo) = Dias Correspondientes THEN
+    '           PAGO = Dias Correspondientes - SUM(Pagos del periodo)
+    '       ELSE
+    '           PAGO = 0
+    '       END
+    '   END
+    '----------------------------------------------------------------------------
+    'C) Dias Correspondientes < 20
+    '   PAGO = Dias Correspondientes - SUM(Pagos del Periodo).
+    'PAGOS ---------------------------------------------------------------------
+    
+' ---------------------------------------------------------------------------------------
+Const Dias_Tope = 10
+
+Dim Fin_Licencia  As Boolean
+Dim Mes_Afecta    As Integer
+Dim Ano_Afecta    As Integer
+Dim Primero_Mes   As Date
+Dim Ultimo_Mes    As Date
+Dim Dias_Pendientes As Integer
+Dim Dias_Restantes As Integer
+Dim Dias_Afecta As Integer
+Dim Dias_ya_tomados As Integer
+Dim Fecha_limite    As Date
+Dim Legajo As Long
+Dim NroTer As Long
+Dim Nombre As String
+Dim Quincena_Inicio As Integer
+Dim Quincena_Fin As Integer
+Dim Quincena_Siguiente As Integer
+
+Dim Aux_TipDiaPago As Integer
+Dim Aux_TipDiaDescuento As Integer
+Dim Jornal As Boolean
+Dim Existe_Pago As Boolean
+Dim Primer_Pago As Boolean
+
+Dim Dias_Correspondientes As Integer
+
+Dim Dias_Gozados As Integer
+Dim Dias_Pagados As Integer
+Dim Dias_Acumulados As Integer
+
+Dim Dias_Lic  As Integer
+Dim Dias_Pago As Integer
+Dim Dias_Dto  As Integer
+
+Dim Mes_Inicio As Integer
+Dim Ano_Inicio As Integer
+Dim Mes_Fin    As Integer
+Dim Ano_Fin    As Integer
+Dim Aux_Fecha_Desde As Date
+Dim Aux_Fecha_Hasta As Date
+Dim New_Fecha_Hasta As Date
+
+
+Dim TipoVac As Long
+Dim CHabiles As Integer
+Dim cNoHabiles As Integer
+Dim cFeriados As Integer
+
+Dim rs As New ADODB.Recordset
+Dim rs_Estructura  As New ADODB.Recordset
+'===================================================================
+
+'Busco la licencia dentro del intervalo especificado
+Dias_Lic = 0
+StrSql = "SELECT * FROM emp_lic "
+StrSql = StrSql & " INNER JOIN lic_vacacion ON emp_lic.emp_licnro = lic_vacacion.emp_licnro"
+StrSql = StrSql & " WHERE emp_lic.emp_licnro = " & nrolicencia
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    NroVac = rs!vacnro
+    'Dias_Lic = rs!elcantdiashab
+    Dias_Lic = rs!elcantdias
+    Aux_Fecha_Desde = rs!elfechadesde
+    Aux_Fecha_Hasta = rs!elfechahasta
+    Mes_Inicio = Month(rs!elfechadesde)
+    Ano_Inicio = Year(rs!elfechadesde)
+    Mes_Fin = Month(rs!elfechahasta)
+    Ano_Fin = Year(rs!elfechahasta)
+End If
+
+
+
+Call Politica(1503)
+If Not PoliticaOK Then
+    Flog.writeline "Error cargando configuracion de la Politica 1503. Seteo Parametros default."
+    TipDiaPago = 23
+    TipDiaDescuento = 3
+End If
+If st_ModeloDto2 = 0 Then
+    st_ModeloDto2 = st_ModeloDto
+End If
+If st_ModeloPago2 = 0 Then
+    st_ModeloPago2 = st_ModeloPago
+End If
+
+Genera_Pagos = False
+Genera_Descuentos = False
+Call Politica(1507)
+If Not PoliticaOK Then
+    Flog.writeline "Error cargando configuracion de la Politica 1507. Default. Se generarán los pagos y los descuentos."
+    Genera_Pagos = True
+    Genera_Descuentos = True
+End If
+
+'Reproceso
+If Reproceso Then
+    If Not Ya_Pago Then
+        'verificar si no tiene pagos/descuentos ya procesados, sino depurarlos
+        StrSql = "SELECT * FROM vacpagdesc "
+        StrSql = StrSql & " WHERE ternro = " & Ternro
+        StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+        StrSql = StrSql & " AND vacpagdesc.pronro is not null"
+        OpenRecordset StrSql, rs
+        If Not rs.EOF Then
+            Flog.writeline "No se puede Reprocesar, hay pagos y/o descuentos Liquidados. "
+        Else
+            StrSql = "DELETE FROM vacpagdesc"
+            StrSql = StrSql & " WHERE ternro = " & Ternro
+            StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+            If Genera_Pagos And Genera_Descuentos Then
+                StrSql = StrSql & " AND (pago_dto = 3" 'pagos
+                StrSql = StrSql & " OR pago_dto = 4)" 'Descuentos
+            Else
+                If Genera_Pagos Then
+                    StrSql = StrSql & " AND pago_dto = 3" 'pagos
+                End If
+                If Genera_Descuentos Then
+                    StrSql = StrSql & " AND pago_dto = 4" 'Descuentos
+                End If
+            End If
+            objConn.Execute StrSql, , adExecuteNoRecords
+        End If
+    End If
+Else
+    'si no es reproceso y existe el desglose de pago/descuento, salir
+    StrSql = "SELECT * FROM vacpagdesc WHERE emp_licnro = " & nrolicencia
+    OpenRecordset StrSql, rs
+    If Not rs.EOF Then
+        Flog.writeline "Reproceso y existe el desglose de pago/descuento, salir"
+        rs.Close
+        Set rs = Nothing
+        Exit Sub
+    End If
+    rs.Close
+End If
+
+
+'Busco los dias correspondientes
+StrSql = "SELECT * FROM vacdiascor WHERE vacdiascor.ternro = " & Ternro
+StrSql = StrSql & " AND vacdiascor.vacnro = " & NroVac
+StrSql = StrSql & " AND (venc is null OR venc = 0)"
+OpenRecordset StrSql, rs
+If rs.EOF Then
+    Flog.writeline "No hay dias correspondientes a ese periodo. SQL: " & StrSql
+    Exit Sub
+Else
+    Dias_Correspondientes = rs!vdiascorcant
+    'FGZ - 18/11/2010 -------------------------
+    TipoVac = rs!tipvacnro
+    'FGZ - 18/11/2010 -------------------------
+End If
+
+
+''Determino si es el primer pago del periodo
+'Existe_Pago = False
+'StrSql = "SELECT * FROM vacpagdesc "
+'StrSql = StrSql & " WHERE ternro = " & Ternro
+'StrSql = StrSql & " AND vacpagdesc.vacnro = " & NroVac
+'OpenRecordset StrSql, rs
+'If Not rs.EOF Then
+'    'Existe_Pago = True
+'    Primer_Pago = False
+'Else
+'    'Existe_Pago = False
+'    Primer_Pago = True
+'End If
+''Primer_Pago = Not Ya_Pago Or Existe_Pago
+
+'Busco la cantidad de licencias ya gozadas
+Dias_Gozados = 0
+StrSql = "SELECT sum(elcantdias) dias FROM emp_lic "
+StrSql = StrSql & " INNER JOIN lic_vacacion ON emp_lic.emp_licnro = lic_vacacion.emp_licnro"
+StrSql = StrSql & " WHERE empleado = " & Ternro
+StrSql = StrSql & " AND emp_lic.emp_licnro <> " & nrolicencia
+StrSql = StrSql & " AND elfechadesde <=" & ConvFecha(Aux_Fecha_Desde)
+'FGZ - 18/11/2010 ------
+StrSql = StrSql & " AND lic_vacacion.vacnro = " & NroVac
+'FGZ - 18/11/2010 ------
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    Dias_Gozados = IIf(EsNulo(rs!dias), 0, rs!dias)
+End If
+
+'Busco los dias ya pagados
+Dias_Pagados = 0
+StrSql = "SELECT sum(cantdias) dias FROM vacpagdesc "
+StrSql = StrSql & " WHERE ternro = " & Ternro
+StrSql = StrSql & " AND vacnro = " & NroVac
+StrSql = StrSql & " AND pago_dto = 3" 'pagos
+OpenRecordset StrSql, rs
+If Not rs.EOF Then
+    Dias_Pagados = IIf(EsNulo(rs!dias), 0, rs!dias)
+End If
+
+
+'Pago segun..
+Select Case Dias_Correspondientes
+Case Is = 20
+    Dias_Pago = Fix((Dias_Gozados + Dias_Lic) / 10) * 10 - Dias_Pagados
+
+Case Is > 20
+    If Dias_Pagados = 0 Then
+        If (Dias_Gozados + Dias_Lic) = Dias_Correspondientes Then
+            Dias_Pago = Dias_Correspondientes
+        Else
+            If (Dias_Gozados + Dias_Lic) >= Dias_Tope Then
+                Dias_Pago = Minimo(Dias_Gozados + Dias_Lic, Dias_Correspondientes - Dias_Tope)
+            Else
+                Dias_Pago = 0
+            End If
+        End If
+    Else
+        If (Dias_Gozados + Dias_Lic) = Dias_Correspondientes Then
+            Dias_Pago = Dias_Correspondientes - Dias_Pagados
+        Else
+            Dias_Pago = 0
+        End If
+    End If
+Case Else '(< 20)
+    Dias_Pago = Dias_Correspondientes - Dias_Pagados
+End Select
+
+Dias_Dto = Dias_Pago
+'------------------------------
+
+'Busco la forma de liquidacion
+Flog.writeline "Busco la forma de liquidacion"
+StrSql = " SELECT estructura.estrnro, estructura.estrcodext  FROM his_estructura"
+StrSql = StrSql & " INNER JOIN estructura ON his_estructura.estrnro = estructura.estrnro "
+StrSql = StrSql & " WHERE ternro = " & Ternro & " AND "
+StrSql = StrSql & " his_estructura.tenro = 22 AND "
+StrSql = StrSql & " (his_estructura.htetdesde <= " & ConvFecha(Aux_Fecha_Hasta) & ") AND "
+StrSql = StrSql & " ((" & ConvFecha(Aux_Fecha_Hasta) & " <= his_estructura.htethasta) or (his_estructura.htethasta is null))"
+OpenRecordset StrSql, rs_Estructura
+If Not rs_Estructura.EOF Then
+    If Not IsNull(rs_Estructura!estrcodext) Then
+        If rs_Estructura!estrcodext = "2" Then
+            Jornal = True
+            Flog.writeline "Jornal"
+        Else
+            Jornal = False
+            Flog.writeline "Mensual"
+        End If
+    Else
+        Flog.writeline "Codigo externo de la Forma de liq Nulo. Se asume No Jornal"
+        Jornal = False
+        Flog.writeline "Mensual"
+    End If
+Else
+    Flog.writeline "No existe Forma de liq. Se asume No Jornal. SQL: " & StrSql
+    Jornal = False
+    Flog.writeline "Mensual"
+End If
+
+
+'------------------------------------------------------------------------------------------------
+'------------------------------------------------------------------------------------------------
+'Genero los pagos y/o descuentos
+'----------------------------------------------------------------------------------------------------------
+'PAGOS
+If Genera_Pagos And Dias_Pago > 0 Then
+    Mes_Afecta = Mes_Inicio
+    Ano_Afecta = Ano_Inicio
+    Aux_TipDiaPago = TipDiaPago
+    Dias_Afecta = Dias_Pago
+
+    Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaPago, Dias_Afecta, 3) 'Pago
+End If
+
+'Descuentos ---------------------------------------------
+If Genera_Descuentos And Dias_Dto > 0 Then
+    Dias_Pagados = 0
+    Ya_Pago = True
+    
+    Fin_Licencia = False
+    Mes_Afecta = Mes_Inicio
+    Ano_Afecta = Ano_Inicio
+    Dias_Pendientes = 0
+    Dias_Restantes = Dias_Dto 'Dias_Pago
+    Dias_Afecta = Dias_Dto  'Dias_Pago
+    
+    Aux_TipDiaPago = TipDiaPago
+    Aux_TipDiaDescuento = TipDiaDescuento
+    
+    'FGZ - 30/11/2010 ---------------------
+    ' Redefino la fecha hasta tal que  la cantidad de dias sean habiles
+    New_Fecha_Hasta = CalcFechaHastaLic(Ternro, TipoVac, Aux_Fecha_Desde, Dias_Dto)
+    Aux_Fecha_Hasta = New_Fecha_Hasta
+    'FGZ - 30/11/2010 ---------------------
+    
+    
+    'FGZ - 18/11/2010 ------------------------------------------------------
+    Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+    'Dias_Afecta = CHabiles
+    'If Dias_Afecta > (DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1) Then
+    If Dias_Afecta > CHabiles Then
+        If CHabiles < Dias_Tope Then
+            Dias_Afecta = CHabiles
+            Aux_Fecha_Hasta = DateAdd("d", Dias_Afecta - 1, Aux_Fecha_Desde)
+            Mes_Fin = Month(Aux_Fecha_Hasta)
+            Ano_Fin = Year(Aux_Fecha_Hasta)
+        Else
+            Dias_Afecta = CHabiles
+            Aux_Fecha_Hasta = DateAdd("d", Dias_Afecta - 1, Aux_Fecha_Desde)
+            Mes_Fin = Month(Aux_Fecha_Hasta)
+            Ano_Fin = Year(Aux_Fecha_Hasta)
+        End If
+    End If
+    
+    If Jornal Then
+        If Day(Aux_Fecha_Desde) > 15 Then
+            Aux_TipDiaDescuento = st_ModeloDto2
+            Quincena_Inicio = 2
+        Else
+            Aux_TipDiaDescuento = st_ModeloDto
+            Quincena_Inicio = 1
+        End If
+        If Day(Aux_Fecha_Hasta) > 15 Then
+            Quincena_Fin = 2
+        Else
+            Quincena_Fin = 1
+        End If
+        Flog.writeline "Quincena Inicio " & Quincena_Inicio
+        Flog.writeline "Quincena Fin " & Quincena_Fin
+        Flog.writeline "Modelo Pago " & Aux_TipDiaPago
+        Flog.writeline "Modelo Descuento " & Aux_TipDiaDescuento
+    Else
+        Quincena_Inicio = 1
+    End If
+    Quincena_Siguiente = Quincena_Inicio
+
+    If Mes_Afecta = 2 Then
+        Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+        If Not Jornal Then
+            Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+        Else
+            If Quincena_Siguiente = 1 Then
+                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+            Else
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            End If
+        End If
+    Else
+        If Not Jornal Then
+            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+            If Mes_Afecta = 12 Then
+                Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+            Else
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            End If
+        Else
+            If Quincena_Siguiente = 1 Then
+                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+            Else
+                Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+                If Mes_Afecta = 12 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            End If
+        End If
+    End If
+
+    'EAM- Preguntar
+    If (Aux_Fecha_Hasta <= Ultimo_Mes) Then 'termina en el mes
+        'Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1
+        Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+        Dias_Afecta = CHabiles
+    Else 'continua en el mes siguiente
+        'Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Ultimo_Mes) + 1
+        Call DiasHabilesLic(Ternro, TipoVac, Aux_Fecha_Desde, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+        Dias_Afecta = CHabiles
+    End If
+   
+    Primero_Mes = AFecha(Mes_Afecta, Day(Aux_Fecha_Desde), Ano_Afecta)
+    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+    Aux_TipDiaPago = TipDiaPago
+    Aux_TipDiaDescuento = TipDiaDescuento
+    
+    If Jornal Then 'reviso a que quincena corresponde
+        If Day(Primero_Mes) > 15 Then
+            Aux_TipDiaDescuento = st_ModeloDto2
+            Quincena_Siguiente = 2
+        Else
+            Aux_TipDiaDescuento = st_ModeloDto
+            Quincena_Siguiente = 1
+        End If
+    End If
+    
+    
+    Do While Not (Fin_Licencia) Or Dias_Acumulados > 0
+        If Jornal Then
+            If Dias_Afecta > 15 Then
+                Dias_Afecta = 15
+                Dias_Acumulados = 1
+            End If
+            If Dias_Acumulados > 0 And Dias_Afecta < 15 Then
+                If (Dias_Acumulados + Dias_Afecta) <= 15 Then
+                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+                    Dias_Acumulados = 0
+                End If
+            End If
+        Else
+            If Dias_Afecta > 30 Then
+                Dias_Afecta = 30
+                Dias_Acumulados = 1
+            End If
+            If Dias_Acumulados > 0 And Dias_Afecta < 30 Then
+                If (Dias_Acumulados + Dias_Afecta) <= 30 Then
+                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+                    Dias_Acumulados = 0
+                End If
+            End If
+            'Aux_TipDiaDescuento = 7
+        End If
+        
+        Dias_Restantes = Dias_Restantes - Dias_Afecta
+        
+        'Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaPago, Dias_Afecta, 3) 'Pago
+        Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaDescuento, Dias_Afecta, 4) 'Descuento
+        
+        If Jornal Then
+            If Quincena_Siguiente = 1 Then
+                Quincena_Siguiente = 2
+            Else
+                Quincena_Siguiente = 1
+            End If
+        End If
+        
+        'determinar a que continua en el proximo mes
+        If (Mes_Afecta = 12) Then
+            If Not Jornal Then
+                Mes_Afecta = 1
+                Ano_Afecta = Ano_Afecta + 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Mes_Afecta = 1
+                    Ano_Afecta = Ano_Afecta + 1
+                Else
+                    'Queda como esta, en el mismo mes y año
+                End If
+            End If
+        Else
+            If Not Jornal Then
+                Mes_Afecta = Mes_Afecta + 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Mes_Afecta = Mes_Afecta + 1
+                Else
+                    'Queda como esta, en el mismo mes y año
+                End If
+            End If
+        End If
+        
+        If (Ano_Afecta = Ano_Fin) Then
+            If (Mes_Afecta > Mes_Fin) Then
+                If Dias_Restantes <= 0 Then
+                    Fin_Licencia = True
+                End If
+            Else
+                If (Mes_Afecta = Mes_Fin) And Jornal Then
+                    If Quincena_Siguiente > Quincena_Fin Then
+                        If Dias_Restantes <= 0 Then
+                            Fin_Licencia = True
+                        End If
+                    End If
+                End If
+            End If
+        Else
+            If (Ano_Afecta > Ano_Fin) Then
+                If Dias_Restantes <= 0 Then
+                    Fin_Licencia = True
+                End If
+            End If
+        End If
+    
+        If Mes_Afecta = 2 Then
+            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+            If Not Jornal Then
+                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            End If
+        Else
+            If Not Jornal Then
+                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                If Mes_Afecta = 12 Then
+                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                Else
+                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                End If
+            Else
+                If Quincena_Siguiente = 1 Then
+                    Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+                Else
+                    Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+                    If Mes_Afecta = 12 Then
+                        Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+                    Else
+                        Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+                    End If
+                End If
+            End If
+        End If
+    
+        Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+        If (Aux_Fecha_Hasta <= Ultimo_Mes) Then
+            'If (Dias_Restantes < DateDiff("d", Primero_Mes, Ultimo_Mes)) Then
+            If (Dias_Restantes < CHabiles) Then
+                Dias_Afecta = Dias_Restantes
+            Else
+                'Dias_Afecta = DateDiff("d", Primero_Mes, rs!Aux_Fecha_Hasta) + 1
+                'Dias_Afecta = DateDiff("d", Primero_Mes, Aux_Fecha_Hasta) + 1
+                Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Aux_Fecha_Hasta, CHabiles, cNoHabiles, cFeriados)
+                Dias_Afecta = CHabiles
+            End If
+        Else
+            'Dias_Afecta = DateDiff("d", Primero_Mes, Ultimo_Mes) + 1
+            Call DiasHabilesLic(Ternro, TipoVac, Primero_Mes, Ultimo_Mes, CHabiles, cNoHabiles, cFeriados)
+            Dias_Afecta = CHabiles
+        End If
+        
+        If Not Jornal Then
+            If Dias_Afecta > 30 Then
+               Dias_Afecta = 30
+            End If
+        Else
+            If Dias_Afecta > 15 Then
+               Dias_Afecta = 15
+            End If
+        End If
+        
+        If Jornal Then
+            If Day(Primero_Mes) > 15 Then
+                Aux_TipDiaDescuento = st_ModeloDto2
+            Else
+                Aux_TipDiaDescuento = st_ModeloDto
+            End If
+        End If
+    Loop
+End If
+'----------------------------------------------------------------------------------------------------------
+'----------------------------------------------------------------------------------------------------------
+
+''Descuentos
+'If Genera_Descuentos And Dias_Dto > 0 Then
+'    Ya_Pago = True
+'
+'    Fin_Licencia = False
+'    Mes_Afecta = Mes_Inicio
+'    Ano_Afecta = Ano_Inicio
+'    Dias_Pendientes = 0
+'    Dias_Restantes = Dias_Dto
+'
+'    Aux_TipDiaPago = TipDiaPago
+'    Aux_TipDiaDescuento = TipDiaDescuento
+'
+'    Dias_Afecta = Dias_Dto
+'    If Dias_Afecta > (DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1) Then
+'        Aux_Fecha_Hasta = DateAdd("d", Dias_Afecta - 1, Aux_Fecha_Desde)
+'        Mes_Fin = Month(Aux_Fecha_Hasta)
+'        Ano_Fin = Year(Aux_Fecha_Hasta)
+'    End If
+'
+'
+'    If Jornal Then
+'        If Day(Aux_Fecha_Desde) > 15 Then
+'            Aux_TipDiaDescuento = st_ModeloDto2
+'            Quincena_Inicio = 2
+'        Else
+'            Aux_TipDiaDescuento = st_ModeloDto
+'            Quincena_Inicio = 1
+'        End If
+'        If Day(Aux_Fecha_Hasta) > 15 Then
+'            Quincena_Fin = 2
+'        Else
+'            Quincena_Fin = 1
+'        End If
+'        Flog.writeline "Quincena Inicio " & Quincena_Inicio
+'        Flog.writeline "Quincena Fin " & Quincena_Fin
+'        Flog.writeline "Modelo Pago " & Aux_TipDiaPago
+'        Flog.writeline "Modelo Descuento " & Aux_TipDiaDescuento
+'    Else
+'        Quincena_Inicio = 1
+'    End If
+'    Quincena_Siguiente = Quincena_Inicio
+'
+'    If Mes_Afecta = 2 Then
+'        Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'        If Not Jornal Then
+'            Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'        Else
+'            If Quincena_Siguiente = 1 Then
+'                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'            Else
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            End If
+'        End If
+'    Else
+'        If Not Jornal Then
+'            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'            If Mes_Afecta = 12 Then
+'                Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'            Else
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            End If
+'        Else
+'            If Quincena_Siguiente = 1 Then
+'                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'            Else
+'                Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+'                If Mes_Afecta = 12 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            End If
+'        End If
+'    End If
+'
+'    Dias_Afecta = Dias_Dto
+'    If (Aux_Fecha_Hasta <= Ultimo_Mes) Then 'termina en el mes
+'        Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Aux_Fecha_Hasta) + 1
+'    Else 'continua en el mes siguiente
+'        Dias_Afecta = DateDiff("d", Aux_Fecha_Desde, Ultimo_Mes) + 1
+'    End If
+'
+'    Primero_Mes = AFecha(Mes_Afecta, Day(Aux_Fecha_Desde), Ano_Afecta)
+'    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'    Aux_TipDiaPago = TipDiaPago
+'    Aux_TipDiaDescuento = TipDiaDescuento
+'
+'    If Jornal Then 'reviso a que quincena corresponde
+'        If Day(Primero_Mes) > 15 Then
+'            Aux_TipDiaDescuento = st_ModeloDto2
+'            Quincena_Siguiente = 2
+'        Else
+'            Aux_TipDiaDescuento = st_ModeloDto
+'            Quincena_Siguiente = 1
+'        End If
+'    End If
+'
+'
+'    Do While Not (Fin_Licencia) Or Dias_Acumulados > 0
+'        If Jornal Then
+'            If Dias_Afecta > 15 Then
+'                Dias_Afecta = 15
+'                Dias_Acumulados = 1
+'            End If
+'            If Dias_Acumulados > 0 And Dias_Afecta < 15 Then
+'                If (Dias_Acumulados + Dias_Afecta) <= 15 Then
+'                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+'                    Dias_Acumulados = 0
+'                End If
+'            End If
+'        Else
+'            If Dias_Afecta > 30 Then
+'                Dias_Afecta = 30
+'                Dias_Acumulados = 1
+'            End If
+'            If Dias_Acumulados > 0 And Dias_Afecta < 30 Then
+'                If (Dias_Acumulados + Dias_Afecta) <= 30 Then
+'                    Dias_Afecta = Dias_Afecta + Dias_Acumulados
+'                    Dias_Acumulados = 0
+'                End If
+'            End If
+'            Aux_TipDiaDescuento = 7
+'        End If
+'
+'        Dias_Restantes = Dias_Restantes - Dias_Afecta
+'
+'        If Dias_Afecta <> 0 Then
+'            Call Generar_PagoDescuento(Mes_Afecta, Ano_Afecta, Aux_TipDiaDescuento, Dias_Afecta, 4) 'Descuento
+'        End If
+'
+'        If Jornal Then
+'            If Quincena_Siguiente = 1 Then
+'                Quincena_Siguiente = 2
+'            Else
+'                Quincena_Siguiente = 1
+'            End If
+'        End If
+'
+'        'determinar a que continua en el proximo mes
+'        If (Mes_Afecta = 12) Then
+'            If Not Jornal Then
+'                Mes_Afecta = 1
+'                Ano_Afecta = Ano_Afecta + 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Mes_Afecta = 1
+'                    Ano_Afecta = Ano_Afecta + 1
+'                Else
+'                    'Queda como esta, en el mismo mes y año
+'                End If
+'            End If
+'        Else
+'            If Not Jornal Then
+'                Mes_Afecta = Mes_Afecta + 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Mes_Afecta = Mes_Afecta + 1
+'                Else
+'                    'Queda como esta, en el mismo mes y año
+'                End If
+'            End If
+'        End If
+'
+'        If (Ano_Afecta = Ano_Fin) Then
+'            If (Mes_Afecta > Mes_Fin) Then
+'                Fin_Licencia = True
+'            Else
+'                If (Mes_Afecta = Mes_Fin) And Jornal Then
+'                    If Quincena_Siguiente > Quincena_Fin Then
+'                        Fin_Licencia = True
+'                    End If
+'                End If
+'            End If
+'        Else
+'            If (Ano_Afecta > Ano_Fin) Then
+'                Fin_Licencia = True
+'            End If
+'        End If
+'
+'        If Mes_Afecta = 2 Then
+'            Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'            If Not Jornal Then
+'                Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            End If
+'        Else
+'            If Not Jornal Then
+'                Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                If Mes_Afecta = 12 Then
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                Else
+'                    Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                End If
+'            Else
+'                If Quincena_Siguiente = 1 Then
+'                    Primero_Mes = AFecha(Mes_Afecta, 1, Ano_Afecta)
+'                    Ultimo_Mes = AFecha(Mes_Afecta, 15, Ano_Afecta)
+'                Else
+'                    Primero_Mes = AFecha(Mes_Afecta, 16, Ano_Afecta)
+'                    If Mes_Afecta = 12 Then
+'                        Ultimo_Mes = AFecha(Mes_Afecta, 31, Ano_Afecta)
+'                    Else
+'                        Ultimo_Mes = AFecha(Mes_Afecta + 1, 1, Ano_Afecta) - 1
+'                    End If
+'                End If
+'            End If
+'        End If
+'
+'        If (Aux_Fecha_Hasta <= Ultimo_Mes) Then
+'            If (Dias_Restantes < DateDiff("d", Primero_Mes, Ultimo_Mes)) Then
+'                Dias_Afecta = Dias_Restantes
+'            Else
+'                Dias_Afecta = DateDiff("d", Primero_Mes, Aux_Fecha_Hasta) + 1
+'            End If
+'        Else
+'            Dias_Afecta = DateDiff("d", Primero_Mes, Ultimo_Mes) + 1
+'        End If
+'
+'        If Not Jornal Then
+'            If Dias_Afecta > 30 Then
+'               Dias_Afecta = 30
+'            End If
+'        Else
+'            If Dias_Afecta > 15 Then
+'               Dias_Afecta = 15
+'            End If
+'        End If
+'
+'        If Jornal Then
+'            If Day(Primero_Mes) > 15 Then
+'                Aux_TipDiaDescuento = st_ModeloDto2
+'            Else
+'                Aux_TipDiaDescuento = st_ModeloDto
+'            End If
+'        End If
+'    Loop
+'End If
+
+rs.Close
+Set rs = Nothing
+End Sub
+
+
+
+Private Sub DiasHabilesLic(ByVal Ternro As Long, ByVal TipoVac As Long, ByVal FechaInicial As Date, ByVal Fechafinal As Date, ByRef CHabiles As Integer, ByRef cNoHabiles As Integer, ByRef cFeriados As Integer)
+'-----------------------------------------------------------------------
+' Procedimiento
+'       Calcula la cantidad de dias entre 2 fechas (habiles, no habiles, feriados)
+'Autor: FGZ
+'Ultima Mod: FGZ - 18/11/2010
+'-----------------------------------------------------------------------
+Dim i As Integer
+Dim j As Integer
+Dim objFeriado As New Feriado
+Dim DHabiles(1 To 7) As Boolean
+Dim EsFeriado As Boolean
+Dim objRs As New ADODB.Recordset
+Dim ExcluyeFeriadosNoLab As Boolean
+Dim ExcluyeFeriadosLab As Boolean
+Dim Fecha As Date
+
+Dim AuxFechaDesde As Date
+Dim AuxFechaHasta As Date
+Dim Quedandias As Boolean
+
+'Dim CHabiles As Integer
+'Dim cNoHabiles As Integer
+'Dim cFeriados As Integer
+Dim CortarLicencias As Boolean
+
+    'Por default deberia cortar las licencias
+    CortarLicencias = True
+    
+    StrSql = "SELECT * FROM tipovacac WHERE tipvacnro = " & TipoVac
+    OpenRecordset StrSql, objRs
+    If Not objRs.EOF Then
+        DHabiles(1) = objRs!tpvhabiles__1
+        DHabiles(2) = objRs!tpvhabiles__2
+        DHabiles(3) = objRs!tpvhabiles__3
+        DHabiles(4) = objRs!tpvhabiles__4
+        DHabiles(5) = objRs!tpvhabiles__5
+        DHabiles(6) = objRs!tpvhabiles__6
+        DHabiles(7) = objRs!tpvhabiles__7
+    
+        ExcluyeFeriadosNoLab = CBool(objRs!tpvferiado)
+        
+        If Not EsNulo(objRs!excferilab) Then
+            ExcluyeFeriadosLab = CBool(objRs!excferilab)
+        Else
+            ExcluyeFeriadosLab = False
+        End If
+        
+        If Not EsNulo(objRs!tpvprog3) Then
+            CortarLicencias = CBool(objRs!tpvprog3)
+        End If
+    Else
+        Flog.writeline "No se encontro el tipo de Vacacion " & TipoVac
+        Exit Sub
+    End If
+    
+    Set objFeriado.Conexion = objConn
+    Set objFeriado.ConexionTraza = objConn
+    
+    i = 0
+    j = 0
+    CHabiles = 0
+    cNoHabiles = 0
+    cFeriados = 0
+   
+   AuxFechaDesde = FechaInicial
+   
+   Fecha = FechaInicial
+    
+    Do While Fecha <= Fechafinal
+        Quedandias = True
+        EsFeriado = objFeriado.Feriado(Fecha, Ternro, False)
+        
+        'FGZ - 10/08/2010 -----------------------
+        If Not EsFeriado Then
+            If DHabiles(Weekday(Fecha)) Then
+                i = i + 1
+                CHabiles = CHabiles + 1
+            Else
+                cNoHabiles = cNoHabiles + 1
+                If PoliticaOK And Diashabiles_LV Then
+                    i = i + 1
+                End If
+            End If
+        Else    'Es feriado
+            If Feriado_Laborable Then
+                If ExcluyeFeriadosLab Then
+                    If DHabiles(Weekday(Fecha)) Then
+                        i = i + 1
+                        CHabiles = CHabiles + 1
+                    Else
+                        cNoHabiles = cNoHabiles + 1
+                        If PoliticaOK And Diashabiles_LV Then
+                            i = i + 1
+                        End If
+                    End If
+                Else
+                    cFeriados = cFeriados + 1
+                    If PoliticaOK And Diashabiles_LV Then
+                        i = i + 1
+                    End If
+                End If
+            Else 'Feriado no laborable
+                If ExcluyeFeriadosNoLab Then
+                    If DHabiles(Weekday(Fecha)) Then
+                        i = i + 1
+                        CHabiles = CHabiles + 1
+                    Else
+                        cNoHabiles = cNoHabiles + 1
+                        If PoliticaOK And Diashabiles_LV Then
+                            i = i + 1
+                        End If
+                    End If
+                Else
+                    cFeriados = cFeriados + 1
+                End If
+            End If
+        End If
+        
+        Fecha = DateAdd("d", 1, Fecha)
+    Loop
+    Set objFeriado = Nothing
+End Sub
+
+
+Private Function CalcFechaHastaLic(ByVal Ternro As Long, ByVal TipoVac As Long, ByVal Aux_Fecha_Desde As Date, ByVal Dias_Dto As Integer)
+'-----------------------------------------------------------------------
+' Procedimiento
+'       Calcula la fecha hasta que debe tener una licencia para que la cantidad de dias habiles sea los que se pasan por parametro
+'Autor: FGZ - 30/11/2010
+'Ultima Mod:
+'-----------------------------------------------------------------------
+Dim i As Integer
+Dim j As Integer
+Dim objFeriado As New Feriado
+Dim DHabiles(1 To 7) As Boolean
+Dim EsFeriado As Boolean
+Dim objRs As New ADODB.Recordset
+Dim ExcluyeFeriadosNoLab As Boolean
+Dim ExcluyeFeriadosLab As Boolean
+Dim Fecha As Date
+
+Dim AuxFechaDesde As Date
+Dim AuxFechaHasta As Date
+Dim Quedandias As Boolean
+
+Dim CHabiles As Integer
+Dim cNoHabiles As Integer
+Dim cFeriados As Integer
+Dim CortarLicencias As Boolean
+
+    'Por default deberia cortar las licencias
+    CortarLicencias = True
+    
+    StrSql = "SELECT * FROM tipovacac WHERE tipvacnro = " & TipoVac
+    OpenRecordset StrSql, objRs
+    If Not objRs.EOF Then
+        DHabiles(1) = objRs!tpvhabiles__1
+        DHabiles(2) = objRs!tpvhabiles__2
+        DHabiles(3) = objRs!tpvhabiles__3
+        DHabiles(4) = objRs!tpvhabiles__4
+        DHabiles(5) = objRs!tpvhabiles__5
+        DHabiles(6) = objRs!tpvhabiles__6
+        DHabiles(7) = objRs!tpvhabiles__7
+    
+        ExcluyeFeriadosNoLab = CBool(objRs!tpvferiado)
+        
+        If Not EsNulo(objRs!excferilab) Then
+            ExcluyeFeriadosLab = CBool(objRs!excferilab)
+        Else
+            ExcluyeFeriadosLab = False
+        End If
+        
+        If Not EsNulo(objRs!tpvprog3) Then
+            CortarLicencias = CBool(objRs!tpvprog3)
+        End If
+    Else
+        Flog.writeline "No se encontro el tipo de Vacacion " & TipoVac
+        Exit Function
+    End If
+    
+    Set objFeriado.Conexion = objConn
+    Set objFeriado.ConexionTraza = objConn
+    
+    i = 0
+    j = 0
+    CHabiles = 0
+    cNoHabiles = 0
+    cFeriados = 0
+   
+   'AuxFechaDesde = Aux_Fecha_Desde
+   Fecha = Aux_Fecha_Desde
+    
+    'Do While Fecha <= Fechafinal
+    Do While CHabiles < Dias_Dto
+        Quedandias = True
+        EsFeriado = objFeriado.Feriado(Fecha, Ternro, False)
+        
+        'FGZ - 10/08/2010 -----------------------
+        If Not EsFeriado Then
+            If DHabiles(Weekday(Fecha)) Then
+                i = i + 1
+                CHabiles = CHabiles + 1
+            Else
+                cNoHabiles = cNoHabiles + 1
+                If PoliticaOK And Diashabiles_LV Then
+                    i = i + 1
+                End If
+            End If
+        Else    'Es feriado
+            If Feriado_Laborable Then
+                If ExcluyeFeriadosLab Then
+                    If DHabiles(Weekday(Fecha)) Then
+                        i = i + 1
+                        CHabiles = CHabiles + 1
+                    Else
+                        cNoHabiles = cNoHabiles + 1
+                        If PoliticaOK And Diashabiles_LV Then
+                            i = i + 1
+                        End If
+                    End If
+                Else
+                    cFeriados = cFeriados + 1
+                    If PoliticaOK And Diashabiles_LV Then
+                        i = i + 1
+                    End If
+                End If
+            Else 'Feriado no laborable
+                If ExcluyeFeriadosNoLab Then
+                    If DHabiles(Weekday(Fecha)) Then
+                        i = i + 1
+                        CHabiles = CHabiles + 1
+                    Else
+                        cNoHabiles = cNoHabiles + 1
+                        If PoliticaOK And Diashabiles_LV Then
+                            i = i + 1
+                        End If
+                    End If
+                Else
+                    cFeriados = cFeriados + 1
+                End If
+            End If
+        End If
+        
+        If CHabiles < Dias_Dto Then
+            Fecha = DateAdd("d", 1, Fecha)
+        End If
+    Loop
+    CalcFechaHastaLic = Fecha
+
+Set objFeriado = Nothing
+    
+End Function

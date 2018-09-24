@@ -1,0 +1,385 @@
+0080000000ALCAN ALUMINIO DO BRASIL LTDA                                                                                                               MAUA                                         SP 60561800008945
+0080000001GRAFICOS SANGAR LTDA                                                                                                                        JABAQUARA                                    SP 74461005000158
+0080000002GRAFICA E. RAINHA LESCAL LTDA                                                                                                               RIO DE JANEIRO                               RJ 33042896000120
+0080000003FABRICA DE PAPEL E PAPELAO NOSSA                                                                                                            ITAPIRA                                      SP 49912199000385
+0080000004KLOCKNER PENTAPLAST DO BRASIL LTDA                                                                                                          SAO PAULO                                    SP 59201087000108
+0080000005PRODESMAQ IND.GRAFICA LTDA                                                                                                                  VINHEDO                                      SP 48062707000159
+0081400000FMC INTERNATIONAL                                                                                                                           CORK                                         DB
+0080000006SALDEC PRODS.QUIM.PECUARIOS LT                                                                                                              RIO DE JANEIRO                               RJ 33398652000185
+0080000007SELECTCHEMIE IMP EXP REP LT                                                                                                                 SP                                           SP 62651955000166
+0080000008ESKISA S.A. INDUSTRIA E COM.                                                                                                                SAO PAULO                                    SP 60911161000169
+0080000009MAGNESITA S/A.                                                                                                                              BAHIA                                        BA 19791268000540
+0080000010FABRICA DE PAPEL E PAPELAO NOSSA   SENHORA DA PENHA SA                                                                                      ITAPIRA                                      SP 49912199000385
+0080000011ABRASIVOS AMARANTE LTDA                                                                                                                     RIO DE JANEIRO                               RJ 33681750000125
+0080000012SALDEC PRODS.QUIM.PECUARIOS LT                                                                                                              RIO DE JANEIRO                               RJ 33398652000185
+0000272111ROCHE INTERNATIONAL LTD.           CENTRO LOGISTICO                                                                                         MONTEVIDEO                                   10
+0080000015PRODUCTOS ROCHE LTDA.              PRODUCTOS ROCHE LTDA.                                                                                    SANTIAGO                                     13 82.999.400-3
+0080000020CALCONOVA S.A.DE C.V.                                                                                                                       NAUCALPAN JUAREZ                             DF -CNO891127RNA
+0080000021ACERO COMERCIAL ADOC S.A.          ACERO COMERCIAL ADOC S.A.                                                                                SANTIAGO                                     13 78.339.790-0
+0080000025Proveedor sin retenciones                                                                                                                   1600                                         01
+0080000026TEST                               LAST NAME                                                                                                SANTIAGO                                     13 78.339.790-0
+0080000027Acero Comercial                    Acero Com.                                                                                               santiago                                     13 78.339.790-0
+0080000028Acero Com.                         Acero Comercial                                                                                          santiago                                     13 78.339.790-0
+0080000029Acero Com.                         Acero Comercial                                                                                          santiago                                     13 78.339.790-0
+0080000030Acero Comercial                    Acero Com.                                                                                               santiago                                     13 78.339.790-0
+0080000031Acero Comercial                    Acero Com.                                                                                               santiago                                     13 78.339.790-0
+0000600901ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM                                         BL
+0000600903ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM                                         BL
+0000600904ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM
+0000600905ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM                                         BL
+0000600906ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM                                         BL
+0000600907ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM                                         BL
+0080000032AR CONSULTING S.A.                 AR CONSULTING S.A.                                                                                       CIUDAD DE BUENOS AIRES                       00 30688941993
+0000600908ROCHE DIAGNOSTICS INTERNAT LTD                                                                                                              CHAM
+0000616402ROCHE DIAGNOSTICS GMBH                                                                                                                       MANNHEIM
+0000616405ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616404ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616407ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616408ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616410ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616411ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0000616412ROCHE DIAGNOSTICS GMBH                                                                                                                      MANNHEIM
+0080000033Proveedor ABC                                                                                                                               1000                                         13
+0080000034Proveedor Peruano Financiero                                                                                                                1000                                         06
+0080000035Proveedor Colombiano Financiero                                                                                                             cumbia                                       102
+0080000036Proveedor Venezolano Financiero                                                                                                             1000                                         01
+0080000037Proveedor Brasilero Financiero                                                                                                              1000                                         SP
+0080000038Proveedor Argentina Financiero                                                                                                              1000                                         00 20205692089
+0000600900ROCHE DIAGNOSTICS INTERNAT L                                                                                                                CHAM
+0080000039Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000040Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000041Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000042Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000043Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000044Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000045Acero Comercial ADOC, S.A.         Acero Comercial ADOC, S.A                                                                                Santiago                                     13 78.339.790-0
+0080000050Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000051Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0051060000Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060001Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081600000Juan Pablo G                       JPG
+0081600001Juan Pablo G                       JPG
+0081600002Juan Pablo G                       JPG
+0081610000Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610001Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610002Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610003Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900000Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081900001Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081950000GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0081950001GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950002GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0000100000SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100001SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100002SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100003SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100004SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100005SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0080000052Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal Bs As.                       00 30500008454
+0080000053Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000054Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000055Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000056Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000057Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000058Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000059Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000060Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000061Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000062Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000063Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0000100007SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0051060002Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060003Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060004Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060005Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060006Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081600003Juan Pablo G                       JPG
+0081600004Juan Pablo G                       JPG
+0081610004Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610005Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900002Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081900003Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081950003GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0051060010Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060011Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060012Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0080000065Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000066Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000067Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000068Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000069Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000070Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000071Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000072Banco Rio de la Plata, S. A.       Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000073Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000074Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000075Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000076Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000077Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000078Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000079Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000080Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0051060013Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060014Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060015Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060016Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060017Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060018Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081600005Juan Pablo G                       JPG
+0081600006Juan Pablo G                       JPG
+0051060019CIENTEC INSTRUMENTOS CIENTIFICOS SACIENTEC INSTRUMENTOS CIENTIFICOS SA                                                                      SANTIAGO                                     13 96.709.790-K
+0081600007Juan Pablo G                       JPG
+0081600008Juan Pablo G                       JPG
+0081600009Juan Pablo G                       JPG
+0081600010Juan Pablo G                       JPG
+0081610010Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610011Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900005Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081900006Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081950005GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950006GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950007GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950008GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950009GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950010GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950011GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950012GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950013GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0000100008SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100009SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0080000081Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal                              00 30500008455
+0080000082Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal                              00 30500008455
+0080000083Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal                              00 30500008455
+0080000084LABORATORIO CHILE S.A.             LABORATORIO CHILE S.A.                                                                                   SANTIAGO                                     13 90.322.000-7
+0080000085LABORATORIO RIDER S.A.             LABORATORIO RIDER S.A.                                                                                   SANTIAGO                                     13 92.054.000-7
+0080000090proveedor financiero De chile con                                                                                                           salas                                        01
+0080000091IMPSAT                                                                                                                                      QUITO                                        EC 1791252322001
+0080000092ADVANTEGE SECURITY SYSTEMS S DE RL                                                                                                          PASEO DE LAS LOMAS SANTA FE                  MOR2
+0080000093Proveedor Financiero Sintex                                                                                                                 1000                                         DF
+0080000094Proveedor financiero cia 2631                                                                                                               1000                                         MEX
+0080000095Proveedor exclusivo para pruebas EM                                                                                                         1000                                         01
+0080000096Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal                              00 30500008455
+0080000097Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0080000098Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060020Diagnostica Stago Field Changed    Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060021Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0000260801PRODUCTOS ROCHE S.A.                                                                                                                        BOGOTA
+0051060022Diagnostica Stago Field Changed    Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060023Diagnostica Stago Field Changed    Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060024Roche Instrument Center            Roche Instrument  field Changed                                                                          Rotkreuz                                     BL
+0051060025Roche Instrument Center            Roche Instrument  field Changed                                                                          Rotkreuz                                     BL
+0051060026Roche Instrument Center            Roche Instrument  field Changed                                                                          Rotkreuz                                     BL
+0081600015Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081600016Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081600017Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081600018Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081610015Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610016Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610017Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610018Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900010Municipalidad de Tucuman CF        Banco Mariva Debito en Cuenta                                                                            SAN MIGUEL DE TUCUMAN                        14
+0081900011Municipalidad de Tucuman CF        Banco Mariva Debito en Cuenta                                                                            SAN MIGUEL DE TUCUMAN                        14
+0081950015GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0081950016GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0081950017GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0000100010SK Service comercial ltda.         SK service comercial ltda F.ch                                                                           SAO PAULO                                    SP 01727184000159
+0000100011SK Service comercial ltda.         SK service comercial ltda F.ch                                                                           SAO PAULO                                    SP 01727184000159
+0080000100c                                                                                                                                           v                                            01
+0000216200Test Afiliada                                                                                                                               TEST                                         BA
+0080000105Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060030Diagnostica Stago Field Changed    Diagnostica Stago                                                                                        AsniÇres                                     75
+0081600020Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081610020Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900015Municipalidad de Tucuman CF        Banco Mariva Debito en Cuenta                                                                            SAN MIGUEL DE TUCUMAN                        14
+0081950020GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0081950021GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0081950022GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                       COL. NARVARTE                                DF -GOM700525MX5
+0000100012SK Service comercial ltda.         SK service comercial ltda F.ch                                                                           SAO PAULO                                    SP 01727184000159
+0080000110Name 1                             Name 2                                                                                                   CITY1                                        SP
+0000272150RIL para Test eBN                                                                                                                           URUGUAY
+0000261950Roche Brasil - Test eBN                                                                                                                     Brasil
+0000100016SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100017SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100018SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0081600025Dr. Javier Pi Sun                  Dr. Javier Pi Sun
+0081600026Juan Pablo G                       JPG
+0081600027PROV. GRAL. DIAGNOSTICA            PROV. GRAL. DIAGNOSTICA                                                                                  sin info                                     06
+0081600028Pronto                             Pronto                                                                                                                                                102
+0081610025Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610026Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610027Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610028Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610029ANDREA GAMEIRO SPLENDORE                                                                                                                    QUITO                                        EC
+0081610030ANDREA GAMEIRO SPLENDORE                                                                                                                    QUITO                                        EC
+0081610031ANDREA GAMEIRO SPLENDORE                                                                                                                    QUITO                                        EC
+0080000111Proveedor Argen para Cheque dif                                                                                                             marron y Blanco                              01
+0081950025GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0080000112FABRICA DE PAPEL E PAPELAO NOSSA 2                                                                                                          ITAPIRA                                      SP 49912199000385
+0080000113FABRICA DE PAPEL E PAPELAO NOSSA 3                                                                                                          ITAPIRA                                      SP 49912199000385
+0080000114FABRICA DE PAPEL E PAPELAO NOSSA 4                                                                                                          ITAPIRA                                      SP 49912199000385
+0080000115g                                                                                                                                           G                                            AL
+0081950026AEROMEXICO                                                                                                                                                                               DF -AME880912I89
+0081950027BERLITZ DE MEXICO. S.A. DE C.V.                                                                                                                                                          DF -BME730201IA5
+0081950028CIA.OPERADORA DE SERV.TURISTICOS LAS BRISAS.S.A. DE C.V.                                                                                                                                 DF -OST851103KY5
+00819500291
+0081600029df
+0081950030a
+0080000116Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0051060035Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0051060036Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0080000120Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000121Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000122Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000123Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0081600030Juan Pablo G                       JPG
+0081900020Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0051060040Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0080000124Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0000100015SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0080000125Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0081600031Dr. Javier Pi Sun field changed    Dr. Javier Pi Sun
+0081610035Regina Gurian FK01                 Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900021Municipalidad de Tucuman CF        Banco Mariva Debito en Cuenta                                                                            SAN MIGUEL DE TUCUMAN                        14
+0051060041FARMACIA GUADALAJARA, S.A. DE C.V.                                                                                                          GUADALAJARA                                  DF -FGU830930PD3
+0051060042FARMACIA GUADALAJARA, S.A. DE C.V.                                                                                                          GUADALAJARA                                  DF -FGU830930PD3
+0080000126Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000127Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060043Diagnostica Stago Field Changed    Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060044Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060045Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060046Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400005Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0051060047Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400006Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0051060048Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0051060049Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400007Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0081610036Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081900022Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081950035GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950036GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950037GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950038GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950039GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081950040GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0000100020SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100022SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0000100023SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0080000128Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0080000129Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0080000130Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060050Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                San Jose                                     01 506 987645
+0051060051Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0051060052Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                San Jose                                     01 506 987645
+0051060053Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000131Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060054Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000132Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060055Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000133Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060056Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000134MAGNESITA S/A.                                                                                                                              BAHIA                                        BA 19791268000540
+0080000135MAGNESITA S/A. 3                                                                                                                            BAHIA                                        BA 19791268000540
+0080000136LABORATORIO RIDER S.A. 2           LABORATORIO RIDER S.A. 2                                                                                 SANTIAGO                                     13 92.054.000-7
+0080000137LABORATORIO RIDER S.A. 3           LABORATORIO RIDER S.A. 3                                                                                 SANTIAGO                                     13 92.054.000-7
+0080000140Teste Easy despachante                                                                                                                      RIO DE JANEIRO                               RJ
+0080000141Teste Easy IPI                                                                                                                              RIO DE JANEIRO                               RJ
+0080000142Teste Easy ICMS                                                                                                                             RIO DE JANEIRO                               RJ
+0080000143Teste Easy II                                                                                                                               RIO DE JANEIRO                               RJ
+0080000144Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060060Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000145Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060061Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0051060062FARMACIA GUADALAJARA, S.A. DE C.V.                                                                                                          GUADALAJARA                                  DF -FGU830930PD3
+0080000146Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0080000147Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060063Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0081600035Juan Pablo G                       JPG
+0051060064FARMACIA GUADALAJARA, S.A. DE C.V.                                                                                                          GUADALAJARA                                  DF -FGU830930PD3
+0081610040Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0080000148Se§ores Banco Rio de la Plata      Banco Rio de la Plata, S. A.                                                                             Capital Federal                              00 30500008454
+0081900025Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0081600036Juan Pablo G                       JPG
+0081950045GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0081600037Juan Pablo G                       JPG
+0081900026Municipalidad de Tucuman           Municipalidad de Tucuman                                                                                 San Miguel de Tucuman                        14
+0000100024SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0081950046GOMEZ, S.A. DE C.V.                GOMEZ S.A. DE C.V.                                                                                                                                    DF -GOM700525MX5
+0051060065Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081610041Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081400010Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0000100025SK Service comercial ltda.         SK service comercial ltda.                                                                               SAO PAULO                                    SP 01727184000159
+0051060066Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400011Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0081610045Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0081610046Regina Gurian                      Regina Gurian                                                                                            CAMPINAS                                     SP
+0051060070Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400015Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0081400016Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0081400017Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0081400018Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0051060071Diagnostica Stago                  Diagnostica Stago                                                                                        AsniÇres                                     75
+0081400019Brain Ware Solution AG             Brain Ware Solution AG                                                                                   Zuger                                        ZH
+0080000150C.A.Platense                                                                                                                                1600                                         AM
+0000272112Fornecedor para testes AVERAGE1                                                                                                             TESTE
+0000272113Fornecedor para testes AVERAGE2                                                                                                             teste
+0000272114Fornecedor para testes AVERAGE3                                                                                                             teste
+0000272115Fornecedor para testes AVERAGE4                                                                                                             TESTE
+0000272116Fornecedor para testes AVERAGE5                                                                                                             teste
+0000272117Fornecedor para testes AVERAGE6                                                                                                             TESTE
+0080000155Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal                              00 30500008455
+0080000156Se§ores Banco Rio de la Plata FK01 Banco Rio de la Plata, S. A. FK01                                                                        Capital Federal Field Changed                00 30500008455
+0051060075Asoc. de Medicos Anestesiologos    Asoc. de Medicos Anestes.                                                                                Capital Federal Field Changed                01 506 987645
+0080000160Nestor Rambal                                                                                                                               1234                                         ANZJ12345678-6
+0080000161CESAR NATARENO BARRIOS                                                                                                                      GUATEMALA                                    01 0835404
+0000999999Werner Prokopetz                                                                                                                            S∆o jose dos Campos
+0000999997XX                                                                                                                                          XX
+0000999995NAME1                              NAME2                              NAME3                              NAME4                              CITY                               POBOX     SP
+0000999998SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999996SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999990SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999992SK Service comercial ltda.         SK service comercial ltda F.ch     SK SERVICE COM                     SK SERVICE F C.                    SAO PAULO                                       01727184000159
+0080000165Vendor Venezuela                                                                                                                            1                                            01
+0000999994SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999989SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999988SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999987SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999986SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999985SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999984SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999983SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999982SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999981SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999980SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999979SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999975SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999974SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999973SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999972SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999971SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999970SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999969SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999968SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999967SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999966SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999965SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999964SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999963SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999962SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999961SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999960SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999959SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999958SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999957SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999955SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999954SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999953SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999952SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0000999951SK Service comercial ltda.         SK service comercial ltda.         SK SERVICE COM                                                        SAO PAULO                                       01727184000159
+0080000166adfafag                                                                                                                                     Santiago                                     02
+0080000167Prokoware Systems                                                                                                                           S«O JOSê DOS CAMPOS                POBOX     SP
+0080000169.                                  .                                  .                                                                     .                                  .         SP
+0080000170NAME1                              NAME2                              .                                                                     CITY                               POBOX     SP
+0080000171NAME1                              NAME2                              .                                                                     CITY                               POBOX     SP
+0080000172NAME1                              NAME2                              .                                                                     CITY                               POBOX     SP
+0080000173NAME1                              NAME2                              .                                                                     CITY                               POBOX     SP

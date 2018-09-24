@@ -1,0 +1,471 @@
+Attribute VB_Name = "ProcMasivosNovBaja"
+Option Explicit
+
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Modulo que se encarga de generar los procesos masivos (insertar en NovBaja)
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+Dim fs, f
+
+Dim NroProceso As Long
+
+Global Path As String
+Global HuboErrores As Boolean
+
+Global simpronro  As Integer
+Global pnovnro  As Integer
+Global fec_fin  As Date
+
+
+Private Sub Main()
+
+Dim strCmdLine As String
+Dim Nombre_Arch As String
+
+Dim StrSql As String
+Dim StrSql2 As String
+Dim objRs As New ADODB.Recordset
+Dim objRs2 As New ADODB.Recordset
+Dim rsEmpleados As New ADODB.Recordset
+Dim I
+Dim cantConcPar
+Dim PID As String
+Dim parametros As String
+Dim ArrParametros
+
+Dim nro_concepto As Integer
+Dim nro_parametro As Integer
+Dim proccalculo As Integer
+Dim valor_proccalc As Double
+
+'toDo: Agegar bien los comentarios para el log
+
+    strCmdLine = Command()
+    ArrParametros = Split(strCmdLine, " ", -1)
+    If UBound(ArrParametros) > 0 Then
+        If IsNumeric(ArrParametros(0)) Then
+            NroProceso = ArrParametros(0)
+            Etiqueta = ArrParametros(1)
+        Else
+            Exit Sub
+        End If
+    Else
+        If IsNumeric(strCmdLine) Then
+            NroProceso = strCmdLine
+        Else
+            Exit Sub
+        End If
+    End If
+    
+    ' carga las configuraciones basicas, formato de fecha, string de conexion,
+    ' tipo de BD y ubicacion del archivo de log
+    Call CargarConfiguracionesBasicas
+
+    On Error GoTo CE
+    
+    TiempoInicialProceso = GetTickCount
+    OpenConnection strconexion, objConn
+    
+    HuboErrores = False
+    
+    Nombre_Arch = PathFLog & "ProcMasivos" & "-" & NroProceso & ".log"
+    
+    Set fs = CreateObject("Scripting.FileSystemObject")
+    Set Flog = fs.CreateTextFile(Nombre_Arch, True)
+    
+    Flog.Writeline "Inicio Proceso de Procesos Masivos (Novedades Baja): " & Now
+    Flog.Writeline "Cambio el estado del proceso a Procesando"
+    
+    ' Obtengo el Process ID
+    PID = GetCurrentProcessId
+    Flog.Writeline "PID = " & PID
+    
+    'Cambio el estado del proceso a Procesando
+    StrSql = "UPDATE batch_proceso SET bprchorainicioej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecinicioej = " & ConvFecha(Date) & ", bprcestado = 'Procesando', bprcpid = " & PID & ", bprcprogreso = 0 WHERE bpronro = " & NroProceso
+    objConn.Execute StrSql, , adExecuteNoRecords
+    
+    Flog.Writeline "Obtengo los datos del proceso"
+    
+    TiempoAcumulado = GetTickCount
+    
+    'Obtengo los datos del proceso
+    StrSql = "SELECT * FROM batch_proceso WHERE bpronro = " & NroProceso
+    OpenRecordset StrSql, objRs2
+    
+    If Not objRs2.EOF Then
+       
+       'Obtengo los parametros del proceso
+       parametros = objRs2!bprcparam
+       ArrParametros = Split(parametros, "@")
+              
+       'Obtengo el Nro de simpronro
+        simpronro = CInt(ArrParametros(0))
+        
+       'Obtengo el Nro de Pronov
+        pnovnro = CInt(ArrParametros(1))
+              
+       'Obtengo el Nro de Pronov
+        fec_fin = CDate(ArrParametros(2))
+
+        'EMPIEZA EL PROCESO
+
+        '------------------------------------------------------------------------------------------------------------------------
+        'GENERO LA SQL QUE BUSCA EL CONJUNTO DE CONCEPTOS Y SUS PARAMETROS
+        '------------------------------------------------------------------------------------------------------------------------
+        
+        StrSql2 = " SELECT * FROM pnov_conc "
+        StrSql2 = StrSql2 & " WHERE pnovnro = " & pnovnro
+
+        '------------------------------------------------------------------------------------------------------------------------
+        'GENERO LA Sql QUE BUSCA LOS EMPLEADOS
+        '------------------------------------------------------------------------------------------------------------------------
+        
+        StrSql = "SELECT empleg,empleado "
+        StrSql = StrSql & " FROM simcabliq "
+        StrSql = StrSql & " INNER JOIN v_empleado ON v_empleado.ternro = simcabliq.empleado "
+        StrSql = StrSql & " WHERE simpronro = " & simpronro
+        StrSql = StrSql & " ORDER BY empleg "
+
+        'Agrego una entrada en novBaja para cada empleado
+        OpenRecordset StrSql, rsEmpleados
+                                   
+       If rsEmpleados.EOF Then
+              Flog.Writeline "No se encontraron empleados asignados a este proceso: " & simpronro
+              Exit Sub
+
+       Else
+             
+             cantConcPar = CInt(objRs.RecordCount)
+             I = 1
+            
+            ' Para cada empleado relacionado al proceso
+            Do Until rsEmpleados.EOF
+                        
+                 'Busco el Conjunto de conceptos y parametros
+                 OpenRecordset StrSql2, objRs
+                                   
+                 If objRs.EOF Then
+                    Flog.Writeline "No se encontraron Conceptos para el Proceso Masivo: " & pnovnro
+                    Exit Sub
+                    
+                 Else
+                 
+                      'Recorro todos los conceptos y parametros del proceso masivo
+                      Do While Not objRs.EOF
+                     
+                          nro_concepto = CInt(objRs!concnro)
+                          nro_parametro = CInt(objRs!tpanro)
+                          proccalculo = CInt(objRs!tippnovnro)
+                          
+                          'Obtengo el valor dado por el prorama de calculo
+                          valor_proccalc = 0
+                          Select Case proccalculo
+                              Case 0: valor_proccalc = 0
+                              Case 1: valor_proccalc = SAC(rsEmpleados!Empleado)
+                              Case 2: valor_proccalc = Vacaciones(rsEmpleados!Empleado)
+                              Case 3: valor_proccalc = Renuncia()
+                              Case 4: valor_proccalc = IndemAntig()
+                              Case 5: valor_proccalc = DepNov()
+                              Case 6: valor_proccalc = Licencias()
+                              Case 7: valor_proccalc = Premios()
+                          End Select
+                        
+                          ' Agrego entrada en el log
+                          Flog.Writeline "Insertando Novedad de Baja para el Empleado:" & rsEmpleados!empleg
+                          Flog.Writeline "Nro. Concepto:" & nro_concepto & " Nro. Parametro:" & nro_parametro
+                          Flog.Writeline "Valor Calculado: " & valor_proccalc
+                                          
+                          ' Inserto en NovBaja
+                          InsertarNovBaja CInt(rsEmpleados!Empleado), nro_concepto, nro_parametro, valor_proccalc
+                          
+                          objRs.MoveNext
+                          
+                      Loop
+                     
+                      TiempoAcumulado = GetTickCount
+                        
+                      StrSql = "UPDATE batch_proceso SET bprcprogreso = " & Fix((I / cantConcPar) * 100) & _
+                               ", bprctiempo ='" & CStr((TiempoAcumulado - TiempoInicialProceso)) & "'" & _
+                               " WHERE bpronro = " & NroProceso
+                      objConn.Execute StrSql, , adExecuteNoRecords
+                  
+                      I = I + 1
+                                     
+                      rsEmpleados.MoveNext
+                      
+                End If
+               
+            Loop
+               
+       End If
+    
+    Else
+
+       Exit Sub
+
+    End If
+    
+    'Actualizo el estado del proceso
+    If Not HuboErrores Then
+       StrSql = "UPDATE batch_proceso SET  bprcprogreso =100, bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Procesado' WHERE bpronro = " & NroProceso
+       Flog.Writeline "Proceso Finalizado Correctamente"
+    Else
+       StrSql = "UPDATE batch_proceso SET  bprcprogreso =100, bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Incompleto' WHERE bpronro = " & NroProceso
+       Flog.Writeline "Proceso Incompleto"
+    End If
+    
+    objConn.Execute StrSql, , adExecuteNoRecords
+
+    Flog.Writeline "Fin :" & Now
+    Flog.Close
+    If objRs.State = adStateOpen Then objRs.Close
+    If rsEmpleados.State = adStateOpen Then objRs.Close
+
+    Exit Sub
+    
+CE:
+    HuboErrores = True
+    Flog.Writeline " Error: " & Err.Description & Now
+
+End Sub
+
+Sub InsertarNovBaja(ByVal empternro As Integer, ByVal nro_concepto As Integer, ByVal nro_parametro As Integer, ByVal valor_proccalc As Double)
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de Insertar los datos en la tabla NovBaja
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+    Dim StrSql As String
+    
+    On Error GoTo MError
+    
+    '-------------------------------------------------------------------------------
+    'Inserto los datos en la BD
+    '-------------------------------------------------------------------------------
+    StrSql = "INSERT INTO novbaja "
+    StrSql = StrSql & "(empleado, concnro, tpanro, nbvalor, nbvigencia)"
+    StrSql = StrSql & "VALUES (" & _
+             empternro & "," & nro_concepto & "," & nro_parametro & ",'" & valor_proccalc & "',0)"
+    objConn.Execute StrSql, , adExecuteNoRecords
+        
+    Exit Sub
+                
+MError:
+    Flog.Writeline " Error: " & Err.Description
+    HuboErrores = True
+    Exit Sub
+
+End Sub
+
+Public Function SAC(ByVal empternro As Integer) As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como SAC
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+' Variables Locales
+Dim maximo As Double
+Dim fec_ini_sem     As Date
+Dim fec_ini_1_sem   As Date
+Dim fec_ini_2_sem   As Date
+Dim fec_ini_calc    As Date
+Dim dias_sac        As Double
+
+Dim rsPnov_conf As New ADODB.Recordset
+Dim rsEmp As New ADODB.Recordset
+Dim StrSql As String
+Dim StrSql2 As String
+
+
+    'Obtengo los datos del proceso
+    StrSql = "SELECT * FROM pnov_conc INNER JOIN pronov ON pronov.pnovnro = pnov_conc.pnovnro"
+    StrSql = StrSql & " WHERE pnov_conc.pnovnro = " & pnovnro
+    StrSql = StrSql & " AND pnov_conc.tpanro = 30"
+    OpenRecordset StrSql, rsPnov_conf
+
+    SAC = 0
+
+    maximo = rsPnov_conf!maximo
+    
+    StrSql = "SELECT * FROM v_empleado"
+    StrSql = StrSql & " WHERE v_empleado.ternro = " & empternro
+    OpenRecordset StrSql, rsEmp
+    
+
+    ' calculo de inicio del semestre
+     fec_ini_1_sem = CDate("1/1/" & Year(fec_fin))
+     fec_ini_2_sem = CDate("7/1/" & Year(fec_fin))
+     If (fec_fin >= fec_ini_2_sem) Then
+         fec_ini_sem = fec_ini_2_sem
+     Else
+         fec_ini_sem = fec_ini_1_sem
+     End If
+     
+     If (rsEmp!empfaltagr > fec_ini_sem) Then
+         fec_ini_calc = rsEmp!empfaltagr
+     Else
+         fec_ini_calc = fec_ini_sem
+     End If
+
+
+    dias_sac = fec_fin - fec_ini_calc + 1
+    If (dias_sac >= maximo) Then
+        dias_sac = maximo
+    End If
+
+    
+    ' DESCONTAR LOS DIAS DE LOS CONCEPTOS SELECCIONADOS , DEL SEMESTRE FIJADO */
+    ' Cuando se migro desde progress se decidio sacar este calculo
+                   
+    If dias_sac < 0 Then dias_sac = 0
+
+    SAC = dias_sac
+        
+End Function
+
+Public Function Vacaciones(ByVal empternro As Integer) As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Vacaciones
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+Dim maximo As Double
+Dim diasvac As Double
+Dim diasvactomados As Double
+Dim genera As Boolean
+Dim propor As Double
+
+Dim rsPnov_conf As New ADODB.Recordset
+Dim rsEmpLic As New ADODB.Recordset
+Dim StrSql As String
+
+
+    'Obtengo los datos del proceso
+    StrSql = "SELECT * FROM pnov_conc INNER JOIN pronov ON pronov.pnovnro = pnov_conc.pnovnro"
+    StrSql = StrSql & " WHERE pnov_conc.pnovnro = " & pnovnro
+    StrSql = StrSql & " AND pnov_conc.tpanro = 29"
+    OpenRecordset StrSql, rsPnov_conf
+
+    Vacaciones = 0
+
+    maximo = rsPnov_conf!maximo
+
+    '/* A pedido de Analia */
+    'run pronov/des01.p(empleado.ternro, /*fec-fin*/ date(12,31,year(today)), output diasvac,output genera).
+    
+    ' Des01(diasvac,genera)
+
+
+    diasvactomados = 0 'diasvac
+    propor = True
+    
+    
+    ' /*  ****** Se le descuenta los dias de vacaciones que ya estan marcados como liquidados en el pago /dto de la Gestion integral  ******/
+    
+    StrSql = "SELECT * FROM emp_lic " & _
+             " INNER JOIN vacpagdesc ON vacpagdesc.emp_licnro = emp_lic.emp_licnro AND" & _
+             " vacpagdesc.pago-dto = 3 AND vacpagdesc.pronro <> null" & _
+             " INNER JOIN lic_vacacion ON lic_vacacion.emp_licnro = emp_lic.emp_licnro" & _
+             " INNER JOIN vacacion ON vacacion.vacnro = lic_vacacion.vacnro"
+    StrSql = StrSql & " WHERE emp_lic.empleado = " & empternro
+    StrSql = StrSql & " AND emp_lic.tdnro = 2"
+    StrSql = StrSql & " AND emp_lic.elfechahasta < " & fec_fin
+    OpenRecordset StrSql, rsEmpLic
+    
+    
+    diasvactomados = diasvactomados - rsEmpLic!emp_lic!elcantdias
+    
+    If rsEmpLic!vacacion!vacanio = Year(fec_fin) Then
+        propor = True
+    Else
+        If rsEmpLic!vacacion!vacanio + 1 = Year(fec_fin) Then
+                      propor = False
+        End If
+    End If
+         
+       
+    '/*  PROPORCIONAR  LA CANTIDAD TOTAL DE DIAS CORRESPONDIENTES O LA CANT. PENDIENTE EN FUNCION  A LA FECHA DE BAJA */
+    If propor Then
+        diasvac = diasvactomados / 365 * ((Month(fec_fin) - 1) * 30 + Day(fec_fin))
+   Else
+        diasvac = diasvac / 365 * ((Month(fec_fin) - 1) * 30 + Day(fec_fin)) + diasvactomados
+  
+   If Not (Int(diasvac) = diasvac) Then
+        diasvac = Int(diasvac + 1)
+   End If
+    
+End Function
+
+Public Function Renuncia() As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Renuncia
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+
+End Function
+
+Public Function IndemAntig() As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Indemnizacion por Antiguedad para seg. Fallec
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+
+End Function
+
+Public Function DepNov() As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Depuracion de Novedades
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+
+End Function
+
+Public Function Licencias() As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Licencias
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+
+End Function
+
+
+Public Function Premios() As Double
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Se encarga de calcular el valor del parametro de un concepto
+'               copnfigurado como Premios x Horas Extras
+' Autor      : GdeCos
+' Fecha      : 28/04/2005
+' Ultima Mod :
+' ---------------------------------------------------------------------------------------------
+
+
+End Function
+
+

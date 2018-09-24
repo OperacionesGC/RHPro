@@ -1,0 +1,13 @@
+mdlDataAccess = 44, 42, 769, 577, C
+MdlGlobal = 44, 58, 716, 443, 
+MdlFechas = 0, 0, 0, 0, C
+varios = 0, 0, 630, 385, 
+MdlInterface = 30, 37, 769, 422, 
+mdlConstantes = 0, 0, 0, 0, C
+MdlInterfacesCustom = 66, 87, 805, 472, 
+MdlInterfacesMigraInicial = 110, 145, 849, 530, 
+MdlInterfacesEstandar = 88, 116, 827, 501, Z
+MdlFuncionesGenerales = 132, 174, 762, 559, 
+Feriado = 0, 0, 0, 0, C
+FechasHoras = 0, 0, 0, 0, C
+MdlConfiguracion = 132, 174, 762, 559, 

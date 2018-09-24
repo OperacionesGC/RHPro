@@ -1,0 +1,12 @@
+MdlInterface = 67, 113, 750, 476, 
+MdlInterfacesCustom = 84, 96, 639, 540, C
+MdlInterfacesMigraInicial = -3, -3, 924, 649, 
+MdlInterfacesEstandar = 16, 52, 571, 496, C
+mdlDataAccess = 0, 0, 0, 0, C
+MdlGlobal = 132, 132, 763, 551, I
+MdlConfiguracion = 0, 0, 0, 0, C
+mdlConstantes = 0, 0, 0, 0, C
+varios = 0, 0, 0, 0, C
+FechasHoras = 0, 0, 0, 0, C
+Feriado = 0, 0, 0, 0, C
+MdlFuncionesGenerales = 0, 0, 0, 0, C

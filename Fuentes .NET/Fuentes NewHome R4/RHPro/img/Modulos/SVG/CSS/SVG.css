@@ -1,0 +1,11 @@
+/*La hoja de estilo redirecciona al estilo correspondiente*/ 
+/* 29/10/2013 - Brzozowski Juan Pablo - 20270 - Estandarizacion R4 Estilos */
+ /*@import  url("/rhprox2/shared/css/SVG.asp"); */
+ 
+ 
+.SVG{    
+ height:26px !important; width:26px !important; vertical-align:middle; text-align:center; 
+}
+.PATH {fill:#0181B2 !important;  }
+
+ 

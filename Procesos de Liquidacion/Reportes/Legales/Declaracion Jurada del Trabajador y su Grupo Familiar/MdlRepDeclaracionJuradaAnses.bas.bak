@@ -1,0 +1,663 @@
+Attribute VB_Name = "MdlRepDeclaracionJuradaAnses"
+Option Explicit
+
+'Version: 0.01
+'Primera Version realizada, todavia en etapa de desarrollo
+Const Version = 0.01
+Const FechaVersion = "24/04/2006"
+
+
+'------------------------------------------------------------
+'------------------------------------------------------------
+'------------------------------------------------------------
+Global IdUser As String
+Global Fecha As Date
+Global Hora As String
+
+Global Aux_Autoriz_Apenom As String
+Global Aux_Autoriz_Docu As String
+Global Aux_Autoriz_Prov_Emis As String
+
+Global Aux_Certifi_Corresponde As String
+Global Aux_Certifi_Doc_Tipo As String
+Global Aux_Certifi_Doc_Nro As String
+Global Aux_Certifi_Expedida As String
+
+
+
+Public Sub Main()
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Procedimiento inicial del Generador de Reportes.
+' Autor      : FGZ
+' Fecha      : 17/02/2004
+' Ultima Mod.:
+' Descripcion:
+' ---------------------------------------------------------------------------------------------
+Dim objconnMain As New ADODB.Connection
+Dim strCmdLine
+Dim Nombre_Arch As String
+Dim HuboError As Boolean
+Dim rs_batch_proceso As New ADODB.Recordset
+Dim bprcparam As String
+Dim PID As String
+Dim ArrParametros
+
+    strCmdLine = Command()
+    ArrParametros = Split(strCmdLine, " ", -1)
+    NroProcesoBatch = 875
+    'If UBound(ArrParametros) > 0 Then
+    '    If IsNumeric(ArrParametros(0)) Then
+    '        NroProcesoBatch = ArrParametros(0)
+    '        Etiqueta = ArrParametros(1)
+    '    Else
+    '        Exit Sub
+    '    End If
+    'Else
+    '    If IsNumeric(strCmdLine) Then
+    '        NroProcesoBatch = strCmdLine
+    '    Else
+    '        Exit Sub
+    '    End If
+    'End If
+    
+    ' carga las configuraciones basicas, formato de fecha, string de conexion,
+    ' tipo de BD y ubicacion del archivo de log
+    Call CargarConfiguracionesBasicas
+
+    'Abro la conexion
+    OpenConnection strconexion, objConn
+    
+    Nombre_Arch = PathFLog & "DeclaracionJuradaAnses_PS53" & "-" & NroProcesoBatch & ".log"
+    
+    Set fs = CreateObject("Scripting.FileSystemObject")
+    Set Flog = fs.CreateTextFile(Nombre_Arch, True)
+    
+    ' Obtengo el Process ID
+    PID = GetCurrentProcessId
+    Flog.writeline "-----------------------------------------------------------------"
+    Flog.writeline "Version = " & Version
+    Flog.writeline "Fecha   = " & FechaVersion
+    Flog.writeline "-----------------------------------------------------------------"
+    Flog.writeline
+    Flog.writeline "PID = " & PID
+    
+    
+    'Cambio el estado del proceso a Procesando y el PID
+    StrSql = "UPDATE batch_proceso SET bprchorainicioej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecinicioej = " & ConvFecha(Date) & ", bprcestado = 'Procesando', bprcpid = " & PID & " WHERE bpronro = " & NroProcesoBatch
+    objConn.Execute StrSql, , adExecuteNoRecords
+    
+    'Obtengo los datos del proceso
+    StrSql = "SELECT * FROM batch_proceso WHERE (btprcnro = 129 ) AND bpronro =" & NroProcesoBatch
+    OpenRecordset StrSql, rs_batch_proceso
+    
+    TiempoInicialProceso = GetTickCount
+    
+    If Not rs_batch_proceso.EOF Then
+        IdUser = rs_batch_proceso!IdUser
+        Fecha = rs_batch_proceso!bprcfecha
+        Hora = rs_batch_proceso!bprchora
+        bprcparam = rs_batch_proceso!bprcparam
+        
+        rs_batch_proceso.Close
+        Set rs_batch_proceso = Nothing
+        
+        Call LevantarParamteros(NroProcesoBatch, bprcparam)
+    End If
+    
+    TiempoFinalProceso = GetTickCount
+    Flog.writeline "Tiempo del proceso (milisegundos): " & (TiempoFinalProceso - TiempoInicialProceso)
+    
+    If Not HuboError Then
+        StrSql = "UPDATE batch_proceso SET bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Procesado' WHERE bpronro = " & NroProcesoBatch
+    Else
+        StrSql = "UPDATE batch_proceso SET bprchorafinej = '" & Format(Now, "hh:mm:ss ") & "', bprcfecfinej = " & ConvFecha(Date) & ", bprcestado = 'Error' WHERE bpronro = " & NroProcesoBatch
+    End If
+    objConn.Execute StrSql, , adExecuteNoRecords
+
+    Flog.Close
+    objConn.Close
+    
+End Sub
+
+Public Sub Generar_Reporte(ByVal bpronro As Long, ByVal HFecha As Date)
+' --------------------------------------------------------------------------------------------
+' Descripcion: Procedimiento de generacion del Reporte de Certificado Anses de Servicios
+' Autor      : FGZ
+' Fecha      : 15/07/2004
+' Ult. Mod   : FGZ - 10/11/2005
+' Desc       : agrupa en hojas de hasta 5 movimientos de empresas por c/u.
+' --------------------------------------------------------------------------------------------
+'Variables auxiliares
+
+'Empresa
+Dim Aux_Empresa_ternro As String
+Dim Aux_Empresa_Cuit As String
+Dim Aux_Empresa_RazonSocial As String
+Dim Aux_Empresa_DMTRCalle As String
+Dim Aux_Empresa_DMTRNum As String
+Dim Aux_Empresa_DMTRPiso As String
+Dim Aux_Empresa_DMTRDepto As String
+Dim Aux_Empresa_DMTRCodPost As String
+Dim Aux_Empresa_DMTRLoc As String
+Dim Aux_Empresa_DMTRProv As String
+Dim Aux_Empresa_TelefonoLab As String
+
+'Empleado
+Dim Aux_Empleado_ternro As String
+Dim Aux_Empleado_CUIL As String
+Dim Aux_Empleado_Nombres As String
+Dim Aux_Empleado_TipoNroDoc As String
+Dim Aux_Empleado_Sexo As String
+Dim Aux_Empleado_FecNac As String
+Dim Aux_Empleado_EstadoCivil As String
+Dim Aux_Empleado_DOMCalle As String
+Dim Aux_Empleado_DOMNro As String
+Dim Aux_Empleado_DOMPiso As String
+Dim Aux_Empleado_DOMDto As String
+Dim Aux_Empleado_DOMCodPost As String
+Dim Aux_Empleado_DOMLocalidad As String
+Dim Aux_Empleado_DOMProvincia As String
+Dim Aux_Empleado_Telefono As String
+Dim Aux_Empleado_OSElegida As String
+Dim Aux_Empleado_FecIngreso As String
+Dim Aux_Empleado_ABM As String
+
+'Familiar
+Dim Aux_Familiar_Parentesco As String
+Dim Aux_Familiar_CUIL As String
+Dim Aux_Familiar_Nombres As String
+Dim Aux_Familiar_TipoNroDoc As String
+Dim Aux_Familiar_FecNac As String
+Dim Aux_Familiar_Sexo As String
+Dim Aux_Familiar_EstadoCivil As String
+Dim Aux_Familiar_Incapacidad As String
+Dim Aux_Familiar_DOMCalle As String
+Dim Aux_Familiar_DOMNro As String
+Dim Aux_Familiar_DOMPiso As String
+Dim Aux_Familiar_DOMDto As String
+Dim Aux_Familiar_DOMCodPost As String
+Dim Aux_Familiar_DOMLocalidad As String
+Dim Aux_Familiar_DOMProvinc As String
+Dim Aux_Familiar_Telefono As String
+Dim Aux_Familiar_Aniocursa As String
+Dim Aux_Familiar_Genderasigf As String ' Si/No
+Dim Aux_Familiar_Escolaridad As String 'General basica, polimodal o no informa
+
+'Registros
+Dim rs_Empresa As New ADODB.Recordset
+Dim rs_Empleados As New ADODB.Recordset
+Dim rs_Familiares As New ADODB.Recordset
+Dim rs_batch_empleado As New ADODB.Recordset
+
+Dim Aux_Familiar_ternro As String
+Dim Aux_Familiar_empleado As String
+Dim Aux_Familiar_repnro As String
+Dim Aux_repnro
+
+Dim TERCERO
+
+On Error GoTo CE
+
+' Comienzo la transaccion
+MyBeginTrans
+    Flog.writeline "Peticion lista de empleados"
+    StrSql = "SELECT ternro from batch_empleado where bpronro = " & NroProcesoBatch
+    OpenRecordset StrSql, rs_batch_empleado
+    'Loopeo por cada empleado en la tabla batch_empleado con el ID del proceso
+    Do While Not rs_batch_empleado.EOF
+    
+        'Traigo loa valores de la empresa
+        StrSql = "select empresa.ternro EMPTERNRO, detdom.calle, detdom.nro, detdom.piso, detdom.oficdepto, detdom.codigopostal, localidad.locdesc, provincia.provdesc, telefono.telnro, empresa.empnom, ter_doc.nrodoc "
+        StrSql = StrSql & " from his_estructura"
+        StrSql = StrSql & " join empresa on his_estructura.estrnro = empresa.estrnro and his_estructura.htetdesde <= " & HFecha & " and (his_estructura.htethasta >= " & HFecha & " or his_estructura.htethasta is null) and his_estructura.tenro = 10 and his_estructura.ternro = " & rs_batch_empleado!ternro
+        StrSql = StrSql & " left join cabdom on empresa.ternro = cabdom.ternro and cabdom.domdefault = -1 "
+        StrSql = StrSql & " left join detdom on cabdom.domnro = detdom.domnro "
+        StrSql = StrSql & " left join localidad on localidad.locnro = detdom.locnro "
+        StrSql = StrSql & " left join provincia on provincia.provnro = detdom.provnro "
+        StrSql = StrSql & " left join telefono on telefono.domnro = cabdom.domnro and telefono.teldefault = -1 "
+        StrSql = StrSql & " left join ter_doc on ter_doc.ternro = empresa.ternro and tidnro = 6"
+        Flog.writeline "--Peticion datos de la empresa"
+        OpenRecordset StrSql, rs_Empresa
+        
+        'Asigno los valores auxiliares para la empresa
+        Aux_Empresa_ternro = rs_Empresa!EMPTERNRO
+        Aux_Empresa_Cuit = rs_Empresa!nrodoc
+        Aux_Empresa_RazonSocial = rs_Empresa!empnom
+        Aux_Empresa_DMTRCalle = rs_Empresa!calle
+        Aux_Empresa_DMTRNum = rs_Empresa!nro
+        Aux_Empresa_DMTRPiso = rs_Empresa!piso
+        Aux_Empresa_DMTRDepto = rs_Empresa!oficdepto
+        Aux_Empresa_DMTRCodPost = rs_Empresa!codigopostal
+        Aux_Empresa_DMTRLoc = rs_Empresa!locdesc
+        Aux_Empresa_DMTRProv = rs_Empresa!provdesc
+        Aux_Empresa_TelefonoLab = rs_Empresa!telnro
+        Flog.writeline "--Generacion de variables auxiliares de empresa"
+        
+        
+        
+        'Traigo loa valores del empleado
+        StrSql = "select estcivil.estcivildesabr, tercero.terape, tercero.terape2, tercero.ternom, tercero.ternom2, tipodocu.tidsigla, DU.nrodoc NRODU, tercero.tersex, tercero.terfecnac, detdom.calle, detdom.nro, detdom.piso, detdom.oficdepto, detdom.codigopostal, localidad.locdesc, provincia.provdesc, telefono.telnro, CUIL.nrodoc NROCUIL, osocial.osdesc from tercero "
+        StrSql = StrSql & " left join cabdom on tercero.ternro = cabdom.ternro and cabdom.domdefault = -1"
+        StrSql = StrSql & " left join detdom on cabdom.domnro = detdom.domnro"
+        StrSql = StrSql & " left join localidad on localidad.locnro = detdom.locnro"
+        StrSql = StrSql & " left join provincia on provincia.provnro = detdom.provnro"
+        StrSql = StrSql & " left join telefono on telefono.domnro = cabdom.domnro and telefono.teldefault = -1"
+        StrSql = StrSql & " left join ter_doc CUIL on CUIL.ternro = tercero.ternro and CUIL.tidnro = 10"
+        StrSql = StrSql & " left join ter_doc DU on DU.ternro = tercero.ternro and (DU.tidnro = 1 or DU.tidnro = 2 or DU.tidnro = 3 or DU.tidnro = 4)"
+        StrSql = StrSql & " left join tipodocu on DU.tidnro = tipodocu.tidnro"
+        StrSql = StrSql & " left join estcivil on tercero.estcivil = estcivil.estcivilnro"
+        StrSql = StrSql & " left join his_estructura on his_estructura.tenro = 17 and his_estructura.ternro = tercero.ternroand his_estructura.htetdesde <= " & HFecha & " and (his_estructura.htethasta >= " & HFecha & " or his_estructura.htethasta is null)"
+        StrSql = StrSql & " left join replica_estr on replica_estr.estrnro = his_estructura.estrnro"
+        StrSql = StrSql & " left join osocial on osocial.ternro = replica_estr.origen"
+        StrSql = StrSql & " where tercero.ternro = " & rs_batch_empleado!ternro
+		Flog.writeline "--Peticion datos empleado"
+        OpenRecordset StrSql, rs_Empleados
+        
+        'Asigno los valores auxiliares para el empleado
+        Aux_Empleado_ternro = rs_batch_empleado!ternro
+        Aux_Empleado_CUIL = rs_Empleados!NROCuil
+        Aux_Empleado_Nombres = rs_Empleados!terape & " " & rs_Empleados!terape2 & " " & rs_Empleados!ternom & " " & rs_Empleados!ternom2
+        Aux_Empleado_TipoNroDoc = rs_Empleados!tidsigla & " " & rs_Empleados!NRODU
+        Aux_Empleado_Sexo = rs_Empleados!tersex
+        Aux_Empleado_FecNac = rs_Empleados!terfecnac
+        Aux_Empleado_EstadoCivil = rs_Empleados!estcivil
+        Aux_Empleado_DOMCalle = rs_Empleados!calle
+        Aux_Empleado_DOMNro = rs_Empleados!nro
+        Aux_Empleado_DOMPiso = rs_Empleados!piso
+        Aux_Empleado_DOMDto = rs_Empleados!oficdto
+        Aux_Empleado_DOMCodPost = rs_Empleados!codigopostal
+        Aux_Empleado_DOMLocalidad = rs_Empleados!locdesc
+        Aux_Empleado_DOMProvincia = rs_Empleados!provdesc
+        Aux_Empleado_Telefono = rs_Empleados!telnro
+        Aux_Empleado_OSElegida = rs_Empleados!osdesc
+        Aux_Empleado_FecIngreso = " "
+        Aux_Empleado_ABM = " "
+        Flog.writeline "--Generacion de variables auxiliares de empleado"
+
+            StrSql = "INSERT INTO rep_PS53 "
+            StrSql = StrSql & "(empresa,bpronro,fecha, hora, iduser, ternro, "
+            StrSql = StrSql & "abm, repfecha, cuit, razonsocial, cuil, nombre, tiponrodoc,"
+            StrSql = StrSql & "sexo, fecnac, estadocivil, fecingreso, domcalle, domnro, "
+            StrSql = StrSql & "dompiso, domdepto, domcodpost, domlocalidad, domprovinc, "
+            StrSql = StrSql & "telefono, oselegida, dmtrcalle, dmtrnro, dmtrpiso, dmtrdepto,"
+            StrSql = StrSql & "dmtrcodpost, dmtrloc, dmtrprov, telefonolab)"
+            StrSql = StrSql & " VALUES("
+            StrSql = StrSql & "'" & Aux_Empresa_ternro & "',"
+            StrSql = StrSql & "'" & NroProcesoBatch & "',"
+            StrSql = StrSql & "'" & Date() & "',"
+            StrSql = StrSql & "'" & " " & "',"
+            StrSql = StrSql & "'" & " " & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_ternro & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_ABM & "',"
+            StrSql = StrSql & "'" & " " & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_Cuit & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_RazonSocial & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_CUIL & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_Nombres & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_TipoNroDoc & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_Sexo & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_FecNac & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_EstadoCivil & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_FecIngreso & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMCalle & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMNro & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMPiso & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMDto & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMCodPost & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMLocalidad & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_DOMProvincia & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_Telefono & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_OSElegida & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRCalle & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRNum & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRPiso & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRDepto & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRCodPost & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRLoc & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_DMTRProv & "',"
+            StrSql = StrSql & "'" & Aux_Empresa_TelefonoLab & "'"
+            StrSql = StrSql & ")"
+            Flog.writeline "--Se Graban los datos del reporte"
+            objConn.Execute StrSql, , adExecuteNoRecords
+			
+			'Obtengo el repnro recien agregado
+			StrSql = "select repnro from rep_PS53 where bpronro=" & NroProcesoBatch & " and "
+	
+			Aux_repnro = rs_
+
+		
+        'Armo el query para pedir los familiares del empleado correspondiente al registro donde estoy parado, dentro del recordset rs_Empleados
+        StrSql = "select parentesco.paredesc, CUIL.nrodoc NROCUIL, tercero.terape, tercero.terape2, tercero.ternom, tercero.ternom2, tipodocu.tidsigla, DU.nrodoc NRODU, tercero.terfecnac, tercero.tersex, estcivil.estcivdesabr, familiar.faminc, detdom.calle, detdom.nro, detdom.piso, detdom.oficdepto, detdom.codigopostal, localidad.locdesc, provincia.provdesc, telefono.telnro, estudio_actual.nivnro, estudio_actual.estactgra"
+        StrSql = StrSql & "from familiar join tercero on familiar.ternro = tercero.ternro and familiar.empleado = " & rs_batch_empleado!ternro
+        StrSql = StrSql & " left join parentesco on familiar.parenro = parentesco.parenro"
+        StrSql = StrSql & " left join cabdom on tercero.ternro = cabdom.ternro and cabdom.domdefault = -1"
+        StrSql = StrSql & " left join detdom on cabdom.domnro = detdom.domnro"
+        StrSql = StrSql & " left join localidad on localidad.locnro = detdom.locnro"
+        StrSql = StrSql & " left join provincia on provincia.provnro = detdom.provnro"
+        StrSql = StrSql & " left join telefono on telefono.domnro = cabdom.domnro and telefono.teldefault = -1"
+        StrSql = StrSql & " left join ter_doc CUIL on CUIL.ternro = tercero.ternro and CUIL.tidnro = 10"
+        StrSql = StrSql & " left join ter_doc DU on DU.ternro = tercero.ternro and (DU.tidnro = 1 or DU.tidnro = 2 or DU.tidnro = 3 or DU.tidnro = 4)"
+        StrSql = StrSql & " left join tipodocu on DU.tidnro = tipodocu.tidnro"
+        StrSql = StrSql & " left join estcivil on tercero.estcivnro = estcivil.estcivnro"
+        StrSql = StrSql & " left join estudio_actual on tercero.ternro = estudio_actual.ternro"
+        Flog.writeline "----Peticion datos familiar de empleado"
+        OpenRecordset StrSql, rs_Familiares
+        
+        'Por cada familiar agrego el registro en la tabla rep_PS53_fam
+        Do While Not rs_Familiares.EOF
+            Aux_Familiar_ternro = rs_Empleados!ternro
+            Aux_Familiar_Parentesco = rs_Familiares!paredesc
+            Aux_Familiar_CUIL = rs_Familiares!NROCuil
+            Aux_Familiar_Nombres = rs_Familiares!terape & rs_Familiares!terape2 & rs_Familiares!ternom & rs_Familiares!ternom2
+            Aux_Familiar_TipoNroDoc = rs_Familiares!tidsigla & " " & rs_Familiares!nrodoc
+            Aux_Familiar_FecNac = rs_Familiares!terfecnac
+            Aux_Familiar_Sexo = rs_Familiares!tersex
+            Aux_Familiar_EstadoCivil = rs_Familiares!estvcivdesabr
+			if CInt(rs_Familiares!faminc) = 0 Then
+				Aux_Familiar_Incapacidad = "No"
+			else
+				Aux_Familiar_Incapacidad = "Si"
+			end if
+            Aux_Familiar_DOMCalle = rs_Familiares!calle
+            Aux_Familiar_DOMNro = rs_Familiares!nro
+            Aux_Familiar_DOMPiso = rs_Familiares!piso
+            Aux_Familiar_DOMDto = rs_Familiares!oficdepto
+            Aux_Familiar_DOMCodPost = rs_Familiares!codigopostal
+            Aux_Familiar_DOMLocalidad = rs_Familiares!locdesc
+            Aux_Familiar_DOMProvinc = rs_Familiares!provdesc
+            Aux_Familiar_Telefono = rs_Familiares!telnro
+            Aux_Familiar_Aniocursa = rs_Familiares!nivnro
+            Aux_Familiar_Escolaridad = " "
+			if CInt(rs_Familiares!genderasigf) = 0 Then
+				Aux_Familiar_GenDerAsigF = "No"
+			else
+				Aux_Familiar_GenDerAsigF = "Si"
+			end if
+
+            
+            'Ejecuto el query
+            StrSql = "INSERT INTO rep_PS53_fam "
+            StrSql = StrSql & "(repnro,ternro,familiar,parentesco,cuil,nombre,tiponrodoc,fecnac,sexo,"
+            StrSql = StrSql & "estadocivil,incapacidad,domcalle,domnro,dompiso,domdepto,domcodpost,"
+            StrSql = StrSql & "domlocalidad,domprovinc,telefono,genderasigf,escolaridad,aniocursa)"
+            StrSql = StrSql & " VALUES("
+            StrSql = StrSql & "'" & Aux_repnro & "',"
+            StrSql = StrSql & "'" & Aux_Empleado_ternro & "',"
+            StrSql = StrSql & "'" & rs_Familiares!FAMTERNRO & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Parentesco & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_CUIL & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Nombres & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_TipoNroDoc & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_FecNac & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Sexo & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_EstadoCivil & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Incapacidad & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMCalle & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMNro & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMPiso & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMDto & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMCodPost & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMLocalidad & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_DOMProvinc & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Telefono & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Genderasigf & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Escolaridad & "',"
+            StrSql = StrSql & "'" & Aux_Familiar_Aniocursa & "',"
+            StrSql = StrSql & ")"
+            Flog.writeline "----Se Graban los datos del familiar del empleado"
+            objConn.Execute StrSql, , adExecuteNoRecords
+            
+            rs_Familiares.MoveNext
+        Loop
+        rs_batch_empleado.MoveNext
+
+		If rs_Familiares.State = adStateOpen Then rs_Familiares.Close
+		If rs_Empresa.State = adStateOpen Then rs_Empresa.Close
+		If rs_Empleados.State = adStateOpen Then rs_Empleados.Close
+	Loop
+
+'Fin de la transaccion
+MyCommitTrans
+
+
+If rs_batch_empleado.State = adStateOpen Then rs_batch_empleado.Close
+
+Set rs_Empresa = Nothing
+Set rs_Empleados = Nothing
+Set rs_Familiares = Nothing
+Set rs_batch_empleado = Nothing
+
+Exit Sub
+CE:
+    HuboError = True
+    Flog.writeline "Error: " & Err.Description
+    Flog.writeline "Ultimo sql Ejecutado: " & StrSql
+    MyRollbackTrans
+End Sub
+
+
+
+
+
+
+
+Public Sub LevantarParamteros(ByVal bpronro As Long, ByVal parametros As String)
+' --------------------------------------------------------------------------------------------
+' Descripcion: Procedimiento para levantar los parametros pasados en batch_proceso en bprcparam
+' Autor      : FGZ
+' Fecha      :
+' Ult. Mod   :
+' Fecha      :
+' --------------------------------------------------------------------------------------------
+Dim pos1 As Integer
+Dim pos2 As Integer
+Dim aux As String
+
+Dim HFecha As Date
+Dim Aux_Separador As String
+
+Aux_Separador = "@"
+' Levanto cada parametro por separado, el separador de parametros es Aux_Separador
+
+If Not IsNull(parametros) Then
+    If Len(parametros) >= 1 Then
+        pos1 = 1
+        pos2 = InStr(pos1, parametros, Aux_Separador) - 1
+        HFecha = CDate(Mid(parametros, pos1, pos2 - pos1 + 1))
+    End If
+End If
+
+'Certificado Ansses de Servicios
+Call Generar_Reporte(bpronro, HFecha)
+End Sub
+
+
+Public Function EsElUltimoEmpleado(ByVal rs As ADODB.Recordset, ByVal Anterior As Long) As Boolean
+' --------------------------------------------------------------------------------------------
+' Descripcion: Procedimiento para saber si es el ultimo empleado de la secuencia
+' Autor      : FGZ
+' Fecha      :
+' Ult. Mod   :
+' Fecha      :
+' --------------------------------------------------------------------------------------------
+    
+    rs.MoveNext
+    If rs.EOF Then
+        EsElUltimoEmpleado = True
+    Else
+        If rs!Empleado <> Anterior Then
+            EsElUltimoEmpleado = True
+        Else
+            EsElUltimoEmpleado = False
+        End If
+    End If
+    rs.MovePrevious
+End Function
+
+
+
+Public Function Antiguedad(ByRef dia As Integer, ByRef mes As Integer, ByRef Anio As Integer, ByRef DiasHabiles As Integer) As Integer
+' -----------------------------------------------------------------------------------
+' Descripcion: Antigued.p. Calcula la antiguedad al dia de hoy de un empleado en :
+'               dias hábiles(si es menor que un año) o en dias, meses y años en caso contrario.
+'               Retorna 0 si no hubo error y <> 0 en caso contrario
+' Autor: FGZ
+' Fecha: 31/07/2003
+' Ultima Modificacion:
+' -----------------------------------------------------------------------------------
+Dim aux1 As Long
+Dim aux2 As Long
+Dim aux3 As Long
+Dim fecalta As Date
+Dim fecbaja As Date
+Dim seguir As Date
+Dim q As Long
+Dim NombreCampo As String
+Dim rs_Fases As New ADODB.Recordset
+
+DiasHabiles = 0
+
+StrSql = "SELECT * FROM fases WHERE empleado = " & buliq_empleado!ternro
+OpenRecordset StrSql, rs_Fases
+
+If rs_Fases.EOF Then
+    ' ERROR. El empleado no tiene fecha de alta en fases
+    Antiguedad = 1
+    Exit Function
+Else
+        fecalta = rs_Fases!altfec
+        ' verificar si se trata de un registro completo(alta/baja) o solo de un alta
+        If CBool(rs_Fases!estado) Then
+            fecbaja = Date  ' solo es un alta ==> tomar el Today (Date)
+        Else
+            fecbaja = rs_Fases!bajfec   'se trata de un registro completo
+        End If
+        
+        Call Dif_Fechas(fecalta, fecbaja, aux1, aux2, aux3)
+        dia = dia + aux1
+        mes = mes + aux2 + Int(dia / 30)
+        Anio = Anio + aux3 + Int(mes / 12)
+        dia = dia Mod 30
+        mes = mes Mod 12
+        
+        If Anio = 0 Then
+            Call DiasTrab(fecalta, fecbaja, aux1)
+            DiasHabiles = DiasHabiles + aux1
+        End If
+        Antiguedad = 0
+End If
+
+If Anio <> 0 Then
+    DiasHabiles = 0
+End If
+
+' Cierro todo y Libero
+If rs_Fases.State = adStateOpen Then rs_Fases.Close
+Set rs_Fases = Nothing
+
+End Function
+
+
+
+Public Sub DiasTrab(ByVal Desde As Date, ByVal Hasta As Date, ByRef DiasH As Long)
+' ---------------------------------------------------------------------------------------------
+' Descripcion: Calcula la cantidad de dias trabajados de acuerdo al turno en que se trabaja y
+'              de acuerdo a los dias que figuran como feriados en la tabla de feriados.
+' Autor      : FGZ
+' Fecha      :
+' Ultima Mod.:
+' Descripcion:
+' ---------------------------------------------------------------------------------------------
+
+Dim d1 As Integer
+Dim d2 As Integer
+Dim aux As Integer
+Dim aux2 As Integer
+Dim dxsem As Integer
+
+Dim rs_pais As New ADODB.Recordset
+Dim rs_feriados As New ADODB.Recordset
+
+    dxsem = 5
+    
+    d1 = Weekday(Desde)
+    d2 = Weekday(Hasta)
+    
+    aux = DateDiff("d", Desde, Hasta) + 1
+    If aux < 7 Then
+        DiasH = Minimo(aux, dxsem)
+    Else
+        If aux = 7 Then
+            DiasH = dxsem
+        Else
+            aux2 = 8 - d1 + d2
+            If aux2 < 7 Then
+                aux2 = Minimo(aux2, dxsem)
+            Else
+                If aux2 = 7 Then
+                    aux2 = dxsem
+                End If
+            End If
+            
+            If aux2 >= 7 Then
+                aux2 = Abs(aux2 - 7) + Int(aux2 / 7) * dxsem
+            Else
+                aux2 = aux2 + Int((aux2 - aux2) / 7) * dxsem
+            End If
+        End If
+    End If
+    
+    aux = 0
+    
+    StrSql = "SELECT * FROM pais INNER JOIN tercero ON tercero.paisnro = pais.paisnro WHERE tercero.ternro = " & buliq_empleado!ternro
+    OpenRecordset StrSql, rs_pais
+    
+    If Not rs_pais.EOF Then
+        ' Resto los Feriados Nacionales
+        StrSql = "SELECT * FROM feriado WHERE tipferinro = 2 " & _
+                 " AND fericodext = " & rs_pais!paisnro & _
+                 " AND ferifecha >= " & ConvFecha(Desde) & _
+                 " AND ferifecha < " & ConvFecha(Hasta)
+        OpenRecordset StrSql, rs_feriados
+        
+        Do While Not rs_feriados.EOF
+            If Weekday(rs_feriados!ferifecha) > 1 Then
+                DiasH = DiasH - 1
+            End If
+            
+            ' Siguiente Feriado
+            rs_feriados.MoveNext
+        Loop
+    End If
+
+
+    ' Resto los feriados por Convenio
+    StrSql = "SELECT * FROM empleado INNER JOIN his_estructura ON empleado.ternro = his_estructura.ternro " & _
+             " INNER JOIN fer_estr ON fer_estr.tenro = his_estructura.tenro " & _
+             " INNER JOIN feriado ON fer_estr.ferinro = feriado.ferinro " & _
+             " WHERE empleado.ternro = " & buliq_empleado!ternro & _
+             " AND feriado.tipferinro = 2" & _
+             " AND feriado.ferifecha >= " & ConvFecha(Desde) & _
+             " AND feriado.ferifecha < " & ConvFecha(Hasta)
+    OpenRecordset StrSql, rs_feriados
+    
+    Do While Not rs_feriados.EOF
+        If Weekday(rs_feriados!ferifecha) > 1 Then
+            DiasH = DiasH - 1
+        End If
+        
+        ' Siguiente Feriado
+        rs_feriados.MoveNext
+    Loop
+    
+    
+    ' cierro todo y libero
+    If rs_pais.State = adStateOpen Then rs_pais.Close
+    If rs_feriados.State = adStateOpen Then rs_feriados.Close
+        
+    Set rs_feriados = Nothing
+    Set rs_pais = Nothing
+
+End Sub
+
+

@@ -1,0 +1,217 @@
+[BASE_0_R3_ARG]
+SAP = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\BASE_0_R3_ARG\log\]
+Procesos = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\BASE_0_R3_ARG\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAECEC6D3DAC5C4C6D9FBFBF1E5ECE6E9D6DBC5B6CA36C83C3E2E244844585045464A67132C313E263412164838141513B8DAE5E5FC99CED7C8C49FF185F7B1A4A5AC8892DAC9A29A947266697D3A507D514F5B5F5E7F79051E1300683E385033342CC0BBCDF3FFF5BDF5C0DDC3D9D681978693958AA3]
+TipoDB = [3]
+Etiqueta = [BASE_0_R3_ARG]
+Schema = [rhpro]
+
+
+'base_0_r3_arg encriptada
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAECEC6D3DAC5C4C6D9FBFBF1E5ECE6E9D6DBC5B6CA36C83C3E2E244844585045464A67132C313E263412164838141513B8DAE5E5FC99CED7C8C49FF185F7B1A4A5AC8892DAC9A29A947266697D3A507D514F5B5F5E7F79051E1300683E385033342CC0BBCDF3FFF5BDF5C0DDC3D9D681978693958AA3]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=rhpror3;Initial Catalog=BASE_0_R3_ARG;Data Source=RHDESA]
+conexion = [Provider=SQLOLEDB.1;Password=ess;Persist Security Info=True;User ID=ess;Initial Catalog=base_0_r3_arg;Data Source=RHdesa]
+
+[R4_Chile]
+SAP = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\R4_Chile\log\]
+Procesos = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\R4_Chile\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=winsy;Initial Catalog=R4_Chile;Data Source=RHDESA]
+TipoDB = [3]
+
+[IBT_R4_Prod]
+SAP = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\R4_Chile\log\]
+Procesos = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\IBT\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=winsy;Initial Catalog=IBT_R4_prod;Data Source=RHDESA]
+TipoDB = [3]
+
+
+[BASE_0_R4]
+SAP = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\BASE_0_R4\log\]
+Procesos = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\BASE_0_R4\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=rhpror3;Initial Catalog=BASE_0_R4;Data Source=RHDESA]
+TipoDB = [3]
+
+[APEX_PY]
+SAP = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\APEX_PY\log\]
+Procesos = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\APEX_PY\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=rhpror3;Initial Catalog=Apex_PY;Data Source=RHDESA]
+TipoDB = [3]
+
+[INDAP]
+SAP = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\INDAP\log\]
+Procesos = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\Procesos\]
+FLog = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\INDAP\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=winsyr3;Initial Catalog=indap;Data Source=RHsrvBB]
+TipoDB = [3]
+ 
+[BASE_0_R3_PT]
+SAP = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\BASE_0_R3_PT\log\]
+Procesos = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\BASE_0_R3_PT\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=rhpror3;Initial Catalog=BASE_0_R3_PT;Data Source=RHDESA]
+TipoDB = [3]
+
+[Northgate_Arinso_PT]
+SAP = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Northgate_Arinso_PT\log\]
+Procesos = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4000_rhprox2_r4\cgi-bin\Northgate_Arinso_PT\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F343838;Persist Security Info=True;User ID=rhpror3;Initial Catalog=Northgate_Arinso_PT;Data Source=RHDESA]
+TipoDB = [3]
+
+[DES_R3_URU]
+SAP = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\BASE_0_R3_ARG\log\]
+Procesos = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\Procesos\]
+FLog = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\DES_R3_URU\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Password=494655352F3438381068051F11;Persist Security Info=True;User ID=rhpror3;Initial Catalog=DES_R3_URU;Data Source=RHsrvBB]
+TipoDB = [3]
+
+
+[CDE-R3]
+SAP = [c:\logs\sap\]
+Procesos = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\Procesos\]
+FLog = [d:\Desarrollo\rhprox2_std_r3\cgi-bin\CDE-R3\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAEBEF2D3CCC08BFDF9FBBDA0A1A8BCAED6D5A7918A718C6B7F72222C181E1519000D72720F617F6765555753211F010FECFDE3B0CAC7F8D1DFDFCBC1E183ADAABAE3B3929C97D0B09C726E284275666E464B0A62711169120F1464110F0317051412A7C3E8E6EAF8F2C192EAD0C9D68C9A9CE48F98B09CDF]
+TipoDB = [3]
+
+
+[Alquimaq]
+SAP = [C:\logs\sap\]
+Procesos = [D:\Desarrollo\rhprox2_std_r3\cgi-bin\\Procesos\]
+FLog = [D:\Desarrollo\rhprox2_std_r3\cgi-bin\Alquimaq\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAECEC6D3DAC5C4C6D9FBBCBDB8AAB2BF8D8FCCA09C70886D7E623F4B4449565E5C4A3E60003C2D3B60321D1D1441260FE0FCB7D9DD9FE9CCDDC4D08388A4AAB8BCBF8BC0AA939F9591696835507662694C43564102065A302C760C3714180009482CCFD3DBC4C9D6]
+TipoDB = [3]
+
+
+[Base80_r2_arg]
+SAP = [c:\logs\sap\]
+Procesos = [E:\ENTORNOS\80-RHProX2 STD\cgi-bin\Procesos\]
+FLog = [E:\ENTORNOS\80-RHProX2 STD\cgi-bin\Base80\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAECEC6D3DAC5C4C6D9FBBCBDB8AAB2BF8D8FCCA09C70886D7E623F4B4449565E5C4A3E60003C2D3B60321D1D1441260FE0FCB7D9DD9FE9CCDDC4D08388A4AAB8BCBF8BC0AA939F95916968356372636E4A56056F4B7000002C223E783205161E161BBAF2E1E2F9FBF994F3DAD9EAE1F3969F9BE2E9D2EE]
+TipoDB = [3]
+
+
+[rhprox2] 'Rhprox2
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\rhprox2\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\produccion;Initial Catalog=rhprox2_r2]
+TipoDB = [3]
+
+
+[base0] 'Base 0
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Base0\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\produccion;Initial Catalog=base0]
+TipoDB = [3]
+
+
+[losgrobo] 'Los Grobo ORACLE
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\LosGrobos\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=MSDAORA.1;Password=rhpro;Persist Security Info=True;User ID=losgrobo;Data Source=rhpro]
+TipoDB = [4]
+
+[FINCA] 'FINCA
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\FINCA\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=finca]
+TipoDB = [3]
+
+
+[gorina] 'Gorina
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\gorina\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=gorina]
+TipoDB = [3]
+
+[CCU] 'CCU
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\CCU\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=CCU]
+TipoDB = [3]
+
+[eki] 'EKI
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\eki\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=eki]
+TipoDB = [3]
+
+[chile] 'Rhprox2 CHILE
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\chile\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\produccion;Initial Catalog=rhprox2cl]
+TipoDB = [3]
+
+[sanat_paredes] ' Sanatorio Paredes
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\sanat_paredes\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=sanat_paredes]
+TipoDB = [3]
+
+[sofrecom] 'sofrecom
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\sofrecom\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=sofrecom]
+TipoDB = [3]
+
+[pha] 'pha
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\pha\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhprod\implementacion;Initial Catalog=pha]
+TipoDB = [3]
+
+[arlei]
+SAP = [c:\logs\sap\]
+Procesos = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\Procesos\]
+FLog = [D:\ENTORNOS\8000-RHProX2 ARG\cgi-bin\arlei\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=True;Data Source=rhPROD\implementacion;Initial Catalog=arlei]
+TipoDB = [3]
+
+conexion = [6A4153332733352B5F08352139333DC5C8ADBDAEBEF2D3CCC08BFDF9FBBDA0A1A8BCAED6D5A7918A718C6B7F72226B5443534D5656267B1937392734151B48221F1009F7E7E3E9B9EBF5C2C28BEBCAB4AFF888B4AA86C0BA9D9E869E63325A5949414A676C0C79572B4F2D2C3A7F1B001E02001A19BAC2E8E1EEA4C2F49CF7F0E8F487]
+
+[TestR4]
+SAP = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\TestR4\log\]
+Procesos = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\Procesos\]
+FLog = [f:\Fuentes\4100_rhprox2_r4\cgi-bin\TestR4\log\]
+Fecha = [DD/MM/YYYY]
+conexion = [Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TestR4;Data Source=RHDESA2]
+TipoDB = [3]

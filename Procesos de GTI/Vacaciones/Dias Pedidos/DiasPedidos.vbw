@@ -1,0 +1,13 @@
+mdlDiasPedidos = 25, 25, 945, 428, 
+MdlGlobal = 0, 0, 0, 0, C
+mdlDataAccess = 0, 0, 0, 0, C
+mdlConstantes = 0, 0, 0, 0, C
+BuscarDia = 0, 0, 0, 0, C
+BuscarTurno = 0, 0, 0, 0, C
+Feriado = 0, 0, 0, 0, C
+FechasHoras = 0, 0, 0, 0, C
+mdlPoliticasVac = 0, 0, 0, 0, C
+MdlPed_Paraguay = 0, 0, 0, 0, C
+MdlMidioma = 0, 0, 0, 0, C
+mdlPed_Argentina = 0, 0, 0, 0, C
+mdlValidarBD = 50, 50, 970, 453, Z

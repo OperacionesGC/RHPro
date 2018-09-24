@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../css/SVG.aspx" type="text/css"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	  class='SVG_REDES'  width="612px" height="792px" viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
+<path  class='PATH_REDES'  d="M306,96.885C140.803,96.885,6.885,230.803,6.885,396S140.803,695.115,306,695.115
+	c165.196,0,299.114-133.918,299.114-299.115S471.197,96.885,306,96.885z M420.114,249.212l-41.371,0.018
+	c-32.437,0-38.716,15.417-38.716,38.036v49.878h77.363l-0.03,78.127h-77.326v200.474h-80.692V415.266h-67.455v-78.122h67.455V279.53
+	c0-66.861,40.851-103.275,100.49-103.275l60.288,0.092v72.865H420.114z"/>
+</svg>

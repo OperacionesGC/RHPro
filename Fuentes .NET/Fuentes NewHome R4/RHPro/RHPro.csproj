@@ -1,0 +1,586 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EC7CC1AF-7AE6-43C8-AA51-881C4B889DE4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RHPro</RootNamespace>
+    <AssemblyName>RHPro</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Conexion.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfiguracionesHome.cs" />
+    <Compile Include="Config_Gadget.aspx.cs">
+      <DependentUpon>Config_Gadget.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Config_Gadget.aspx.designer.cs">
+      <DependentUpon>Config_Gadget.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConsultaDatos.cs" />
+    <Compile Include="Controls\Banner.ascx.cs">
+      <DependentUpon>Banner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Banner.ascx.designer.cs">
+      <DependentUpon>Banner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigGadgets.ascx.cs">
+      <DependentUpon>ConfigGadgets.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigGadgets.ascx.designer.cs">
+      <DependentUpon>ConfigGadgets.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContenedorPrincipal.ascx.cs">
+      <DependentUpon>ContenedorPrincipal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ContenedorPrincipal.ascx.designer.cs">
+      <DependentUpon>ContenedorPrincipal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Contenedor_Estilos.ascx.cs">
+      <DependentUpon>Contenedor_Estilos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Contenedor_Estilos.ascx.designer.cs">
+      <DependentUpon>Contenedor_Estilos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Contenedor_Favoritos.ascx.cs">
+      <DependentUpon>Contenedor_Favoritos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Contenedor_Favoritos.ascx.designer.cs">
+      <DependentUpon>Contenedor_Favoritos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomLogin.ascx.cs">
+      <DependentUpon>CustomLogin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomLogin.ascx.designer.cs">
+      <DependentUpon>CustomLogin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EstilosNewHome.ascx.cs">
+      <DependentUpon>EstilosNewHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EstilosNewHome.ascx.designer.cs">
+      <DependentUpon>EstilosNewHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.designer.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FooterPage.ascx.cs">
+      <DependentUpon>FooterPage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\FooterPage.ascx.designer.cs">
+      <DependentUpon>FooterPage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Idiomas.ascx.cs">
+      <DependentUpon>Idiomas.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Idiomas.ascx.designer.cs">
+      <DependentUpon>Idiomas.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Link.ascx.cs">
+      <DependentUpon>Link.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Link.ascx.designer.cs">
+      <DependentUpon>Link.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message.ascx.cs">
+      <DependentUpon>Message.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Message.ascx.designer.cs">
+      <DependentUpon>Message.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Modulos.ascx.cs">
+      <DependentUpon>Modulos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Modulos.ascx.designer.cs">
+      <DependentUpon>Modulos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MRU.ascx.cs">
+      <DependentUpon>MRU.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MRU.ascx.designer.cs">
+      <DependentUpon>MRU.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CopyAspSessionToAspNetSession.aspx.cs">
+      <DependentUpon>CopyAspSessionToAspNetSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="css\sm-clean.aspx.cs">
+      <DependentUpon>sm-clean.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="css\sm-clean.aspx.designer.cs">
+      <DependentUpon>sm-clean.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="css\SVG.aspx.cs">
+      <DependentUpon>SVG.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="css\SVG.aspx.designer.cs">
+      <DependentUpon>SVG.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EndSession.aspx.cs">
+      <DependentUpon>EndSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EndSession.aspx.designer.cs">
+      <DependentUpon>EndSession.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gadget.cs" />
+    <Compile Include="Gadgets\HomeImagenCorporativa\Gadget_Corporativa.ascx.cs">
+      <DependentUpon>Gadget_Corporativa.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gadgets\HomeImagenCorporativa\Gadget_Corporativa.ascx.designer.cs">
+      <DependentUpon>Gadget_Corporativa.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="InfoHack.aspx.cs">
+      <DependentUpon>InfoHack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InfoHack.aspx.designer.cs">
+      <DependentUpon>InfoHack.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lenguaje.cs">
+    </Compile>
+    <Compile Include="MasterPage.Master.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage.Master.designer.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MetaHome.cs">
+    </Compile>
+    <Compile Include="PopUpChangePassword.aspx.cs">
+      <DependentUpon>PopUpChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PopUpChangePassword.aspx.designer.cs">
+      <DependentUpon>PopUpChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PopUpPolitics.aspx.cs">
+      <DependentUpon>PopUpPolitics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PopUpPolitics.aspx.designer.cs">
+      <DependentUpon>PopUpPolitics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PopUpSearch.aspx.cs">
+      <DependentUpon>PopUpSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PopUpSearch.aspx.designer.cs">
+      <DependentUpon>PopUpSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RefreshSession.aspx.cs">
+      <DependentUpon>RefreshSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RefreshSession.aspx.designer.cs">
+      <DependentUpon>RefreshSession.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\Banner.ascx" />
+    <Content Include="Controls\CustomLogin.ascx" />
+    <Content Include="Controls\Footer.ascx" />
+    <Content Include="Controls\FooterPage.ascx" />
+    <Content Include="Controls\Link.ascx" />
+    <Content Include="Controls\Message.ascx" />
+    <Content Include="Controls\MRU.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="img\Flags\originales\Thumbs.db" />
+    <None Include="img\Flags\Thumbs.db" />
+    <None Include="img\Help2\Thumbs.db" />
+    <None Include="img\Modulos\PNG\Thumbs.db" />
+    <None Include="img\Modulos\SVG\Thumbs.db" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Config_Gadget.aspx" />
+    <Content Include="Controls\ConfigGadgets.ascx" />
+    <Content Include="Controls\ContenedorPrincipal.ascx" />
+    <Content Include="Controls\Contenedor_Estilos.ascx" />
+    <Content Include="Controls\Contenedor_Favoritos.ascx" />
+    <Content Include="Controls\EstilosNewHome.ascx" />
+    <Content Include="Controls\Idiomas.ascx" />
+    <Content Include="Controls\Modulos.ascx" />
+    <Content Include="CopyAspNetSessionToAspSession.asp" />
+    <Content Include="CopyAspSessionToAspNetSession.aspx" />
+    <Content Include="css\sm-clean.aspx" />
+    <Content Include="css\sm-cleanTop.css" />
+    <Content Include="css\SVG.aspx" />
+    <Content Include="EndSession.aspx" />
+    <Content Include="Gadgets\HomeImagenCorporativa\Gadget_Corporativa.ascx" />
+    <Content Include="Images\atencion.png" />
+    <Content Include="Images\Banner\arrows.png" />
+    <Content Include="Images\Banner\CloudSaaS.png" />
+    <Content Include="Images\Banner\enUS\enUS.png" />
+    <Content Include="Images\Banner\esAR\esAR.png" />
+    <Content Include="Images\Banner\esBO\esBO.png" />
+    <Content Include="Images\Banner\esCL\esCL.png" />
+    <Content Include="Images\Banner\esCO\esCO.png" />
+    <Content Include="Images\Banner\esCR\esCR.png" />
+    <Content Include="Images\Banner\esDO\esDO.png" />
+    <Content Include="Images\Banner\esEC\esEC.png" />
+    <Content Include="Images\Banner\esES\esES.png" />
+    <Content Include="Images\Banner\esGT\esGT.png" />
+    <Content Include="Images\Banner\esHN\esHN.png" />
+    <Content Include="Images\Banner\esMX\esMX.png" />
+    <Content Include="Images\Banner\esNI\esNI.png" />
+    <Content Include="Images\Banner\esPA\esPA.png" />
+    <Content Include="Images\Banner\esPE\esPE.png" />
+    <Content Include="Images\Banner\esPY\esPY.png" />
+    <Content Include="Images\Banner\esSV\esSV.png" />
+    <Content Include="Images\Banner\esUY\esUY.png" />
+    <Content Include="Images\Banner\esVE\esVE.png" />
+    <Content Include="Images\Banner\image2.png" />
+    <Content Include="Images\Banner\image3.png" />
+    <Content Include="Images\Banner\image4.png" />
+    <Content Include="Images\Banner\Imagenes_Corporativas_YouForce.png" />
+    <Content Include="Images\Banner\Imagenes_Corporativas_YouForceHR.png" />
+    <Content Include="Images\Banner\LanzamientoR4.png" />
+    <Content Include="Images\Banner\logoYouforce.png" />
+    <Content Include="Images\Banner\ptBR\ptBR.png" />
+    <Content Include="Images\Banner\ptPT\ptPT.png" />
+    <Content Include="Images\Banner\x2.jpg" />
+    <Content Include="img\Flags\flag_enUS.png" />
+    <Content Include="img\Flags\flag_esAR.png" />
+    <Content Include="img\Flags\flag_esBO.png" />
+    <Content Include="img\Flags\flag_esCL.png" />
+    <Content Include="img\Flags\flag_esCO.png" />
+    <Content Include="img\Flags\flag_esCR.png" />
+    <Content Include="img\Flags\flag_esDO.png" />
+    <Content Include="img\Flags\flag_esEC.png" />
+    <Content Include="img\Flags\flag_esES.png" />
+    <Content Include="img\Flags\flag_esGT.png" />
+    <Content Include="img\Flags\flag_esHN.png" />
+    <Content Include="img\Flags\flag_esMX.png" />
+    <Content Include="img\Flags\flag_esNI.png" />
+    <Content Include="img\Flags\flag_esPA.png" />
+    <Content Include="img\Flags\flag_esPE.png" />
+    <Content Include="img\Flags\flag_esPY.png" />
+    <Content Include="img\Flags\flag_esSV.png" />
+    <Content Include="img\Flags\flag_esUR.png" />
+    <Content Include="img\Flags\flag_esUY.png" />
+    <Content Include="img\Flags\flag_esVE.png" />
+    <Content Include="img\Flags\flag_ptBR.png" />
+    <Content Include="img\Flags\flag_ptPT.png" />
+    <Content Include="img\Flags\originales\flag_enUS.png" />
+    <Content Include="img\Flags\originales\flag_esAR.png" />
+    <Content Include="img\Flags\originales\flag_esES.png" />
+    <Content Include="img\Flags\originales\flag_esPE.png" />
+    <Content Include="img\Flags\originales\flag_ptBR.png" />
+    <Content Include="img\Flags\originales\flag_ptPT.png" />
+    <Content Include="img\Flags\originales\uruguay.png" />
+    <Content Include="img\FONDO_MENU_BAR.png" />
+    <Content Include="img\Help2\bottom.png" />
+    <Content Include="img\Help2\bottom_der.png" />
+    <Content Include="img\Help2\bottom_izq.png" />
+    <Content Include="img\Help2\centro.png" />
+    <Content Include="img\Help2\der.png" />
+    <Content Include="img\Help2\izq.png" />
+    <Content Include="img\Help2\spacer.gif" />
+    <Content Include="img\Help2\top.png" />
+    <Content Include="img\Help2\top_der.png" />
+    <Content Include="img\Help2\top_izq.png" />
+    <Content Include="img\loader.gif" />
+    <Content Include="img\LogoRHPRO.png" />
+    <Content Include="img\LogoRHPro_0.png" />
+    <Content Include="img\LogoRHPRO_1.png" />
+    <Content Include="img\LogoRHPro_MARCADO.png" />
+    <Content Include="img\LogoRHPRO_ORI}.png" />
+    <Content Include="img\LogoRHPRO_ROJO.png" />
+    <Content Include="img\LogoRHPRO_ROJOX2.png" />
+    <Content Include="img\logoRHPRO_X2Blanco.png" />
+    <Content Include="img\LogoRHPRO_XXX.png" />
+    <Content Include="img\LogoRHPRO_ZZZ.png" />
+    <Content Include="img\logoYouforce.png" />
+    <Content Include="img\logo_movistar.png" />
+    <Content Include="img\Logo_RHPRO.png" />
+    <Content Include="img\Logo_RHPRO_0.png" />
+    <Content Include="img\LOGO_RHPRO_loader.png" />
+    <Content Include="img\miniloader.gif" />
+    <Content Include="img\miniloader2.gif" />
+    <Content Include="img\miniloaderPlano.gif" />
+    <Content Include="img\miniloaderPlano1.gif" />
+    <Content Include="img\Modulos\PNG\ADP.png" />
+    <Content Include="img\Modulos\PNG\ALE.png" />
+    <Content Include="img\Modulos\PNG\ANR.png" />
+    <Content Include="img\Modulos\PNG\APAGAR.png" />
+    <Content Include="img\Modulos\PNG\APERTURA_MODULO.png" />
+    <Content Include="img\Modulos\PNG\BDC.png" />
+    <Content Include="img\Modulos\PNG\BOTONAYUDA.png" />
+    <Content Include="img\Modulos\PNG\CAP.png" />
+    <Content Include="img\Modulos\PNG\CONTROLMODULOS.png" />
+    <Content Include="img\Modulos\PNG\DOWN.png" />
+    <Content Include="img\Modulos\PNG\DVD.png" />
+    <Content Include="img\Modulos\PNG\ENGRANAGE.png" />
+    <Content Include="img\Modulos\PNG\ESTILOS.png" />
+    <Content Include="img\Modulos\PNG\EXPANDEALTO.png" />
+    <Content Include="img\Modulos\PNG\EXPANDEANCHO.png" />
+    <Content Include="img\Modulos\PNG\EYP.png" />
+    <Content Include="img\Modulos\PNG\FAVORITO.png" />
+    <Content Include="img\Modulos\PNG\FAVORITO_TOP.png" />
+    <Content Include="img\Modulos\PNG\GADGET.png" />
+    <Content Include="img\Modulos\PNG\GDD.png" />
+    <Content Include="img\Modulos\PNG\gdp.png" />
+    <Content Include="img\Modulos\PNG\GTI.png" />
+    <Content Include="img\Modulos\PNG\HOME.png" />
+    <Content Include="img\Modulos\PNG\IDIOMA.png" />
+    <Content Include="img\Modulos\PNG\LINK.png" />
+    <Content Include="img\Modulos\PNG\LOGINBASE.png" />
+    <Content Include="img\Modulos\PNG\LOGINPASS.png" />
+    <Content Include="img\Modulos\PNG\LOGINUSER.png" />
+    <Content Include="img\Modulos\PNG\MENSAJES.png" />
+    <Content Include="img\Modulos\PNG\MIG.png" />
+    <Content Include="img\Modulos\PNG\MORE.png" />
+    <Content Include="img\Modulos\PNG\NOM.png" />
+    <Content Include="img\Modulos\PNG\PDD.png" />
+    <Content Include="img\Modulos\PNG\POLITICAS_TOP.png" />
+    <Content Include="img\Modulos\PNG\REPORTES.png" />
+    <Content Include="img\Modulos\PNG\SIM.png" />
+    <Content Include="img\Modulos\PNG\SO.png" />
+    <Content Include="img\Modulos\PNG\SUP.png" />
+    <Content Include="img\Modulos\PNG\UP.png" />
+    <Content Include="img\Modulos\PNG\USER.png" />
+    <Content Include="img\Modulos\PNG\VACACIONES.png" />
+    <Content Include="img\Modulos\SVG\ADMPER.svg" />
+    <Content Include="img\Modulos\SVG\ADP.svg" />
+    <Content Include="img\Modulos\SVG\ALE.svg" />
+    <Content Include="img\Modulos\SVG\ALERTAS.svg" />
+    <Content Include="img\Modulos\SVG\ANALISIS.svg" />
+    <Content Include="img\Modulos\SVG\ANR.svg" />
+    <Content Include="img\Modulos\SVG\ANR_ori.svg" />
+    <Content Include="img\Modulos\SVG\APAGAR.svg" />
+    <Content Include="img\Modulos\SVG\APERTURA_MODULO.svg" />
+    <Content Include="img\Modulos\SVG\BDC.svg" />
+    <Content Include="img\Modulos\SVG\BENEFICIOS.svg" />
+    <Content Include="img\Modulos\SVG\BIENES.svg" />
+    <Content Include="img\Modulos\SVG\BOTONAYUDA.svg" />
+    <Content Include="img\Modulos\SVG\CAP.svg" />
+    <Content Include="img\Modulos\SVG\CAPACITACION.svg" />
+    <Content Include="img\Modulos\SVG\COMPETENCIAS.svg" />
+    <Content Include="img\Modulos\SVG\COMPETENCIAS_ORI.svg" />
+    <Content Include="img\Modulos\SVG\CONTROLMODULOS.svg" />
+    <Content Include="img\Modulos\SVG\CSS\SVG.asp" />
+    <Content Include="img\Modulos\SVG\CSS\SVG.css" />
+    <Content Include="img\Modulos\SVG\DIS.svg" />
+    <Content Include="img\Modulos\SVG\DIS_ORI.svg" />
+    <Content Include="img\Modulos\SVG\DOWN.svg" />
+    <Content Include="img\Modulos\SVG\DVD.svg" />
+    <Content Include="img\Modulos\SVG\EMBARGOS.svg" />
+    <Content Include="img\Modulos\SVG\EMPLEOS.svg" />
+    <Content Include="img\Modulos\SVG\EMPLEOS_CV.svg" />
+    <Content Include="img\Modulos\SVG\EMPLEOS_ORI.svg" />
+    <Content Include="img\Modulos\SVG\ENGRANAGE.svg" />
+    <Content Include="img\Modulos\SVG\ESS.svg" />
+    <Content Include="img\Modulos\SVG\ESTILOS.svg" />
+    <Content Include="img\Modulos\SVG\EVALUACION.svg" />
+    <Content Include="img\Modulos\SVG\EXPANDEALTO.svg" />
+    <Content Include="img\Modulos\SVG\EXPANDEANCHO.svg" />
+    <Content Include="img\Modulos\SVG\EYP.svg" />
+    <Content Include="img\Modulos\SVG\FAVORITO.svg" />
+    <Content Include="img\Modulos\SVG\FAVORITO_TOP.svg" />
+    <Content Include="img\Modulos\SVG\GADGET.svg" />
+    <Content Include="img\Modulos\SVG\GDD.svg" />
+    <Content Include="img\Modulos\SVG\gdp.svg" />
+    <Content Include="img\Modulos\SVG\GTI.svg" />
+    <Content Include="img\Modulos\SVG\HOME.svg" />
+    <Content Include="img\Modulos\SVG\IDIOMA.svg" />
+    <Content Include="img\Modulos\SVG\INFOGER.svg" />
+    <Content Include="img\Modulos\SVG\LINK.svg" />
+    <Content Include="img\Modulos\SVG\LIQUIDACION.svg" />
+    <Content Include="img\Modulos\SVG\LOGINBASE.svg" />
+    <Content Include="img\Modulos\SVG\LOGINPASS.svg" />
+    <Content Include="img\Modulos\SVG\LOGINUSER.svg" />
+    <Content Include="img\Modulos\SVG\MENSAJES.svg" />
+    <Content Include="img\Modulos\SVG\MIG.svg" />
+    <Content Include="img\Modulos\SVG\MORE.svg" />
+    <Content Include="img\Modulos\SVG\NOM.svg" />
+    <Content Include="img\Modulos\SVG\PDD.svg" />
+    <Content Include="img\Modulos\SVG\PDF.svg" />
+    <Content Include="img\Modulos\SVG\PLAN.svg" />
+    <Content Include="img\Modulos\SVG\POLITICAS.svg" />
+    <Content Include="img\Modulos\SVG\POLITICAS_TOP.svg" />
+    <Content Include="img\Modulos\SVG\POLITICAS_TOP2.svg" />
+    <Content Include="img\Modulos\SVG\PROYECTOS.svg" />
+    <Content Include="img\Modulos\SVG\REPORTES.svg" />
+    <Content Include="img\Modulos\SVG\SALUD.svg" />
+    <Content Include="img\Modulos\SVG\SIM.svg" />
+    <Content Include="img\Modulos\SVG\SO.svg" />
+    <Content Include="img\Modulos\SVG\SUP.svg" />
+    <Content Include="img\Modulos\SVG\SUPERVISOR.svg" />
+    <Content Include="img\Modulos\SVG\UP.svg" />
+    <Content Include="img\Modulos\SVG\USER.svg" />
+    <Content Include="img\Modulos\SVG\VACACIONES.svg" />
+    <Content Include="img\REDES\BLOGSPOT.png" />
+    <Content Include="img\REDES\BLOGSPOT.svg" />
+    <Content Include="img\REDES\FACEBOOK.png" />
+    <Content Include="img\REDES\FACEBOOK.svg" />
+    <Content Include="img\REDES\GOOGLE.png" />
+    <Content Include="img\REDES\GOOGLE.svg" />
+    <Content Include="img\REDES\LINKEDIN.png" />
+    <Content Include="img\REDES\LINKEDIN.svg" />
+    <Content Include="img\REDES\PINTEREST.png" />
+    <Content Include="img\REDES\PINTEREST.svg" />
+    <Content Include="img\REDES\TWITTER.png" />
+    <Content Include="img\REDES\TWITTER.svg" />
+    <Content Include="img\REDES\WIKIPEDIA.png" />
+    <Content Include="img\REDES\WIKIPEDIA.svg" />
+    <Content Include="img\REDES\YOUTUBE.png" />
+    <Content Include="img\REDES\YOUTUBE.svg" />
+    <Content Include="InfoHack.aspx" />
+    <Content Include="Js\Drag.js" />
+    <Content Include="Js\GaleriaBanners.js" />
+    <Content Include="Js\jquery-loader.js" />
+    <Content Include="Js\jquery.min.js" />
+    <Content Include="Js\jquery.smartmenus.js" />
+    <Content Include="Js\jquery\jquery.js" />
+    <Content Include="Js\Utils.js" />
+    <Content Include="MasterPage.Master" />
+    <Content Include="newhome.aspx" />
+    <Content Include="RefreshSession.aspx" />
+    <Content Include="Settings.config" />
+    <Content Include="Web.sitemap" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="PopUpChangePassword.aspx" />
+    <Content Include="PopUpPolitics.aspx" />
+    <Content Include="PopUpSearch.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{696F5F71-DEDF-4C65-B301-83E742207C59}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{B09AC5B7-3F12-47AB-B9FA-471D513AF8D0}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServicesProxy\ServicesProxy.csproj">
+      <Project>{8DD5588B-372D-44FB-B02F-ABEAA02AC6FA}</Project>
+      <Name>ServicesProxy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Accesos\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="App_GlobalResources\" />
+    <Folder Include="App_LocalResources\" />
+    <Folder Include="App_Themes\Default\" />
+    <Folder Include="Gadgets\HomeImagenCorporativa\img\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51064</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

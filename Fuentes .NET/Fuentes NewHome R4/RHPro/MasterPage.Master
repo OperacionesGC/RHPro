@@ -1,0 +1,175 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs"
+    Inherits="RHPro.MasterPage" EnableViewState="true" %>
+<% 
+    Response.Cache.SetCacheability(HttpCacheability.NoCache); 
+    Response.Cache.SetAllowResponseInBrowserHistory(false);
+%>    
+<!--
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      xmlns:svg="http://www.w3.org/2000/svg"      xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+
+
+
+<head runat="server">
+ 
+  
+    <!--link type="text/css" href="App_Themes/Default/MainDefault.css" rel="Stylesheet" /-->
+   
+  
+    <link rel="shortcut icon" href="/rhprox2/shared/images/favicon.ico" type="image/x-icon" />
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=ISO-8859-1">
+    
+    <title>RHPro </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+ 
+<script type="text/javascript">
+
+    var keyCode;
+    var myclose = false;
+    var sessionClosedVar;
+ 
+    function ConfirmClose() {
+
+      
+            var keyCode = event.keyCode;
+            var CX; 
+            var CY;
+
+            if (event.clientY) {
+            CX = event.clientX;
+            CY = event.clientY;
+            }
+            else {
+            CX = event.pageX;
+            CY = event.pageY;
+            }
+            
+            if ((CY < 0 && keyCode != 116)
+            || keyCode == 115 
+            || keyCode == 87 
+            || (CX < 100 && keyCode != 116)) {
+                myclose = true;            
+            }
+    }
+
+/*************************************************************************************************************/
+/*Función que se utilza para deslogearse cuando cierran la ventana del home, estando logeado desde el metahome*/
+/*************************************************************************************************************/
+function HandleOnCloseHome() 
+{
+/* //Habilitar en el caso que desee que se cierre la sesion cuando cierra la ventana
+      var e = window.event;     
+      var y = e.pageY || e.clientY;
+
+       if(y < 0)  //Verifica cuando se cierra la ventana        
+       { 
+            if (sessionClosedVar != '') 
+            {               
+                window.open("EndSession.aspx");                                     
+            }
+       }  
+       */
+}
+/*************************************************************************************************************/
+/*Función que se utilza para deslogearse cuando cierran la ventana del home*/
+/*************************************************************************************************************/
+function HandleOnClose() 
+{
+      var e = window.event;     
+      var y = e.pageY || e.clientY;
+
+       if(y < 0)  //Verifica cuando se cierra la ventana        
+       { 
+            if (sessionClosedVar != '') 
+            {
+            ///JPB: Se comento estas lineas porque da un error javascript
+                //javascript: __doPostBack('ctl00$content$cLogin$btnLogOut', '');            
+                // alert(sessionClosedVar);                      
+            }
+       }  
+}
+ 
+
+
+</script>
+
+ </head>
+ <body 
+  <%     
+    /*************************************************************************************/
+    /*    ARMO EL TAG BODY                                                               */
+    /*************************************************************************************/
+    string ImpBody;
+    //ImpBody = " <body  leftmargin='0' topmargin='0' rightmargin='0' bottommargin='0'   ";       
+    ImpBody = " leftmargin='0' topmargin='0' rightmargin='0' bottommargin='0'   ";       
+    
+  
+    if (Common.Utils.IsUserLogin)
+    {
+        //Aqui controlo si viene logeado desde el MetaHome
+        //if ((Common.Utils.SessionNroTempLogin == null) || ((String)Common.Utils.SessionNroTempLogin == ""))
+        if (String.IsNullOrEmpty(Common.Utils.SessionNroTempLogin)) 
+            ImpBody += "  onunload='HandleOnClose()'   ";        
+        else
+            ImpBody += "  onunload='HandleOnCloseHome()'   ";        
+    }       
+    
+   // ImpBody += " >";
+    /*************************************************************************************/
+
+    Response.Write(ImpBody);
+       
+%>  
+ >
+
+<!--body leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0"   onunload="HandleOnClose()"-->
+
+<form id="form1" class="form" runat="server"   requireSSL="true">    
+
+ 
+     <asp:ScriptManager ID="scriptManager" runat="server" OnAsyncPostBackError="scriptManager_AsyncPostBackError"   >
+        <Scripts>                    
+        
+            <asp:ScriptReference Path="js/jquery-loader.js" />
+            <asp:ScriptReference Path="js/jquery.smartmenus.js" />  
+            <asp:ScriptReference Path="~/Js/Utils.js" />               
+               
+        </Scripts>
+    </asp:ScriptManager>
+    
+    <script type="text/javascript" language="javascript">
+       Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+
+        function EndRequestHandler(sender, args)
+        {
+           if (args.get_error() != undefined && args.get_error().httpStatusCode == '500') {
+               alert(args.get_error().message);
+               var errorMessage = args.get_error().message;
+               args.set_errorHandled(true);
+               alert(errorMessages);
+               window.location = "Default.aspx";
+           }
+        }
+    </script>
+    
+    
+     <asp:SiteMapDataSource ID="menuDataSource" runat="server" SiteMapProvider="defaultSitemap"
+        ShowStartingNode="False"  />
+     
+    
+    <asp:ContentPlaceHolder ID="content" runat="server"></asp:ContentPlaceHolder>
+ 
+    
+     
+        
+       
+    
+    </form>
+</body>
+ 
+</html>

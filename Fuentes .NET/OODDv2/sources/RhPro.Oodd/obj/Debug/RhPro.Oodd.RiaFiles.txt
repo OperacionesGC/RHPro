@@ -1,0 +1,2 @@
+c:\Desarrollo\FuentesVB\.net\OODDv2\sources\RhPro.Oodd
+Generated_Code\RhPro.Oodd.Web.g.cs

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSReportPrintImage" targetNamespace="http://tempuri.org/DSReportPrintImage.xsd" xmlns:mstns="http://tempuri.org/DSReportPrintImage.xsd" xmlns="http://tempuri.org/DSReportPrintImage.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSReportPrintImage" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DSReportPrintImage" msprop:Generator_UserDSName="DSReportPrintImage" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ImageData" msprop:Generator_UserTableName="ImageData" msprop:Generator_RowDeletedName="ImageDataRowDeleted" msprop:Generator_TableClassName="ImageDataDataTable" msprop:Generator_RowChangedName="ImageDataRowChanged" msprop:Generator_RowClassName="ImageDataRow" msprop:Generator_RowChangingName="ImageDataRowChanging" msprop:Generator_RowEvArgName="ImageDataRowChangeEvent" msprop:Generator_RowEvHandlerName="ImageDataRowChangeEventHandler" msprop:Generator_TablePropName="ImageData" msprop:Generator_TableVarName="tableImageData" msprop:Generator_RowDeletingName="ImageDataRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ImageId" msprop:Generator_UserColumnName="ImageId" msprop:Generator_ColumnPropNameInRow="ImageId" msprop:Generator_ColumnVarNameInTable="columnImageId" msprop:Generator_ColumnPropNameInTable="ImageIdColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="ImageName" msprop:Generator_UserColumnName="ImageName" msprop:Generator_ColumnPropNameInRow="ImageName" msprop:Generator_ColumnVarNameInTable="columnImageName" msprop:Generator_ColumnPropNameInTable="ImageNameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageBytes" msprop:Generator_UserColumnName="ImageBytes" msprop:Generator_ColumnPropNameInRow="ImageBytes" msprop:Generator_ColumnVarNameInTable="columnImageBytes" msprop:Generator_ColumnPropNameInTable="ImageBytesColumn" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
