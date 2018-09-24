@@ -1,7 +1,0 @@
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\bin\Debug\LeerRegistraciones.exe.config
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\bin\Debug\LeerRegistraciones.exe
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\bin\Debug\LeerRegistraciones.pdb
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\bin\Debug\RHPro.Shared.Sys.dll
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\obj\Debug\LeerRegistraciones.exe
-E:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\obj\Debug\LeerRegistraciones.pdb
-e:\VSTS\Dev\RHPro.Processes\NET\Procesos GTI\LeerRegistraciones\LeerRegistraciones\obj\Debug\LeerRegistraciones.vbprojResolveAssemblyReference.cache

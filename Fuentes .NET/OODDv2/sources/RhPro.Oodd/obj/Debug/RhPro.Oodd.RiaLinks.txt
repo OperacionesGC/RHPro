@@ -1,2 +1,0 @@
-c:\Desarrollo\FuentesVB\.net\OODDv2\sources\RhPro.Oodd.Control.Node\RhPro.Oodd.Control.Node.csproj,635018437840000000,
-c:\Desarrollo\FuentesVB\.net\OODDv2\sources\RhPro.Oodd.Utilities\RhPro.Oodd.Utilities.csproj,635084061460000000,

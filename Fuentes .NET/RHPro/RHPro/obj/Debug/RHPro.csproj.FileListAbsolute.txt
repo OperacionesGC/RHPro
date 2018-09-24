@@ -1,5 +1,0 @@
-c:\documents and settings\lmoro\mis documentos\visual studio 2010\projects\RHPro\RHPro\bin\RHPro.dll
-c:\documents and settings\lmoro\mis documentos\visual studio 2010\projects\RHPro\RHPro\bin\RHPro.pdb
-c:\documents and settings\lmoro\mis documentos\visual studio 2010\projects\RHPro\RHPro\obj\Debug\ResolveAssemblyReference.cache
-c:\documents and settings\lmoro\mis documentos\visual studio 2010\projects\RHPro\RHPro\obj\Debug\RHPro.dll
-c:\documents and settings\lmoro\mis documentos\visual studio 2010\projects\RHPro\RHPro\obj\Debug\RHPro.pdb

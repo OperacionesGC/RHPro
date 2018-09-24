@@ -1,8 +1,0 @@
-mdlDataAccess = 44, 44, 480, 390, 
-mdlConstantes = 66, 66, 502, 412, C
-mdlGerencial = 44, 28, 610, 476, Z
-MdlConceptosNexus = 44, 44, 599, 488, C
-MdlConceptosRHPro = 66, 66, 581, 510, C
-MdlTipoDeHorasRHPro = 88, 88, 603, 532, C
-MdlTiposDeDiasRHPro = 110, 110, 625, 554, C
-MdlFactoresTotalizadores = 154, 154, 713, 573, C

@@ -1,7 +1,0 @@
-- Busca las traducciones de la descripción del menu en la tabla lenguaje_etiqueta.
-
------------- Conidiciones para que funcione correctamente la DLL. ------------
-
-Tener actualizada la tabla lenguaje_etiqueta --> campos de texto varchar(2000).
-si no encuentra traducción, devuelve el contenido de esAR
--------------------------------------------------------------------------------

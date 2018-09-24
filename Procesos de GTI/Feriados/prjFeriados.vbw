@@ -1,8 +1,0 @@
-mdlFeriados = 110, 110, 680, 472, 
-mdlConstantes = 22, 22, 582, 384, C
-mdlDataAccess = 0, 0, 560, 362, CZ
-MdlGlobal = 66, 66, 626, 428, C
-BuscarDia = 110, 110, 777, 472, C
-BuscarTurno = 44, 44, 711, 406, C
-Feriado = 110, 110, 777, 472, C
-FechasHoras = 0, 0, 0, 0, C

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
-  <contractRef ref="http://rhdesa:4000/ws/Consultas.asmx?wsdl" docRef="http://rhdesa:4000/ws/Consultas.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
-  <soap address="http://rhdesa:4000/ws/Consultas.asmx" xmlns:q1="http://rhpro.com.ar/" binding="q1:ConsultasSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
-  <soap address="http://rhdesa:4000/ws/Consultas.asmx" xmlns:q2="http://rhpro.com.ar/" binding="q2:ConsultasSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
-</discovery>

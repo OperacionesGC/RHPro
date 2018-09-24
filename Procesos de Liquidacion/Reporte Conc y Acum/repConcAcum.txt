@@ -1,8 +1,0 @@
-FILE DELETED
-------------
-
-The Deloitte software detection system has identified that a file attachment repConcAcum.bas has been removed as it matches an attachment type currently blocked.
-
-The attachment will NOT be forwarded to you and the sender has NOT been informed of this situation.
-
-We recommend that you contact the sender and request that the message is resent with a renamed attachment.
